@@ -19,4 +19,6 @@ git config --local user.email "YOUR SCHOOL EMAIL"
 
 5. Click VSC in the tabs, select "Enable Version Control Integration", select "Git" and click "OK"
 
-6. Go on to work!
+6. Take a feature in TODO.md to implement, remember to mark it as "taken by your name", don't take those which are taken by others. Remember to indicate commit id once you have finished a feature.
+
+7. Go on to your work!
