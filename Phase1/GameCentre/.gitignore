@@ -1,0 +1,10 @@
+# Android Project
+/local.properties
+/build
+/captures
+.gradle
+.externalNativeBuild
+
+# IntellJ
+*.iml
+.idea/*
