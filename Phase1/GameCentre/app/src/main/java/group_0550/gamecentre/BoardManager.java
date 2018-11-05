@@ -17,11 +17,17 @@ class BoardManager implements Serializable {
     private Board board;
 
     /**
+     * The ScoreBoard to store the score.
+     */
+    private ScoreBoard Score;
+
+    /**
      * Manage a board that has been pre-populated.
      * @param board the board
      */
     BoardManager(Board board) {
         this.board = board;
+        this.Score = new ScoreBoard(board);
     }
 
     /**
