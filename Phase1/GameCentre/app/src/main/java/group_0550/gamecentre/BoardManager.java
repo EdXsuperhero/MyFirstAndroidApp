@@ -54,12 +54,17 @@ class BoardManager implements Serializable {
         boolean solved = true;
         Iterator<Tile> iterTile = this.board.iterator();
         int tileNum = 1;
+        //Tile next_tile = iterTile.next();
         while (iterTile.hasNext() && solved) {
             if (iterTile.next().getId() != tileNum) {
                 solved = false;
-            }
+                }
             tileNum++;
-        }
+            if (tileNum == Board.NUM_TILES){
+                tileNum = 0;
+            }
+            }
+            //next_tile = iterTile.next();
         return solved;
     }
 
@@ -72,7 +77,7 @@ class BoardManager implements Serializable {
     boolean isValidTap(int position) {
         int row = position / Board.NUM_COLS;
         int col = position % Board.NUM_COLS;
-        int blankId = Board.NUM_TILES;
+        int blankId = 0;
         // Are any of the 4 the blank tile?
         Tile above = row == 0 ? null : board.getTile(row - 1, col);
         Tile below = row == Board.NUM_ROWS - 1 ? null : board.getTile(row + 1, col);
@@ -92,7 +97,7 @@ class BoardManager implements Serializable {
     void touchMove(int position) {
         int row = position / Board.NUM_ROWS;
         int col = position % Board.NUM_COLS;
-        int blankId = Board.NUM_TILES;
+        int blankId = 0;
 
         Tile above = row == 0 ? null : board.getTile(row - 1, col);
         Tile below = row == Board.NUM_ROWS - 1 ? null : board.getTile(row + 1, col);
