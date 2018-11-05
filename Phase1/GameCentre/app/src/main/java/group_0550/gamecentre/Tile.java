@@ -1,12 +1,8 @@
 package group_0550.gamecentre;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
-import android.widget.Button;
 
 import java.io.Serializable;
-
-import group_0550.gamecentre.R;
 
 /**
  * A Tile in a sliding tiles puzzle.
@@ -58,9 +54,12 @@ public class Tile implements Comparable<Tile>, Serializable {
      * @param backgroundId
      */
     public Tile(int backgroundId) {
-        id = backgroundId + 1;
+        id = backgroundId;
         // This looks so ugly.
-        switch (backgroundId + 1) {
+        switch (backgroundId) {
+            case 0:
+                background = R.drawable.tile_0;
+                break;
             case 1:
                 background = R.drawable.tile_1;
                 break;
@@ -109,8 +108,29 @@ public class Tile implements Comparable<Tile>, Serializable {
             case 16:
                 background = R.drawable.tile_16;
                 break;
+            case 17:
+                background = R.drawable.tile_17;
+                break;
+            case 18:
+                background = R.drawable.tile_18;
+                break;
+            case 19:
+                background = R.drawable.tile_19;
+                break;
+            case 20:
+                background = R.drawable.tile_20;
+                break;
+            case 21:
+                background = R.drawable.tile_21;
+                break;
+            case 22:
+                background = R.drawable.tile_22;
+                break;
+            case 23:
+                background = R.drawable.tile_23;
+                break;
             default:
-                background = R.drawable.tile_16;
+                background = R.drawable.tile_0;
         }
     }
 
