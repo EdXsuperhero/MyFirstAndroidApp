@@ -1,5 +1,6 @@
 package group_0550.gamecentre;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -61,6 +62,7 @@ public class GameActivity extends AppCompatActivity implements Observer {
         setContentView(R.layout.activity_main);
 
         // Add View to activity
+
         gridView = findViewById(R.id.grid);
         gridView.setNumColumns(Board.NUM_COLS);
         gridView.setBoardManager(boardManager);
@@ -76,7 +78,7 @@ public class GameActivity extends AppCompatActivity implements Observer {
                         int displayHeight = gridView.getMeasuredHeight();
 
                         columnWidth = displayWidth / Board.NUM_COLS;
-                        columnHeight = displayHeight / Board.NUM_ROWS;
+                        columnHeight = displayHeight / (Board.NUM_ROWS);
 
                         display();
                     }

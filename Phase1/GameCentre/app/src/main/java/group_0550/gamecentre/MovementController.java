@@ -19,8 +19,9 @@ public class MovementController {
         if (boardManager.isValidTap(position)) {
             boardManager.touchMove(position);
             if (boardManager.puzzleSolved()) {
-                Toast.makeText(context, "YOU WIN!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "YOU WIN!", Toast.LENGTH_SHORT).show();
                 // TODO: add the score to the player here.
+                Toast.makeText(context, "YOU WIN!", Toast.LENGTH_SHORT).show();
 
 
             }

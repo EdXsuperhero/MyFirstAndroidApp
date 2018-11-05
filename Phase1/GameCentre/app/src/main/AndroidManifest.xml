@@ -9,14 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name="group_0550.gamecentre.StartingActivity">
+        <activity android:name=".StartingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="group_0550.gamecentre.GameActivity"></activity>
+        <activity android:name=".GameActivity" />
+        <activity android:name=".ChooseComplexity"></activity>
     </application>
 
 </manifest>
