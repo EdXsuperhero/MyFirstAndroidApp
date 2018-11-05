@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name="group_0550.gamecentre.StartingActivity">
+        <activity android:name="group_0550.gamecentre.LoginSystemActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name="group_0550.gamecentre.GameActivity"></activity>
+        <activity android:name="group_0550.gamecentre.StartingActivity"></activity>
     </application>
 
 </manifest>
