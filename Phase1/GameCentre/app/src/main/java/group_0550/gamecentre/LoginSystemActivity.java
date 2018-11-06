@@ -32,7 +32,7 @@ public class LoginSystemActivity extends AppCompatActivity {
     /**
      * Username of whom is playing this game.
      */
-    private String currentUserName = null;
+    private static String currentUserName = null;
 
     /**
      * A user manager.
@@ -134,7 +134,7 @@ public class LoginSystemActivity extends AppCompatActivity {
     /**
      * @return Username of whom is currently playing this game.
      */
-    public String getCurrentUserName() {
+    public static String getCurrentUserName() {
         return currentUserName;
     }
 
