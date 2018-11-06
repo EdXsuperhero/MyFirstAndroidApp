@@ -16,23 +16,17 @@ public class Board extends Observable implements Serializable, Iterable<Tile> {
     /**
      * The number of rows.
      */
-    static int NUM_ROWS = 5;
+    private int num_rows;
 
     /**
      * The number of rows.
      */
-    static int NUM_COLS = 5;
-
-    /**
-     * The number of total tiles on board.
-     */
-    static int NUM_TILES = NUM_ROWS * NUM_COLS;
-    //final static int NUM_TILES = NUM_ROWS * NUM_COLS;
+    private int num_cols;
 
     /**
      * The tiles on the board in row-major order.
      */
-    private Tile[][] tiles = new Tile[NUM_ROWS][NUM_COLS];
+    private Tile[][] tiles;
 
     /**
      * A new board of tiles in row-major order.
@@ -40,11 +34,14 @@ public class Board extends Observable implements Serializable, Iterable<Tile> {
      *
      * @param tiles the tiles for the board
      */
-    Board(List<Tile> tiles) {
+    Board(int num_rows, int num_cols, List<Tile> tiles) {
+        this.num_rows = num_rows;
+        this.num_cols = num_cols;
         Iterator<Tile> iter = tiles.iterator();
+        this.tiles = new Tile[this.num_rows][this.num_cols];
 
-        for (int row = 0; row != Board.NUM_ROWS; row++) {
-            for (int col = 0; col != Board.NUM_COLS; col++) {
+        for (int row = 0; row != this.num_rows; row++) {
+            for (int col = 0; col != this.num_cols; col++) {
                 this.tiles[row][col] = iter.next();
             }
         }
@@ -53,12 +50,9 @@ public class Board extends Observable implements Serializable, Iterable<Tile> {
     /**
      * Return the number of tiles on the board.
      * @return the number of tiles on the board
-     *
-     * Q: Do we really need this method since we can
-     * replace it with a constant variable?
      */
     int numTiles() {
-        return NUM_TILES;
+        return this.num_rows * this.num_cols;
     }
 
     /**
@@ -70,6 +64,14 @@ public class Board extends Observable implements Serializable, Iterable<Tile> {
      */
     Tile getTile(int row, int col) {
         return tiles[row][col];
+    }
+
+    public int getNumRows() {
+        return num_rows;
+    }
+
+    public int getNumCols() {
+        return num_cols;
     }
 
     /**
@@ -99,7 +101,7 @@ public class Board extends Observable implements Serializable, Iterable<Tile> {
     @NonNull
     @Override
     public Iterator<Tile> iterator() {
-        return new BoardIterator();
+        return new BoardIterator(this.num_rows, this.num_cols);
     }
 
     /**
@@ -112,14 +114,22 @@ public class Board extends Observable implements Serializable, Iterable<Tile> {
          */
         int nextPosition = 0;
 
+        private int num_rows;
+        private int num_cols;
+
+        public BoardIterator(int num_rows, int num_cols) {
+            this.num_rows = num_rows;
+            this.num_cols = num_cols;
+        }
+
         @Override
         public boolean hasNext() {
-            return nextPosition != NUM_TILES;
+            return nextPosition != this.num_rows * this.num_cols;
         }
 
         @Override
         public Tile next() {
-            Tile nextTile = tiles[nextPosition / NUM_COLS][nextPosition % NUM_COLS];
+            Tile nextTile = tiles[nextPosition / this.num_cols][nextPosition % this.num_cols];
             nextPosition++;
             return nextTile;
         }

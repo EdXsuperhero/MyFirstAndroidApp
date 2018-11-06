@@ -1,23 +1,16 @@
 package group_0550.gamecentre;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+
 public class ChooseComplexity extends StartingActivity {
 
     @Override
@@ -35,11 +28,9 @@ public class ChooseComplexity extends StartingActivity {
         three_by_three.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Board.NUM_COLS = 3;
-                Board.NUM_ROWS = 3;
-                Board.NUM_TILES = 9;
-                boardManager = new BoardManager();
-                switchToGame();
+                boardManager = new BoardManager(3, 3);
+                saveToFile(StartingActivity.SAVE_FILENAME);
+                switchToOtherActivities(GameActivity.class);
             }
 
         });
@@ -50,11 +41,9 @@ public class ChooseComplexity extends StartingActivity {
         four_by_four.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Board.NUM_COLS = 4;
-                Board.NUM_ROWS = 4;
-                Board.NUM_TILES = 16;
-                boardManager = new BoardManager();
-                switchToGame();
+                boardManager = new BoardManager(4, 4);
+                saveToFile(StartingActivity.SAVE_FILENAME);
+                switchToOtherActivities(GameActivity.class);
 
             }
 
@@ -66,14 +55,28 @@ public class ChooseComplexity extends StartingActivity {
         five_by_five.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Board.NUM_COLS = 5;
-                Board.NUM_ROWS = 5;
-                Board.NUM_TILES = 25;
-                boardManager = new BoardManager();
-                switchToGame();
+                boardManager = new BoardManager(5, 5);
+                saveToFile(StartingActivity.SAVE_FILENAME);
+                switchToOtherActivities(GameActivity.class);
 
             }
 
         });
+    }
+
+    /**
+     * Save the board manager to fileName.
+     *
+     * @param fileName the name of the file
+     */
+    public void saveToFile(String fileName) {
+        try {
+            ObjectOutputStream outputStream = new ObjectOutputStream(
+                    this.openFileOutput(fileName, MODE_PRIVATE));
+            outputStream.writeObject(boardManager.getBoard());
+            outputStream.close();
+        } catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
     }
 }

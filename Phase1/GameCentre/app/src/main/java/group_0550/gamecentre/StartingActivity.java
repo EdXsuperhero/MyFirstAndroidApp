@@ -1,8 +1,8 @@
 package group_0550.gamecentre;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,10 +24,6 @@ public class StartingActivity extends AppCompatActivity {
      */
     public static final String SAVE_FILENAME = "save_file.ser";
     /**
-     * A temporary save file.
-     */
-    public static final String TEMP_SAVE_FILENAME = "save_file_tmp.ser";
-    /**
      * The board manager.
      */
     public BoardManager boardManager;
@@ -35,8 +31,12 @@ public class StartingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //boardManager = new BoardManager();
-        saveToFile(TEMP_SAVE_FILENAME);
+
+        loadFromFile(SAVE_FILENAME);
+        if (boardManager.getBoard() == null) {
+            boardManager = new BoardManager(3, 3);
+            saveToFile(SAVE_FILENAME);
+        }
 
         setContentView(R.layout.activity_starting_);
         addStartButtonListener();
@@ -53,9 +53,8 @@ public class StartingActivity extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(StartingActivity.this, ChooseComplexity.class));
-                //boardManager = new BoardManager();
-                //switchToGame();
+                saveToFile(SAVE_FILENAME);
+                switchToOtherActivities(ChooseComplexity.class);
             }
         });
     }
@@ -69,9 +68,9 @@ public class StartingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadFromFile(SAVE_FILENAME);
-                saveToFile(TEMP_SAVE_FILENAME);
+                saveToFile(SAVE_FILENAME);
                 makeToastLoadedText();
-                switchToGame();
+                switchToOtherActivities(GameActivity.class);
             }
         });
     }
@@ -92,7 +91,6 @@ public class StartingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 saveToFile(SAVE_FILENAME);
-                saveToFile(TEMP_SAVE_FILENAME);
                 makeToastSavedText();
             }
             });
@@ -103,7 +101,8 @@ public class StartingActivity extends AppCompatActivity {
         toScoreBoradButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(StartingActivity.this, ScoreBoardActivity.class));
+                saveToFile(SAVE_FILENAME);
+                switchToOtherActivities(ScoreBoardActivity.class);
             }
         });
     }
@@ -120,16 +119,12 @@ public class StartingActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        loadFromFile(TEMP_SAVE_FILENAME);
+        loadFromFile(SAVE_FILENAME);
     }
 
-    /**
-     * Switch to the GameActivity view to play the game.
-     */
-    public void switchToGame() {
-        Intent tmp = new Intent(this, GameActivity.class);
-        saveToFile(StartingActivity.TEMP_SAVE_FILENAME);
-        startActivity(tmp);
+    public void switchToOtherActivities(Class<?> cls){
+        Intent intent = new Intent(this, cls);
+        startActivity(intent);
     }
 
     /**
@@ -143,15 +138,16 @@ public class StartingActivity extends AppCompatActivity {
             InputStream inputStream = this.openFileInput(fileName);
             if (inputStream != null) {
                 ObjectInputStream input = new ObjectInputStream(inputStream);
-                boardManager = (BoardManager) input.readObject();
+                Board board = (Board) input.readObject();
+                boardManager = new BoardManager(board);
                 inputStream.close();
             }
         } catch (FileNotFoundException e) {
-            Log.e("login activity", "File not found: " + e.toString());
+            Log.e("Starting Activity", "File not found: " + e.toString());
         } catch (IOException e) {
-            Log.e("login activity", "Can not read file: " + e.toString());
+            Log.e("Starting Activity", "Can not read file: " + e.toString());
         } catch (ClassNotFoundException e) {
-            Log.e("login activity", "File contained unexpected data type: " + e.toString());
+            Log.e("Starting Activity", "File contained unexpected data type: " + e.toString());
         }
     }
 
@@ -164,7 +160,7 @@ public class StartingActivity extends AppCompatActivity {
         try {
             ObjectOutputStream outputStream = new ObjectOutputStream(
                     this.openFileOutput(fileName, MODE_PRIVATE));
-            outputStream.writeObject(boardManager);
+            outputStream.writeObject(boardManager.getBoard());
             outputStream.close();
         } catch (IOException e) {
             Log.e("Exception", "File write failed: " + e.toString());
