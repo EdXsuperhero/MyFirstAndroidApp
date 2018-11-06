@@ -39,7 +39,7 @@ public class ScoreBoard implements Serializable {
         }
         Collections.sort(scores, Collections.<String>reverseOrder());
         for (int i = 0; i <= 5; i++) {
-            scores.add(new Integer(i).toString(i) + ",Nobody" + new Integer(i).toString(i));
+            scores.add("0,Nobody" + new Integer(i).toString(i));
         }
         return new ArrayList<>(scores.subList(0, 5));
     }

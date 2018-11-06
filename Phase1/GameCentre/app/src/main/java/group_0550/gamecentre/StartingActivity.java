@@ -42,6 +42,7 @@ public class StartingActivity extends AppCompatActivity {
         addStartButtonListener();
         addLoadButtonListener();
         addSaveButtonListener();
+        addToScoreBoardListener();
     }
 
     /**
@@ -95,6 +96,16 @@ public class StartingActivity extends AppCompatActivity {
                 makeToastSavedText();
             }
             });
+    }
+
+    private void addToScoreBoardListener() {
+        Button toScoreBoradButton = findViewById(R.id.ToScoreBoard);
+        toScoreBoradButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(StartingActivity.this, ScoreBoardActivity.class));
+            }
+        });
     }
 
     /**

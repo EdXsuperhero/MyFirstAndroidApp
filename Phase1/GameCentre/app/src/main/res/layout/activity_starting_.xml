@@ -40,4 +40,12 @@
         android:layout_toEndOf="@+id/StartButton"
         android:text="Save Game" />
 
+    <Button
+        android:id="@+id/ToScoreBoard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="To ScoreBoard" />
+
 </RelativeLayout>
