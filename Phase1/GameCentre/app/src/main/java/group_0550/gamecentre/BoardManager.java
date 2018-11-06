@@ -52,20 +52,6 @@ class BoardManager implements Serializable {
         this.board = new Board(tiles);
     }
 
-
-    /*BoardManager(int size) {
-        List<Tile> tiles = new ArrayList<>();
-        Board.NUM_ROWS = size;
-        Board.NUM_COLS = size;
-        final int numTiles = Board.NUM_TILES;
-        for (int tileNum = 0; tileNum != numTiles; tileNum++) {
-            tiles.add(new Tile(tileNum));
-        }
-
-        Collections.shuffle(tiles);
-        this.board = new Board(tiles);
-    }/*
-
     /**
      * Return whether the tiles are in row-major order.
      *

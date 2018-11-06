@@ -15,16 +15,10 @@ public class UserManager implements Serializable {
     private HashMap<String, User> userMap;
 
     /**
-     * A pointer to current user who is playing this game.
-     */
-    public User currentUser;
-
-    /**
      * A new user manager that has empty user HashMap and not logged in.
      */
     public UserManager() {
-        userMap = new HashMap<>();
-        currentUser = null;
+        this.userMap = new HashMap<>();
     }
 
     /**
@@ -39,13 +33,12 @@ public class UserManager implements Serializable {
             returnString = "Invalid Username";
         }
         else {
-            User loginUser = userMap.get(username);
+            User loginUser = this.userMap.get(username);
             if (!loginUser.getPassword().equals(password)) {
                 returnString = "Wrong Password";
             }
             else {
                 returnString = "Welcome, " + username + "!";
-                currentUser = loginUser;
             }
         }
         return returnString;
@@ -64,7 +57,7 @@ public class UserManager implements Serializable {
         }
         else {
             User newUser = new User(username, password);
-            userMap.put(username, newUser);
+            this.userMap.put(username, newUser);
             returnString = this.signIn(username, password) + " Sign Up successful.";
         }
         return returnString;
@@ -75,15 +68,16 @@ public class UserManager implements Serializable {
      * @param username User's typed login name
      * @return If the username is registered
      */
-    public boolean registeredUser(String username) {
-        return userMap.containsKey(username);
+    private boolean registeredUser(String username) {
+        return this.userMap.containsKey(username);
     }
 
     /**
-     * Return the current user that is playing this game.
-     * @return current user
+     * Return User of given username.
+     * @param username username of User want to get
+     * @return User of given username
      */
-    public User getCurrentUser() {
-        return currentUser;
+    public User getUser(String username) {
+        return this.userMap.get(username);
     }
 }

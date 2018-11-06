@@ -22,27 +22,27 @@ public class User implements Serializable {
      * @param username User's login name
      * @param password User's login password
      */
-    public User(String username, String password) {
+    User(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
-    public void setUsername(String username) {
+    void setUsername(String username) {
         this.username = username;
     }
 
-    public String getUsername() {
+    String getUsername() {
         return username;
     }
 
-    public void setPassword(String password) {
+    void setPassword(String password) {
         this.password = password;
     }
 
     /**
      * @return Current User's password
      */
-    public String getPassword() {
+    String getPassword() {
         return password;
     }
 

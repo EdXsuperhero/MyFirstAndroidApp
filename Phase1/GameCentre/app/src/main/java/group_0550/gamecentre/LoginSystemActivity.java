@@ -2,6 +2,7 @@ package group_0550.gamecentre;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -19,7 +20,7 @@ import java.io.ObjectOutputStream;
 import group_0550.gamecentre.UserManagerSystem.UserManager;
 
 /**
- * The initial activity for user login functionality/
+ * The initial activity for user login functionality.
  */
 public class LoginSystemActivity extends AppCompatActivity {
 
@@ -29,14 +30,9 @@ public class LoginSystemActivity extends AppCompatActivity {
     public static final String SAVE_USER = "save_user.ser";
 
     /**
-     * The username typed in.
+     * Username of whom is playing this game.
      */
-    private String username;
-
-    /**
-     * The password typed in.
-     */
-    private String password;
+    private String currentUserName = null;
 
     /**
      * A user manager.
@@ -46,6 +42,7 @@ public class LoginSystemActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         loadFromFile(SAVE_USER);
         if (this.userManager == null) {
             this.userManager = new UserManager();
@@ -65,12 +62,16 @@ public class LoginSystemActivity extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 loadFromFile(SAVE_USER);
-                addUsernameInputTextListener();
-                addPasswordInputTextListener();
+
+                String username = addUsernameInputTextListener();
+                String password = addPasswordInputTextListener();
+
                 String text = userManager.signIn(username, password);
                 makeToastLoadedText(text);
                 if (text.startsWith("Welcome")) {
+                    currentUserName = username;
                     switchToStart();
                 }
             }
@@ -85,13 +86,17 @@ public class LoginSystemActivity extends AppCompatActivity {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 loadFromFile(SAVE_USER);
-                addUsernameInputTextListener();
-                addPasswordInputTextListener();
+
+                String username = addUsernameInputTextListener();
+                String password = addPasswordInputTextListener();
+
                 String text = userManager.signUp(username, password);
                 makeToastLoadedText(text);
-                saveToFile(SAVE_USER);
                 if (text.startsWith("Welcome")) {
+                    saveToFile(SAVE_USER);
+                    currentUserName = username;
                     switchToStart();
                 }
             }
@@ -102,18 +107,20 @@ public class LoginSystemActivity extends AppCompatActivity {
      * Activate the username input box and
      * get typed username.
      */
-    private void addUsernameInputTextListener() {
+    @NonNull
+    private String addUsernameInputTextListener() {
         EditText usernameInput = findViewById(R.id.UsernameInput);
-        this.username = usernameInput.getText().toString();
+        return usernameInput.getText().toString();
     }
 
     /**
      * Activate the password input box and
      * get typed password.
      */
-    private void addPasswordInputTextListener() {
+    @NonNull
+    private String addPasswordInputTextListener() {
         EditText passwordInput = findViewById(R.id.PasswordInput);
-        this.password = passwordInput.getText().toString();
+        return passwordInput.getText().toString();
     }
 
     /**
@@ -122,6 +129,13 @@ public class LoginSystemActivity extends AppCompatActivity {
      */
     private void makeToastLoadedText(String text) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * @return Username of whom is currently playing this game.
+     */
+    public String getCurrentUserName() {
+        return currentUserName;
     }
 
     /**
