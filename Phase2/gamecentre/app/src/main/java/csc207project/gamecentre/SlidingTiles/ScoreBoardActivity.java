@@ -51,7 +51,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadFromFile(SAVE_SCORE);
-        long score = getIntent().getLongExtra("score", -1);
+        long score = getIntent().getLongExtra("score", Long.MAX_VALUE);
         this.scoreManager.addScore(this.username, score);
         saveToFile(SAVE_SCORE);
 
