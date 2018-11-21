@@ -1,4 +1,5 @@
-package csc207project.gamecentre.SlidingTiles;
+
+package csc207project.gamecentre.MemoryMatchingPics;
 
 import android.os.Bundle;
 import android.view.View;
@@ -6,30 +7,30 @@ import android.widget.Button;
 
 import csc207project.gamecentre.R;
 
+
 /**
  * The activity for selecting complexity.
  */
-public class ChooseComplexity extends StartingActivity {
+public class ChooseComplex extends MatchingStartingActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_choose_complexity);
-        addThreeComplexityListener();
+        setContentView(R.layout.activity_matching_complex);
+        addTwoComplexityListener();
         addFourComplexityListener();
-        addFiveComplexityListener();
+        addSixComplexityListener();
     }
-
     /**
      * Activate the three by three complexity.
      */
-    private void addThreeComplexityListener(){
-        Button three_by_three = findViewById(R.id.easy);
-        three_by_three.setOnClickListener(new View.OnClickListener() {
+    private void addTwoComplexityListener(){
+        Button easy = findViewById(R.id.easy1);
+        easy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boardManager = new BoardManager(3);
+                boardManager = new BoardManager(2);
                 switchToGame();
             }
         });
@@ -39,8 +40,8 @@ public class ChooseComplexity extends StartingActivity {
      * Activate the four by four complexity.
      */
     private void addFourComplexityListener(){
-        Button four_by_four = findViewById(R.id.normal);
-        four_by_four.setOnClickListener(new View.OnClickListener() {
+        Button normal = findViewById(R.id.normal1);
+        normal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boardManager = new BoardManager(4);
@@ -52,12 +53,12 @@ public class ChooseComplexity extends StartingActivity {
     /**
      * Activate the five by five complexity.
      */
-    private void addFiveComplexityListener(){
-        Button five_by_five = findViewById(R.id.hard);
-        five_by_five.setOnClickListener(new View.OnClickListener() {
+    private void addSixComplexityListener(){
+        Button hard = findViewById(R.id.hard1);
+        hard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boardManager = new BoardManager(5);
+                boardManager = new BoardManager(6);
                 switchToGame();
             }
         });

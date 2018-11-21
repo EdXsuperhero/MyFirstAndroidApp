@@ -14,41 +14,41 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="40dp"
         android:layout_marginTop="86dp"
-        android:text="Choose game complexity"
+        android:text="@string/choose_game_complexity"
         android:textSize="30sp" />
 
     <Button
-        android:id="@+id/threebythree"
+        android:id="@+id/easy"
         android:layout_width="150dp"
         android:layout_height="70dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="159dp"
-        android:text="3 x 3"
+        android:text="@string/easy"
         android:textSize="24sp" />
 
     <Button
-        android:id="@+id/fourbyfour"
+        android:id="@+id/normal"
         android:layout_width="150dp"
         android:layout_height="70dp"
-        android:layout_below="@+id/threebythree"
-        android:layout_alignStart="@+id/threebythree"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="63dp"
-        android:text="4 x 4"
-        android:textSize="24sp" />
-
-    <Button
-        android:id="@+id/fivebyfive"
-        android:layout_width="150dp"
-        android:layout_height="70dp"
-        android:layout_below="@+id/fourbyfour"
-        android:layout_alignStart="@+id/fourbyfour"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/easy"
+        android:layout_alignStart="@+id/easy"
         android:layout_marginStart="2dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginBottom="162dp"
-        android:text="5 x 5"
+        android:layout_marginTop="57dp"
+        android:text="@string/normal"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/hard"
+        android:layout_width="150dp"
+        android:layout_height="62dp"
+        android:layout_below="@+id/normal"
+        android:layout_alignStart="@+id/normal"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="53dp"
+        android:layout_marginBottom="90dp"
+        android:text="@string/hard"
         android:textSize="24sp" />
 
 </RelativeLayout>

@@ -16,6 +16,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
+import csc207project.gamecentre.MemoryMatchingPics.MatchingMainActivity;
 import csc207project.gamecentre.R;
 import csc207project.gamecentre.SlidingTiles.StartingActivity;
 
@@ -130,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
      * Switch to StartActivity.
      */
     private void switchToStart() {
-        Intent startIntent = new Intent(this, StartingActivity.class);
+        Intent startIntent = new Intent(this, MatchingMainActivity.class);//TODO:Switch to Matching Game;
         startActivity(startIntent);
     }
 
