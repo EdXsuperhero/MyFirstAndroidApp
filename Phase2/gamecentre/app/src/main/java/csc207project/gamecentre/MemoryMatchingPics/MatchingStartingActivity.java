@@ -23,11 +23,11 @@ public class MatchingStartingActivity extends AppCompatActivity {
     /**
      * The main save file.
      */
-    public static final String SAVE_FILENAME = "save_file.ser";
+    public static final String SAVE_FILENAME = "matching_save_file.ser";
     /**
      * A temporary save file.
      */
-    public static final String TEMP_SAVE_FILENAME = "save_file_tmp.ser";
+    public static final String TEMP_SAVE_FILENAME = "matching_save_file_tmp.ser";
     /**
      * The board manager.
      */

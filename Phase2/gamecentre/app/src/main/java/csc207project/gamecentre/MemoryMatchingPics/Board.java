@@ -60,7 +60,7 @@ public class Board extends Observable implements Serializable, Cloneable{
         Iterator<Card> iter= cards.iterator();
 
         for (int row = 0; row != this.width; row++){
-            for (int col = 0; row != this.width; col++){
+            for (int col = 0; col != this.width; col++){
                 this.cards[row][col] = iter.next();
             }
         }
