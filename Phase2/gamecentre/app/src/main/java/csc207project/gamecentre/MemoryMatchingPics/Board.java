@@ -28,15 +28,15 @@ public class Board extends Observable implements Serializable, Cloneable{
      */
     private Card[][] cards;
 
-    /**
-     * the first card to flip.
-     */
-    private Card cardOne;
-
-    /**
-     * the second card to flip.
-     */
-    private Card cardTwo;
+//    /**
+//     * the first card to flip.
+//     */
+//    private Card cardOne;
+//
+//    /**
+//     * the second card to flip.
+//     */
+//    private Card cardTwo;
 
     /**
      * the stack of cards.
@@ -67,65 +67,58 @@ public class Board extends Observable implements Serializable, Cloneable{
     }
 
     void flipCard(int row, int col){
-        cardOne = cards[row][col];
+        Card cardOne = cards[row][col];
         if (cardStack.isEmpty()){
             cardOne.setBackground(cardOne.getBackside());
             cardStack.push(cardOne);
+            updateObsevers();
+
         }else{
-            cardTwo = cardStack.pop();
+            Card cardTwo = cardStack.pop();
             if (cardOne.getId() == cardTwo.getId()){
                 cardOne.setBackground(R.drawable.tile_0);
+                updateObsevers();
             }else{
                 cardOne.setBackground(cardOne.getBackside());
                 updateObsevers();
-                if (matched(cardOne, cardTwo)){
+                //Timer timer = new Timer();
+                if (cardOne.getBackside() == cardTwo.getBackside()){
+
                     this.matched++;
-                    Timer timer = new Timer();
-                    TimerTask timerTask = new FlipFinish(this);
-                    timer.schedule(timerTask, 1500);//delay 1.5 seconds.
+                    cardOne.setBackground(R.drawable.tile_3);
+                    cardTwo.setBackground(R.drawable.tile_3);
+                    updateObsevers();
+//                    TimerTask timerTask = new FlipFinish(this);
+//                    timer.schedule(timerTask, 1500);//delay 1.5 seconds.
                 }else{
-                    Timer timer = new Timer();
-                    TimerTask timerTask = new FlipBack(this);
-                    timer.schedule(timerTask, 1500);//delay 1.5 seconds.
+                    cardOne.setBackground(R.drawable.tile_0);
+                    cardTwo.setBackground(R.drawable.tile_0);
+                    updateObsevers();
+//                    TimerTask timerTask = new FlipBack(this);
+//                    timer.schedule(timerTask, 1500);//delay 1.5 seconds.
                 }
 
             }
         }
-        updateObsevers();
-    }
 
-    /**
-     *
-     * @param cardOne the first card
-     * @param cardTwo the second card
-     * @return whether the first card has the same pics.
-     */
-    private boolean matched(Card cardOne, Card cardTwo) {
-        boolean res;
-        if (cardOne.getBackside() == cardTwo.getBackside()){
-            res = true;
-        }else{
-            res = false;
-        }
-        return res;
     }
 
 
-    /**
-     * flip back the cards.
-     */
-    void flipCardBack(){
-        cardOne.setBackground(R.drawable.tile_0);
-        cardTwo.setBackground(R.drawable.tile_0);
-    }
-
-    /**
-     * flip the cards to a matching state.
-     */
-    void flipCardFinish(){
-        cardOne.setBackground(R.drawable.tile_24);
-        cardTwo.setBackground(R.drawable.tile_24);
-    }
+//    /**
+//     * flip back the cards.
+//     */
+//    void flipCardBack(){
+//        cardOne.setBackground(R.drawable.tile_0);
+//        cardTwo.setBackground(R.drawable.tile_0);
+//    }
+//
+//    /**
+//     * flip the cards to a matching state.
+//     */
+//    void flipCardFinish(){
+//        cardOne.setBackground(R.drawable.tile_24);
+//        cardTwo.setBackground(R.drawable.tile_24);
+//    }
 
     /**
      * notify the observers.
@@ -162,21 +155,21 @@ public class Board extends Observable implements Serializable, Cloneable{
         return this.cards;
     }
 
-    /**
-     * get the first card we touch
-     * @return cardOne
-     */
-    public Card getCardOne() {
-        return this.cardOne;
-    }
-
-    /**
-     * get the second card we touch
-     * @return cardTwo
-     */
-    public Card getCardTwo() {
-        return this.cardTwo;
-    }
+//    /**
+//     * get the first card we touch
+//     * @return cardOne
+//     */
+//    public Card getCardOne() {
+//        return this.cardOne;
+//    }
+//
+//    /**
+//     * get the second card we touch
+//     * @return cardTwo
+//     */
+//    public Card getCardTwo() {
+//        return this.cardTwo;
+//    }
 
     /**
      * get the stack of cards
@@ -200,39 +193,49 @@ public class Board extends Observable implements Serializable, Cloneable{
         return (int) Math.pow(this.width, 2);
     }
 
+//    /**
+//     * return whether the given position is matched.
+//     * @param position on the board.
+//     * @return
+//     */
+//   TODO:Complete match method.
+//    public boolean match(int row, int col) {
+//        if (this.cards[row][col])
+//
+//    }
 }
-
-
-/**
- * A TimerTask to flip back the card to white state.
- */
-class FlipBack extends TimerTask {
-
-    private Board b;
-
-    public FlipBack(Board b){
-        this.b = b;
-    }
-
-    @Override
-    public void run() {
-        this.b.flipCardBack();
-    }
-}
-
-/**
- * A TimerTask to flip back the card to white state.
- */
-class FlipFinish extends TimerTask {
-
-    private Board b;
-
-    public FlipFinish(Board b){
-        this.b = b;
-    }
-
-    @Override
-    public void run() {
-        this.b.flipCardFinish();
-    }
-}
+//
+//
+///**
+// * A TimerTask to flip back the card to white state.
+// */
+//class FlipBack extends TimerTask {
+//
+//    private Board b;
+//
+//    public FlipBack(Board b){
+//        this.b = b;
+//    }
+//
+//    @Override
+//    public void run() {
+//        this.b.flipCardBack();
+//    }
+//}
+//
+///**
+// * A TimerTask to flip back the card to white state.
+// */
+//class FlipFinish extends TimerTask {
+//
+//    private Board b;
+//
+//    public FlipFinish(Board b){
+//        this.b = b;
+//    }
+//
+//    @Override
+//    public void run() {
+//        this.b.flipCardFinish();
+//    }
+//}

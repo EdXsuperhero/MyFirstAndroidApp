@@ -23,6 +23,9 @@ public class MovementController {
         this.mContext = context;
         if (boardManager.isValidTap(position)){
             boardManager.touchMove(position);
+//            if (boardManager.matched(positoin)){
+//                Toast.makeText(context, "MATCHED", Toast.LENGTH_SHORT).show();
+//            }
             if (boardManager.cardAllMatched()) {
                 Toast.makeText(context, "YOU WIN", Toast.LENGTH_SHORT).show();
                 mContext.deleteFile(MatchingStartingActivity.TEMP_SAVE_FILENAME);
@@ -45,7 +48,7 @@ public class MovementController {
 //                        .show();
             }
         } else {
-            Toast.makeText(context, "Invalid Tap", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "Invalid Tap", Toast.LENGTH_SHORT).show();
         }
 
     }

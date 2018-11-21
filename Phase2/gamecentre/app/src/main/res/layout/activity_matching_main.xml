@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MemoryMatchingPics.MatchingMainActivity">
 
-    <csc207project.gamecentre.SlidingTiles.GestureDetectGridView
+    <csc207project.gamecentre.MemoryMatchingPics.GestureDetectGridView
         android:id="@+id/grid1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,8 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="162dp"
-        android:layout_marginTop="520dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="630dp"
         tools:layout_editor_absoluteX="168dp"
         tools:layout_editor_absoluteY="509dp" />
 </RelativeLayout>

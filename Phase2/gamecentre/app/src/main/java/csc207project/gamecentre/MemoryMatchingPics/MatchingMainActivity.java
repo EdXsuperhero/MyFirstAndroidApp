@@ -21,6 +21,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import csc207project.gamecentre.R;
+
 public class MatchingMainActivity extends AppCompatActivity implements Observer{
 
     /**
@@ -84,7 +85,7 @@ public class MatchingMainActivity extends AppCompatActivity implements Observer{
         startTimer();
 
         // Add View to activity
-        gridView = findViewById(R.id.grid);
+        gridView = findViewById(R.id.grid1);
         gridView.setNumColumns(this.boardManager.getBoard().getWidth());
         gridView.setBoardManager(boardManager);
         boardManager.getBoard().addObserver(this);
