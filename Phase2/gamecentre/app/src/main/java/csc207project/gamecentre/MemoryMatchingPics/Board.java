@@ -66,49 +66,79 @@ public class Board extends Observable implements Serializable, Cloneable{
         }
     }
 
-    void flipCard(int row, int col){
+    void flipCard(int row, int col) {
         Card cardOne = cards[row][col];
-        if (cardStack.isEmpty()){
-            cardOne.setBackground(cardOne.getBackside());
-            cardStack.push(cardOne);
+        if (cardStack.size() == 2){
+            cardStack.pop().setBackground(R.drawable.tile_0);
+            cardStack.pop().setBackground(R.drawable.tile_0);
             updateObsevers();
+        }
 
-        }else{
-            Card cardTwo = cardStack.pop();
-            if (cardOne.getId() == cardTwo.getId()){
-                cardOne.setBackground(R.drawable.tile_0);
-                updateObsevers();
-            }else{
-                cardOne.setBackground(cardOne.getBackside());
-                updateObsevers();
-                //Timer timer = new Timer();
-                if (cardOne.getBackside() == cardTwo.getBackside()){
-
-                    this.matched++;
-                    cardOne.setBackground(R.drawable.tile_3);
-                    cardTwo.setBackground(R.drawable.tile_3);
+        else if (cardOne.getFlipable() == true) {
+                if (cardStack.isEmpty()) {
+                    cardOne.setBackground(cardOne.getBackside());
+                    cardStack.push(cardOne);
                     updateObsevers();
+
+                } else {
+                    Card cardTwo = cardStack.pop();
+                    if(cardOne.getId() == cardTwo.getId()) {
+                        cardOne.setBackground(R.drawable.tile_0);
+                        updateObsevers();
+                    } else {
+                        if (cardOne.getnum() == cardTwo.getnum()) {
+                            cardOne.setBackground(cardTwo.getBackground());
+                            cardOne.setFlipable(false);
+                            cardTwo.setFlipable(false);
+                            this.matched += 2;
+                            updateObsevers();
+                        }
+                        else {
+                            cardOne.setBackground(cardOne.getBackside());
+                            updateObsevers();
+                            cardStack.push(cardOne);
+                            cardStack.push(cardTwo);
+
+                            // if you want to use timer
+                            //TODO:Something magical happens(timer), execute the following two lines after 1.5 seconds
+                            //cardOne.setBackground(R.drawable.tile_0);
+                            //cardTwo.setBackground(R.drawable.tile_0);
+
+                        }
+                    }//else {
+                    //cardOne.setBackground(cardOne.getBackside());
+                    //updateObsevers();
+                    //Timer timer = new Timer();
+                    //if (cardOne.getId() == cardTwo.getId()) {
+
+                    //this.matched++;
+                    //cardOne.setBackground(R.drawable.tile_3);
+                    //cardTwo.setBackground(R.drawable.tile_3);
+                    //updateObsevers();
 //                    TimerTask timerTask = new FlipFinish(this);
 //                    timer.schedule(timerTask, 1500);//delay 1.5 seconds.
-                }else{
-                    cardOne.setBackground(R.drawable.tile_0);
-                    cardTwo.setBackground(R.drawable.tile_0);
-                    updateObsevers();
+                    //} else {
+                    //cardOne.setBackground(R.drawable.tile_0);
+                    //cardTwo.setBackground(R.drawable.tile_0);
+                    //updateObsevers();
 //                    TimerTask timerTask = new FlipBack(this);
 //                    timer.schedule(timerTask, 1500);//delay 1.5 seconds.
+                    //}
+
+                    //}
                 }
 
             }
         }
 
-    }
 
 
-//    /**
-//     * flip back the cards.
-//     */
-//    void flipCardBack(){
-//        cardOne.setBackground(R.drawable.tile_0);
+/**
+* flip back the cards.
+  */
+//void flipCardBack(){
+    //cardOne.setBackground(R.drawable.tile_0);
+//}
 //        cardTwo.setBackground(R.drawable.tile_0);
 //    }
 //
@@ -210,17 +240,17 @@ public class Board extends Observable implements Serializable, Cloneable{
 // * A TimerTask to flip back the card to white state.
 // */
 //class FlipBack extends TimerTask {
-//
-//    private Board b;
-//
-//    public FlipBack(Board b){
-//        this.b = b;
-//    }
-//
-//    @Override
-//    public void run() {
-//        this.b.flipCardBack();
-//    }
+
+    //private Board b;
+
+  //public FlipBack(Board b){
+      // this.b = b;
+   //}
+
+  //@Override
+    //public void run() {
+       //this.b.flipCardBack();
+   //}
 //}
 //
 ///**
