@@ -38,10 +38,10 @@ public class BoardManager implements Serializable {
         List<Card> cards = new ArrayList<>();
         final int numTiles = (int) Math.pow(width,2);
         for (int tileNum = 0; tileNum < numTiles/2; tileNum++){
-            cards.add(new Card(tileNum));
+            cards.add(new Card(tileNum, tileNum));
         }
         for (int tileNum = 0; tileNum < numTiles/2; tileNum++){
-            cards.add(new Card(tileNum));
+            cards.add(new Card(tileNum + 8, tileNum));
         }
         Collections.shuffle(cards);
         this.board = new Board(width, cards);
