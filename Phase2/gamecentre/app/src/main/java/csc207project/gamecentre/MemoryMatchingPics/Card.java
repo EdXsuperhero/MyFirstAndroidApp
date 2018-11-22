@@ -27,6 +27,33 @@ public class Card implements Comparable<Card>, Serializable {
     private int id;
 
     /**
+     *  If the card has been matched successfully
+     */
+    private boolean flipable = true;
+
+    /**
+     *  return if the card if flipable
+     * @return flipable
+     */
+    public boolean getFlipable(){return flipable;}
+
+    /**
+     *  change the status of if the card if flipable
+     */
+    public void setFlipable(boolean matched){this.flipable = matched;}
+
+    /**
+     * the number on the back of the card
+     */
+    private int num;
+
+    /**
+     * return the number on the back of the card
+     * @return num
+     * */
+    public int getnum(){return num;}
+
+    /**
      * Return the background id.
      *
      * @return the background id
@@ -62,21 +89,23 @@ public class Card implements Comparable<Card>, Serializable {
      * @param id         the id
      * @param background the background
      */
-    public Card(int id, int background) {
-        this.id = id;
-        this.background = background;
-    }
+    //public Card(int id, int background) {
+        //this.id = id;
+        //this.background = background;
+    //}
 
     /**
      * A tile with a background id; look up and set the id.
      *
      * @param id the id
+     * @param num the number on the back of the card
      */
-    public Card(int id) {
+    public Card(int id, int num) {
         this.id = id;
+        this.num = num;
         // This looks so ugly.
         // True, but I don't know how to fix it, ha ha ha. : )
-        switch (this.id) {
+        switch (num) {
             case 0:
                 this.backside = R.drawable.tile_1;
                 break;
