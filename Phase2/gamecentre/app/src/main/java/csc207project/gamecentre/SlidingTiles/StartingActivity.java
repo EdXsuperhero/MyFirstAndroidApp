@@ -212,16 +212,7 @@ public class StartingActivity extends AppCompatActivity {
         }
     }
 
-    private void set24GameListener() {
-        Button game24 = findViewById(R.id.game24);
-        game24.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent numberGame = new Intent(StartingActivity.this,game24Activity.class);
-                startActivity(numberGame);
-            }
-        });
-    }
+
 }
 
 

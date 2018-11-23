@@ -28,7 +28,6 @@ public class ChangeString {
     }
 
 
-
     public ArrayList<String> getPostOrder(ArrayList<String> inOrderList){
 
         ArrayList<String> result = new ArrayList<String>();
@@ -92,7 +91,6 @@ public class ChangeString {
     }
 
 
-
     public static boolean compare(String peek, String cur){
         if("*".equals(peek) && ("/".equals(cur) || "*".equals(cur) ||"+".equals(cur) ||"-".equals(cur))){
             return true;
@@ -117,4 +115,4 @@ public class ChangeString {
 
 
 
-}
+

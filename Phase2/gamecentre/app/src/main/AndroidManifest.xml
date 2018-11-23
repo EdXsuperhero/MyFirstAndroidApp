@@ -20,7 +20,6 @@
         <activity android:name=".SlidingTiles.StartingActivity" />
          <activity android:name=".SlidingTiles.ChooseComplexity" />
          <activity android:name=".SlidingTiles.ScoreBoardActivity" />
-        <activity android:name=".GoFor24.game24Activity"/>
     </application>
 
 </manifest>
