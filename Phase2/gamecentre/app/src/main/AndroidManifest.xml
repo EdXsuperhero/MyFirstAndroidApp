@@ -19,7 +19,8 @@
         <activity android:name=".SlidingTiles.GameActivity" />
         <activity android:name=".SlidingTiles.StartingActivity" />
         <activity android:name=".SlidingTiles.ChooseComplexity" />
-        <activity android:name=".SlidingTiles.ScoreBoardActivity"></activity>
+        <activity android:name=".SlidingTiles.ScoreBoardActivity" />
+        <activity android:name=".game24Activity"></activity>
     </application>
 
 </manifest>

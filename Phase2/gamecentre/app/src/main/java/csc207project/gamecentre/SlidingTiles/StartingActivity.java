@@ -17,6 +17,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import csc207project.gamecentre.R;
+import csc207project.gamecentre.game24Activity;
 
 /**
  * The initial activity for the sliding puzzle tile game.
@@ -45,6 +46,7 @@ public class StartingActivity extends AppCompatActivity {
         addStartButtonListener();
         addLoadButtonListener();
         addSaveButtonListener();
+        set24GameListener();
     }
 
     /**
@@ -207,5 +209,13 @@ public class StartingActivity extends AppCompatActivity {
         } catch (IOException e) {
             Log.e("SlidingTiles", "File write failed: " + e.toString());
         }
+    }
+
+    private void set24GameListener(){
+        Button game24 = findViewById(R.id.game24);
+        game24.setOnClickListener((v)->{
+            Intent numbergame = new Intent(this, game24Activity.class);
+            startActivity(numbergame);
+        });
     }
 }
