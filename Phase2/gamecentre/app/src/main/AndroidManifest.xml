@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".MemoryMatchingPics.MatchingStartingActivity">
+        <activity android:name=".MainMenu.MainMenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,8 +20,10 @@
         <activity android:name=".SlidingTiles.StartingActivity" />
         <activity android:name=".SlidingTiles.ChooseComplexity" />
         <activity android:name=".SlidingTiles.ScoreBoardActivity" />
+	<activity android:name=".MemoryMatchingPics.MatchingStartingActivity">
         <activity android:name=".MemoryMatchingPics.MatchingMainActivity" />
         <activity android:name=".MemoryMatchingPics.ChooseComplex" />
+        <activity android:name=".game24Activity"></activity>
     </application>
 
 </manifest>
