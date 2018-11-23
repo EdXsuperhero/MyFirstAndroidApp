@@ -40,14 +40,5 @@
         android:layout_toEndOf="@+id/StartButton"
         android:text="Save Game" />
 
-    <Button
-        android:id="@+id/game24"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="43dp"
-        android:text="24Game" />
 
 </RelativeLayout>

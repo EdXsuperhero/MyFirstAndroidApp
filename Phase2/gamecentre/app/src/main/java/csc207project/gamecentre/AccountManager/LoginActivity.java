@@ -16,6 +16,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
+
 import csc207project.gamecentre.R;
 import csc207project.gamecentre.SlidingTiles.StartingActivity;
 
@@ -184,4 +185,6 @@ public class LoginActivity extends AppCompatActivity {
     public static String getCurrentUser() {
         return currentUser;
     }
+
+
 }
