@@ -178,6 +178,9 @@ public class game24Activity extends AppCompatActivity {
                 btnMultiply.setClickable(false);
                 btnDivide.setClickable(false);
 
+                String finalResult = getFinalResult(inputString);
+                editText.setText(finalResult);
+
             }
         });
 
@@ -187,6 +190,32 @@ public class game24Activity extends AppCompatActivity {
 
 
     }
+
+    public String getFinalResult(String str){
+        int re = judgeTransferable(str);
+        if(re == 0){
+            return "Ooop! Computer cannot do this math!";
+        }else{
+            String result = String.valueOf(re);
+            return result;
+        }
+
+    }
+
+    public int judgeTransferable(String s){
+        int i = 0;
+        try{
+            ChangeString changeString = new ChangeString();
+            ArrayList result = changeString.getStringList(s);
+            result = changeString.getPostOrder(result);
+            i = changeString.calculate(result);
+        }catch (Exception e){
+            System.out.println("invalid message");
+
+        }
+        return i;
+    }
+
 
 
     private void setImage(ImageView imageView, int num) {
