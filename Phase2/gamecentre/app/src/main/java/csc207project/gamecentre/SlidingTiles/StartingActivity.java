@@ -16,8 +16,8 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import csc207project.gamecentre.GoFor24.game24Activity;
 import csc207project.gamecentre.R;
-import csc207project.gamecentre.game24Activity;
 
 /**
  * The initial activity for the sliding puzzle tile game.
@@ -46,7 +46,7 @@ public class StartingActivity extends AppCompatActivity {
         addStartButtonListener();
         addLoadButtonListener();
         addSaveButtonListener();
-        set24GameListener();
+
     }
 
     /**
@@ -93,8 +93,8 @@ public class StartingActivity extends AppCompatActivity {
 
         String[] filesLists = this.fileList();
         boolean exists = false;
-        for (String file: filesLists) {
-            if (file.equals(TEMP_SAVE_FILENAME)){
+        for (String file : filesLists) {
+            if (file.equals(TEMP_SAVE_FILENAME)) {
                 exists = true;
             }
         }
@@ -145,7 +145,7 @@ public class StartingActivity extends AppCompatActivity {
                 saveToFile(TEMP_SAVE_FILENAME);
                 makeToastSavedText();
             }
-            });
+        });
     }
 
     /**
@@ -154,6 +154,7 @@ public class StartingActivity extends AppCompatActivity {
     private void makeToastSavedText() {
         Toast.makeText(this, "Game Saved", Toast.LENGTH_SHORT).show();
     }
+
     /**
      * Read the temporary board from disk.
      */
@@ -211,11 +212,16 @@ public class StartingActivity extends AppCompatActivity {
         }
     }
 
-    private void set24GameListener(){
+    private void set24GameListener() {
         Button game24 = findViewById(R.id.game24);
-        game24.setOnClickListener((v)->{
-            Intent numbergame = new Intent(this, game24Activity.class);
-            startActivity(numbergame);
+        game24.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent numberGame = new Intent(StartingActivity.this,game24Activity.class);
+                startActivity(numberGame);
+            }
         });
     }
 }
+
+

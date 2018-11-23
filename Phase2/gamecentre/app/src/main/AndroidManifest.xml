@@ -14,7 +14,7 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+          </intent-filter>
         </activity>
         <activity android:name=".SlidingTiles.GameActivity" />
         <activity android:name=".SlidingTiles.StartingActivity" />
@@ -23,7 +23,7 @@
 	<activity android:name=".MemoryMatchingPics.MatchingStartingActivity">
         <activity android:name=".MemoryMatchingPics.MatchingMainActivity" />
         <activity android:name=".MemoryMatchingPics.ChooseComplex" />
-        <activity android:name=".game24Activity"></activity>
+        <activity android:name=".GoFor24.game24Activity"/>
     </application>
 
 </manifest>

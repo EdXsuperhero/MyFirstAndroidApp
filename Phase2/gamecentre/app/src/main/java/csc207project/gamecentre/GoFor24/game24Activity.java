@@ -1,4 +1,4 @@
-package csc207project.gamecentre;
+package csc207project.gamecentre.GoFor24;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.Random;
 
+import csc207project.gamecentre.R;
+
 public class game24Activity extends AppCompatActivity {
 
     Random random = new Random();
@@ -18,13 +20,6 @@ public class game24Activity extends AppCompatActivity {
     int a2 = random.nextInt(9) + 1;
     int a3 = random.nextInt(9) + 1;
     int a4 = random.nextInt(9) + 1;
-
-    ImageView imageView1 = null;
-    ImageView imageView2 = null;
-    ImageView imageView3 = null;
-    ImageView imageView4 = null;
-
-    EditText editText = null;
 
     String inputString = "";
 
@@ -35,16 +30,14 @@ public class game24Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game24);
 
-        setimageView1Listener();
-
         final Button StartButton = findViewById(R.id.startBtn);
-        editText = findViewById(R.id.inputText);
+        final EditText editText = findViewById(R.id.inputText);
         final Button Comfirm = findViewById(R.id.btnComfirm);
 
-        imageView1 = findViewById(R.id.imageView1);
-        imageView2 = findViewById(R.id.imageView2);
-        imageView3 = findViewById(R.id.imageView3);
-        imageView4 = findViewById(R.id.imageView4);
+        final ImageView imageView1 = findViewById(R.id.imageView1);
+        final ImageView imageView2 = findViewById(R.id.imageView2);
+        final ImageView imageView3 = findViewById(R.id.imageView3);
+        final ImageView imageView4 = findViewById(R.id.imageView4);
 
         final ImageView btnLeft = findViewById(R.id.btnLeft);
         final ImageView btnRight = findViewById(R.id.btnRight);
@@ -88,6 +81,14 @@ public class game24Activity extends AppCompatActivity {
             }
         });
 
+        imageView1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageView1.setClickable(false);
+                inputString += a1;
+                editText.setText(inputString);
+            }
+        });
 
         imageView2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,17 +183,9 @@ public class game24Activity extends AppCompatActivity {
 
 
 
-    }
 
-    private void setimageView1Listener(){
-        imageView1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                imageView1.setClickable(false);
-                inputString += a1;
-                editText.setText(inputString);
-            }
-        });
+
+
     }
 
 
@@ -231,4 +224,6 @@ public class game24Activity extends AppCompatActivity {
         }
 
     }
+
+
 }
