@@ -19,6 +19,7 @@ import java.io.ObjectOutputStream;
 import csc207project.gamecentre.GoFor24.game24Activity;
 import csc207project.gamecentre.R;
 
+
 /**
  * The initial activity for the sliding puzzle tile game.
  */
@@ -46,7 +47,20 @@ public class StartingActivity extends AppCompatActivity {
         addStartButtonListener();
         addLoadButtonListener();
         addSaveButtonListener();
+        add24PointsButtonListener();
 
+    }
+    private void add24PointsButtonListener(){
+        Button btn24Points = findViewById(R.id.btn24Points);
+        btn24Points.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent tmp;
+                tmp = new Intent(getApplicationContext(), game24Activity.class);
+                startActivity(tmp);
+
+            }
+        });
     }
 
     /**
