@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import csc207project.gamecentre.GoFor24.game24Activity;
 import csc207project.gamecentre.R;
 
 /**
@@ -45,6 +46,7 @@ public class StartingActivity extends AppCompatActivity {
         addStartButtonListener();
         addLoadButtonListener();
         addSaveButtonListener();
+
     }
 
     /**
@@ -91,8 +93,8 @@ public class StartingActivity extends AppCompatActivity {
 
         String[] filesLists = this.fileList();
         boolean exists = false;
-        for (String file: filesLists) {
-            if (file.equals(TEMP_SAVE_FILENAME)){
+        for (String file : filesLists) {
+            if (file.equals(TEMP_SAVE_FILENAME)) {
                 exists = true;
             }
         }
@@ -143,7 +145,7 @@ public class StartingActivity extends AppCompatActivity {
                 saveToFile(TEMP_SAVE_FILENAME);
                 makeToastSavedText();
             }
-            });
+        });
     }
 
     /**
@@ -152,6 +154,7 @@ public class StartingActivity extends AppCompatActivity {
     private void makeToastSavedText() {
         Toast.makeText(this, "Game Saved", Toast.LENGTH_SHORT).show();
     }
+
     /**
      * Read the temporary board from disk.
      */
@@ -208,4 +211,8 @@ public class StartingActivity extends AppCompatActivity {
             Log.e("SlidingTiles", "File write failed: " + e.toString());
         }
     }
+
+
 }
+
+
