@@ -1,35 +1,35 @@
-package csc207project.gamecentre.AccountManager;
+package csc207project.gamecentre.UserManager;
 
 import java.io.Serializable;
 import java.util.HashMap;
 
 /**
- * Manage a users list with username and password.
+ * Manage a users list with username and user instance.
  */
-class UserManager implements Serializable {
+public class UserManager implements Serializable {
 
     /**
-     * A HashMap storing usernames and passwords.
+     * A HashMap storing usernames and user instances.
      */
-    private HashMap<String, String> users = new HashMap<>();
+    private HashMap<String, User> users = new HashMap<>();
 
     /**
      * Sign up a new user.
-     * Notice: After signed up, you will be automatically signed in.
      *
      * @param username the username to be signed up
      * @param password the password to be signed up
      * @return a string indicates current login status
      */
-    String signUp(String username, String password) {
+    public String signUp(String username, String password) {
 
         String returnText;
 
         if (isStoredUser(username)) {
             returnText = "Username Exists!";
         } else {
-            this.users.put(username, password);
-            returnText = signIn(username, password) + " Sign Up Successful!";
+            User user = new User(username, password);
+            this.users.put(username, user);
+            returnText = "Sign Up Successful, " + username + "! Please Sign In.";
         }
 
         return returnText;
@@ -42,12 +42,13 @@ class UserManager implements Serializable {
      * @param password the password to be signed in
      * @return a string indicates current login status
      */
-    String signIn(String username, String password) {
+    public String signIn(String username, String password) {
 
         String returnText;
 
         if (isStoredUser(username)) {
-            if (this.users.get(username).equals(password)) {
+            User user = this.users.get(username);
+            if (user.getPassword().equals(password)) {
                 returnText = "Welcome, " + username + "!";
             } else {
                 returnText = "Wrong Password!";
