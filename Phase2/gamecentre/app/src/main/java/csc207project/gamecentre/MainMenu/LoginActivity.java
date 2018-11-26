@@ -1,4 +1,4 @@
-package csc207project.gamecentre.AccountManager;
+package csc207project.gamecentre.MainMenu;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +19,7 @@ import java.io.OutputStream;
 import csc207project.gamecentre.R;
 import csc207project.gamecentre.SlidingTiles.StartingActivity;
 import csc207project.gamecentre.MemoryMatchingPics.MatchingMainActivity;
+import csc207project.gamecentre.UserManager.UserManager;
 
 
 /**
@@ -66,10 +67,9 @@ public class LoginActivity extends AppCompatActivity {
                 String password = getPasswordTextListener();
                 String returnText = userManager.signUp(username, password);
                 makeToastLoadedText(returnText);
-                if (returnText.startsWith("Welcome")) {
+                if (returnText.startsWith("Sign")) {
                     saveToFile(SAVE_USER_FILENAME);
                     currentUser = username;
-                    switchToStart();
                 }
             }
         });
