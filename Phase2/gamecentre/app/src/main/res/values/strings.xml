@@ -5,4 +5,6 @@
     <string name="navigate_game_lib">Game Library</string>
     <string name="navigate_user">Me</string>
 
+    <string name="slidingtiles">Sliding Tiles</string>
+    <string name="slidingtilesdes">A Puzzle Game where you must arrange the numbers in the correct order.</string>
 </resources>
