@@ -1,6 +1,6 @@
 package csc207project.gamecentre.MainMenu;
 
-import android.content.Context;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import csc207project.gamecentre.MainMenu.GameLibFragment.GameLibFragment;
 import csc207project.gamecentre.R;
 
 /**
@@ -17,14 +18,20 @@ import csc207project.gamecentre.R;
 public class MainMenuActivity extends AppCompatActivity {
 
     /**
-     * Set Context
+     * The FragmentTransaction that manages fragments.
      */
-    private Context mContext = this;
+    private FragmentTransaction mFragmentTransaction;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+
+        this.mFragmentTransaction = getFragmentManager().beginTransaction();
+
+        GameLibFragment fragment = new GameLibFragment();
+        this.mFragmentTransaction.add(R.id.MainMenuActivity, fragment);
+        this.mFragmentTransaction.commit();
 
         addBottomNavigationViewListener();
     }
@@ -40,6 +47,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.navigate_game_lib:
                         setNavigationTitle(R.string.navigate_game_lib);
+                        replaceGameLibFragment();
                         return true;
                     case R.id.navigate_user:
                         setNavigationTitle(R.string.navigate_user);
@@ -59,5 +67,14 @@ public class MainMenuActivity extends AppCompatActivity {
     private void setNavigationTitle(int title) {
         TextView navigationTitle = findViewById(R.id.NavigationTitle);
         navigationTitle.setText(title);
+    }
+
+    /**
+     * Replace the current fragment to GameLibFragment.
+     */
+    private void replaceGameLibFragment() {
+        GameLibFragment fragment = new GameLibFragment();
+        this.mFragmentTransaction.replace(R.id.MainMenuActivity, fragment);
+        this.mFragmentTransaction.commit();
     }
 }
