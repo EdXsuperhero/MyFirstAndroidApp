@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 27
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "csc207project.gamecentre"
         minSdkVersion 27
@@ -10,13 +11,20 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    sourceSets {
+        main {
+            res.srcDirs = [
+                    'src/main/res/layout/MainMenu',
+                    'src/main/res'
+            ]
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    buildToolsVersion '28.0.3'
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
