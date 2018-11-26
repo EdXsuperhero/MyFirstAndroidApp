@@ -8,4 +8,7 @@
     <string name="start_game">Start Game</string>
     <string name="save_game">Save game</string>
     <string name="load_game">Load Game</string>
+    <string name="empty" />
+    <string name="navigate_game_lib">Game Library</string>
+    <string name="navigate_user">Me</string>
 </resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigate_game_lib"
+        android:icon="@drawable/ic_game_lib"
+        android:title="@string/navigate_game_lib" />
+
+    <item
+        android:id="@+id/navigate_user"
+        android:icon="@drawable/ic_user"
+        android:title="@string/navigate_user" />
+
+</menu>
