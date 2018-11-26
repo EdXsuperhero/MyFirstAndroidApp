@@ -21,6 +21,7 @@ public class game24Activity extends AppCompatActivity {
     int a3 = random.nextInt(9) + 1;
     int a4 = random.nextInt(9) + 1;
 
+
     String inputString = "";
 
     ArrayList<String> undo;
@@ -32,7 +33,11 @@ public class game24Activity extends AppCompatActivity {
 
         final Button StartButton = findViewById(R.id.startBtn);
         final EditText editText = findViewById(R.id.inputText);
-        final Button Comfirm = findViewById(R.id.btnComfirm);
+        editText.setEnabled(false);
+        editText.setFocusable(false);
+        editText.setInputType(0);
+        Button btnComfirm = findViewById(R.id.btnComfirm);
+        btnComfirm.setEnabled(false);
 
         final ImageView imageView1 = findViewById(R.id.imageView1);
         final ImageView imageView2 = findViewById(R.id.imageView2);
@@ -54,6 +59,12 @@ public class game24Activity extends AppCompatActivity {
         StartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //enable confirm
+                btnComfirm.setEnabled(true);
+                editText.setText("");
+                //enable editText after StartButton is clicked
+                editText.setEnabled(true);
+                editText.setFocusable(true);
 
 
                 //Set StartButton unclickable
@@ -78,6 +89,8 @@ public class game24Activity extends AppCompatActivity {
                 btnMinus.setClickable(true);
                 btnMultiply.setClickable(true);
                 btnDivide.setClickable(true);
+
+                inputString = "";
             }
         });
 
@@ -165,7 +178,7 @@ public class game24Activity extends AppCompatActivity {
             }
         });
 
-        Comfirm.setOnClickListener(new View.OnClickListener() {
+        btnComfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -183,10 +196,6 @@ public class game24Activity extends AppCompatActivity {
 
             }
         });
-
-
-
-
 
 
     }
