@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import csc207project.gamecentre.GoFor24.game24Activity;
 import csc207project.gamecentre.R;
 import csc207project.gamecentre.SlidingTiles.StartingActivity;
 
@@ -63,7 +64,15 @@ public class GameLibFragment extends Fragment {
      */
     private void createListData() {
         this.games.add(
-                new Game(R.string.sliding_tiles, R.string.sliding_tiles_des, StartingActivity.class));
+                new Game(R.string.sliding_tiles,
+                        R.string.sliding_tiles_des,
+                        StartingActivity.class)
+        );
+        this.games.add(
+                new Game(R.string.twenty_four_game,
+                        R.string.twenty_four_game_des,
+                        game24Activity.class)
+        );
     }
 
 }
