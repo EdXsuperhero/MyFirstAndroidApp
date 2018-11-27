@@ -65,12 +65,14 @@ public class GameLibFragment extends Fragment {
      */
     private void createListData() {
         this.games.add(
-                new Game(R.string.sliding_tiles,
+                new Game(R.drawable.sliding_tiles_screenshot,
+                        R.string.sliding_tiles,
                         R.string.sliding_tiles_des,
                         StartingActivity.class)
         );
         this.games.add(
-                new Game(R.string.twenty_four_game,
+                new Game(R.drawable.twenty_four_game_screenshot,
+                        R.string.twenty_four_game,
                         R.string.twenty_four_game_des,
                         game24Activity.class)
         );

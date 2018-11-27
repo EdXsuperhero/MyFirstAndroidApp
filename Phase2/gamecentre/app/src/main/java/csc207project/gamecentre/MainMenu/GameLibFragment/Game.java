@@ -7,6 +7,11 @@ package csc207project.gamecentre.MainMenu.GameLibFragment;
 public class Game {
 
     /**
+     * The image view of this game.
+     */
+    private int gameImage;
+
+    /**
      * The name of this game.
      */
     private int gameName;
@@ -24,14 +29,23 @@ public class Game {
     /**
      * A new game with given name, description and starting activity.
      *
+     * @param gameImage the image view of this game
      * @param gameName the name of this game
      * @param gameDescription the description of this game
      * @param startGameClass the starting activity of this game
      */
-    public Game(int gameName, int gameDescription, Class<?> startGameClass) {
+    public Game(int gameImage, int gameName, int gameDescription, Class<?> startGameClass) {
+        this.gameImage = gameImage;
         this.gameName = gameName;
         this.gameDescription = gameDescription;
         this.startGameClass = startGameClass;
+    }
+
+    /**
+     * @return the image view of this game
+     */
+    public int getGameImage() {
+        return gameImage;
     }
 
     /**

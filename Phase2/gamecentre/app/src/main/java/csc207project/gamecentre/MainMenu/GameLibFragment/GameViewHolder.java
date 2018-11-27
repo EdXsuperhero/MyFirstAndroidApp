@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import csc207project.gamecentre.R;
@@ -24,6 +25,11 @@ public class GameViewHolder extends RecyclerView.ViewHolder {
     private Context mContext;
 
     /**
+     * ImageView for showing the game's screenshot.
+     */
+    ImageView gameImage;
+
+    /**
      * TextView for showing the game's name and description.
      */
     private TextView gameName, gameDescription, gameStarter;
@@ -36,6 +42,7 @@ public class GameViewHolder extends RecyclerView.ViewHolder {
     public GameViewHolder(View itemView) {
         super(itemView);
         this.mContext = itemView.getContext();
+        this.gameImage = itemView.findViewById(R.id.GameImage);
         this.gameName = itemView.findViewById(R.id.GameName);
         this.gameDescription = itemView.findViewById(R.id.GameDescription);
         this.gameStarter = itemView.findViewById(R.id.GameStarter);
@@ -47,6 +54,7 @@ public class GameViewHolder extends RecyclerView.ViewHolder {
      * @param game the game to set
      */
     public void setView(Game game) {
+        this.gameImage.setImageResource(game.getGameImage());
         this.gameName.setText(game.getGameName());
         this.gameDescription.setText(game.getGameDescription());
         this.gameStarter.setOnClickListener(new View.OnClickListener() {
