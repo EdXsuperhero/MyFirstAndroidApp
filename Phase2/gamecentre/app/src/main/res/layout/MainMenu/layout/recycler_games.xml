@@ -14,10 +14,10 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/GameImage"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            card_view:srcCompat="@color/cardview_dark_background" />
+            android:layout_height="300dp"
+            android:scaleType="centerInside"/>
 
         <TextView
             android:id="@+id/GameName"
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="20dp"
-            android:layout_alignStart="@id/imageView"
+            android:layout_alignParentStart="true"
             android:layout_marginStart="15dp"
             android:text="@string/start_game"
             android:textStyle="bold"/>
