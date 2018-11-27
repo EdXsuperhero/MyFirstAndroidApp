@@ -33,7 +33,17 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/GameName"
             android:layout_marginTop="40dp"
-            android:layout_alignStart="@id/GameName"/>
+            android:layout_alignStart="@id/imageView"/>
+
+        <TextView
+            android:id="@+id/GameStarter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/GameDescription"
+            android:layout_marginTop="40dp"
+            android:layout_alignStart="@id/imageView"
+            android:layout_marginStart="15dp"
+            android:text="@string/start_game"/>
 
 
     </RelativeLayout>

@@ -63,7 +63,7 @@ public class GameLibFragment extends Fragment {
      */
     private void createListData() {
         this.games.add(
-                new Game(R.string.slidingtiles, R.string.slidingtilesdes, StartingActivity.class));
+                new Game(R.string.sliding_tiles, R.string.sliding_tiles_des, StartingActivity.class));
     }
 
 }
