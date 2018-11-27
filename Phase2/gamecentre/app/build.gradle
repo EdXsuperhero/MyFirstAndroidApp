@@ -17,6 +17,7 @@ android {
                     'src/main/res/layout/MainMenu',
                     'src/main/res/drawable/MainMenu',
                     'src/main/res/drawable/SlidingTiles',
+                    'src/main/res/drawable/24Game',
                     'src/main/res'
             ]
         }
