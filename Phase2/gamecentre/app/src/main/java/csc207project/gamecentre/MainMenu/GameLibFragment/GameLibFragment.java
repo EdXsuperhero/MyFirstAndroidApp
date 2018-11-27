@@ -53,7 +53,8 @@ public class GameLibFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game_lib, container, false);
         RecyclerView gameRecycler = view.findViewById(R.id.GameRecyclerView);
-        gameRecycler.setLayoutManager(new LinearLayoutManager(this.mContext));
+        gameRecycler.setLayoutManager(new LinearLayoutManager(this.mContext,
+                LinearLayoutManager.HORIZONTAL, false));
         gameRecycler.setAdapter(new GameRecyclerAdapter(this.games));
         createListData();
         return view;
