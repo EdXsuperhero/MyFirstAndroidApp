@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import csc207project.gamecentre.R;
-import csc207project.gamecentre.MainMenu.LoginActivity;
+import csc207project.gamecentre.MainMenu.LoginFragment.LoginActivity;
 
 /**
  * The scoreboard activity for sliding tiles.

@@ -7,6 +7,14 @@
     <string name="matching_game">Matching Game</string>
     <string name="save_game">Save game</string>
     <string name="load_game">Load Game</string>
+
+    <string name="username_input">Username</string>
+    <string name="password_input">Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_in_hint">Please sign in if you have an account.</string>
+    <string name="sign_up_hint">Please sign up if you don\'t.</string>
+
     <string name="empty" />
     <string name="navigate_game_lib">Game Library</string>
     <string name="navigate_user">Me</string>
