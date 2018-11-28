@@ -1,19 +1,47 @@
 package csc207project.gamecentre.GoFor24;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Random;
 
 import csc207project.gamecentre.R;
+import csc207project.gamecentre.filemanagement.FileManagerSingleton;
 
-public class game24Activity extends AppCompatActivity {
+/**
+ * The idea of chronometer is cited from https://codinginflow.com/tutorials/android/chronometer
+ * Disabling the phone keyboard when the game st arts citation:
+ * https://stackoverflow.com/questions/46024100/how-to-completely-disable-keyboard-when-using-edittext-in-android
+ */
+public class game24Activity extends AppCompatActivity implements Serializable, Observer {
 
     Random random = new Random();
     int a1 = random.nextInt(9) + 1;
@@ -21,13 +49,37 @@ public class game24Activity extends AppCompatActivity {
     int a3 = random.nextInt(9) + 1;
     int a4 = random.nextInt(9) + 1;
 
+    ImageView imageView1 = null;
+    ImageView imageView2 = null;
+    ImageView imageView3 = null;
+    ImageView imageView4 = null;
 
     String inputString = "";
 
-    ArrayList<String> undo;
+
+    /**
+     * A Chronometer to calculate time.
+     */
+    private Chronometer chronometer;
+
+    /**
+     * The duration of the timer
+     */
+    private long pauseOffset;
+
+    /**
+     * The attribute to check if is running or not
+     */
+    private boolean running;
+
+    /**
+     * The file GAME24POINTS_FILE_NAME that store the strings.
+     */
+    public final static String GAME24POINTS_FILE_NAME = "game24.ser";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game24);
 
@@ -38,6 +90,8 @@ public class game24Activity extends AppCompatActivity {
         editText.setInputType(0);
         Button btnComfirm = findViewById(R.id.btnComfirm);
         btnComfirm.setEnabled(false);
+        final Button undo = findViewById(R.id.undoBtn);
+        final Button btnLoad = findViewById(R.id.btnLoad);
 
         final ImageView imageView1 = findViewById(R.id.imageView1);
         final ImageView imageView2 = findViewById(R.id.imageView2);
@@ -51,21 +105,28 @@ public class game24Activity extends AppCompatActivity {
         final ImageView btnMultiply = findViewById(R.id.btnMultiply);
         final ImageView btnDivide = findViewById(R.id.btnDivide);
 
+
         editText.setShowSoftInputOnFocus(false);
         editText.setInputType(InputType.TYPE_NULL);
         editText.setFocusable(false);
 
+        this.chronometer = findViewById(R.id.chronometer);
+        chronometer.setFormat("Time: %s");
+        chronometer.setBase(SystemClock.elapsedRealtime());
 
         StartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //enable chronometer
+                startChronometer();
+
                 //enable confirm
                 btnComfirm.setEnabled(true);
                 editText.setText("");
+
                 //enable editText after StartButton is clicked
                 editText.setEnabled(true);
                 editText.setFocusable(true);
-
 
                 //Set StartButton unclickable
                 StartButton.setClickable(false);
@@ -93,6 +154,56 @@ public class game24Activity extends AppCompatActivity {
                 inputString = "";
             }
         });
+
+        btnLoad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FileManagerSingleton fileManagerSingleton = new FileManagerSingleton();
+                fileManagerSingleton.loadFromFile(GAME24POINTS_FILE_NAME);
+                editText.setText(inputString);
+            }
+        });
+//        editText.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                FileManager fileManager = new FileManager();
+//                fileManager.saveToFile(GAME24POINTS_FILE_NAME, "username" + "," +
+//                        editText.getText().toString());
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//            }
+//        });
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(this);
+
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count)
+            {
+                prefs.edit().putString("autoSave", s.toString()).commit();
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after)
+            {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+            }
+        });
+
 
         imageView1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,6 +292,8 @@ public class game24Activity extends AppCompatActivity {
         btnComfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // disable chronometer
+                pauseChronometer();
 
                 StartButton.setClickable(false);
 
@@ -195,21 +308,69 @@ public class game24Activity extends AppCompatActivity {
                 editText.setText(finalResult);
 
             }
+
+            /**
+             * A method that pause the chronometer.
+             */
+            private void pauseChronometer() {
+                if (running) {
+                    chronometer.stop();
+                    pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
+                    running = false;
+                }
+            }
+        });
+
+
+        undo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (inputString.length() != 0) {
+//                    if(){
+                    //检查是否数字，恢复数字按钮的clickable
+//
+//                    }
+                    inputString = inputString.substring(0, inputString.length() - 1);
+                    editText.setText(inputString);
+
+                } else {
+                    editText.setText("No Step to Undo!");
+                }
+            }
+
         });
 
 
     }
 
-    public String getFinalResult(String str){
+    /**
+     * A method that enables the chronometer.
+     */
+    private void startChronometer() {
+        if (!running) {
+            chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+            chronometer.start();
+            running = true;
+        }
+    }
+
+//    public void resetChronometer(View v) {
+//        chronometer.setBase(SystemClock.elapsedRealtime());
+//        pauseOffset = 0;
+//    }
+
+
+    public String getFinalResult(String str) {
         int re = judgeTransferable(str);
-        if(re == 0){
+        if (re == 0) {
             return "Ooop! Computer cannot do this math!";
-        }else{
+        } else {
             String result = String.valueOf(re);
             return result;
         }
 
     }
+
 
     public int judgeTransferable(String s){
         int i = 0;
@@ -224,7 +385,6 @@ public class game24Activity extends AppCompatActivity {
         }
         return i;
     }
-
 
 
     private void setImage(ImageView imageView, int num) {
@@ -261,6 +421,16 @@ public class game24Activity extends AppCompatActivity {
                 break;
         }
 
+    }
+    @Override
+    public void update(Observable o, Object arg) {
+//        display();
+//        this.boardManager.pushToStack();
+//        this.boardManager.setDuration(SystemClock.elapsedRealtime() - this.timer.getBase());
+//        FileManager fileManager = new FileManager();
+//        fileManager.saveToFile(GAME24POINTS_FILE_NAME, inputString);
+        FileManagerSingleton fileManagerSingleton= new FileManagerSingleton();
+//        fileManagerSingleton.writeToFile(GAME24POINTS_FILE_NAME, inputString));
     }
 
 

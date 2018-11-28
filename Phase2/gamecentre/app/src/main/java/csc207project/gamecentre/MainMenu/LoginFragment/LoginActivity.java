@@ -17,6 +17,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
 
+import csc207project.gamecentre.GoFor24.game24Activity;
 import csc207project.gamecentre.R;
 import csc207project.gamecentre.SlidingTiles.StartingActivity;
 import csc207project.gamecentre.MemoryMatchingPics.MatchingMainActivity;
@@ -52,6 +53,20 @@ public class LoginActivity extends AppCompatActivity {
         addSignUpButtonListener();
         addSignInButtonListener();
     }
+//    // test method run to 24 point without MainMenus
+//    private void add24PointsButtonListener(){
+//        Button btntoGame24 = findViewById(R.id.btntoGame24);
+//        btntoGame24.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent tmp;
+//                tmp = new Intent(getApplicationContext(), game24Activity.class);
+//                startActivity(tmp);
+//
+//            }
+//        });
+//    }
+
 
     /**
      * Activate the sign up button.
@@ -132,8 +147,7 @@ public class LoginActivity extends AppCompatActivity {
      * Switch to StartActivity.
      */
     private void switchToStart() {
-        Intent startIntent = new Intent(this, MatchingMainActivity.class);//TODO:Switch to Matching Game;
-        startActivity(startIntent);
+        Intent startIntent = new Intent(this, game24Activity.class);
     }
 
     /**
