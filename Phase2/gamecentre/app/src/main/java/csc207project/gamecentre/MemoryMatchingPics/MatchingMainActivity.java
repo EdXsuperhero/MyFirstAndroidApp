@@ -55,7 +55,7 @@ public class MatchingMainActivity extends AppCompatActivity implements Observer{
      */
     // Display
     public void display() {
-        runOnUiThread(new Runnable() {
+        runOnUiThread(new Runnable(){
             @Override
             public void run() {
                 updateTileButtons();

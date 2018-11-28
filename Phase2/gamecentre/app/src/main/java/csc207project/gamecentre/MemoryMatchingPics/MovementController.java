@@ -21,14 +21,11 @@ public class MovementController {
 
     void processTapMovement(Context context, int position, boolean display){
         this.mContext = context;
-        if (boardManager.isValidTap(position)){
-            boardManager.touchMove(position);
-//            if (boardManager.matched(positoin)){
-//                Toast.makeText(context, "MATCHED", Toast.LENGTH_SHORT).show();
-//            }
-            if (boardManager.cardAllMatched()) {
-                Toast.makeText(context, "YOU WIN", Toast.LENGTH_SHORT).show();
-                mContext.deleteFile(MatchingStartingActivity.TEMP_SAVE_FILENAME);
+
+        boardManager.touchMove(position);
+        if (boardManager.cardAllMatched()) {
+            Toast.makeText(context, "YOU WIN", Toast.LENGTH_SHORT).show();
+            mContext.deleteFile(MatchingStartingActivity.TEMP_SAVE_FILENAME);
 //                long duration = boardManager.getDuration();
 //                String min = getUsedTime(duration)[0];
 //                String sec = getUsedTime(duration)[1];
@@ -46,14 +43,8 @@ public class MovementController {
 //                                    }
 //                                })
 //                        .show();
-            }
-        } else {
-            Toast.makeText(mContext, "Invalid Tap", Toast.LENGTH_SHORT).show();
         }
-
     }
-
-
 
     /**
      * Get the time in milliseconds to readable format.

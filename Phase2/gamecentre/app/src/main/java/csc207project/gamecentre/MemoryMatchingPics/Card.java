@@ -14,7 +14,7 @@ public class Card implements Comparable<Card>, Serializable {
     /**
      * The background id to find the tile image.
      */
-    private int background = R.drawable.tile_0;
+    private int background = R.drawable.card_0;
 
     /**
      * the back side of the tile, which is always blank.
@@ -107,61 +107,61 @@ public class Card implements Comparable<Card>, Serializable {
         // True, but I don't know how to fix it, ha ha ha. : )
         switch (num) {
             case 0:
-                this.backside = R.drawable.tile_1;
+                this.backside = R.drawable.card_1;
                 break;
             case 1:
-                this.backside = R.drawable.tile_2;
+                this.backside = R.drawable.card_2;
                 break;
             case 2:
-                this.backside = R.drawable.tile_3;
+                this.backside = R.drawable.card_3;
                 break;
             case 3:
-                this.backside = R.drawable.tile_4;
+                this.backside = R.drawable.card_4;
                 break;
             case 4:
-                this.backside = R.drawable.tile_5;
+                this.backside = R.drawable.card_5;
                 break;
             case 5:
-                this.backside = R.drawable.tile_6;
+                this.backside = R.drawable.card_6;
                 break;
             case 6:
-                this.backside = R.drawable.tile_7;
+                this.backside = R.drawable.card_7;
                 break;
             case 7:
-                this.backside = R.drawable.tile_8;
+                this.backside = R.drawable.card_8;
                 break;
             case 8:
-                this.backside = R.drawable.tile_9;
+                this.backside = R.drawable.card_9;
                 break;
             case 9:
-                this.backside = R.drawable.tile_10;
+                this.backside = R.drawable.card_10;
                 break;
             case 10:
-                this.backside = R.drawable.tile_11;
+                this.backside = R.drawable.card_11;
                 break;
             case 11:
-                this.backside = R.drawable.tile_12;
+                this.backside = R.drawable.card_12;
                 break;
             case 12:
-                this.backside = R.drawable.tile_13;
+                this.backside = R.drawable.card_13;
                 break;
             case 13:
-                this.backside = R.drawable.tile_14;
+                this.backside = R.drawable.card_14;
                 break;
             case 14:
-                this.backside = R.drawable.tile_15;
+                this.backside = R.drawable.card_15;
                 break;
             case 15:
-                this.backside = R.drawable.tile_16;
+                this.backside = R.drawable.card_16;
                 break;
             case 16:
-                this.backside = R.drawable.tile_17;
+                this.backside = R.drawable.card_17;
                 break;
             case 17:
-                this.backside = R.drawable.tile_18;
+                this.backside = R.drawable.card_18;
                 break;
             default:
-                this.backside = R.drawable.tile_0;
+                this.backside = R.drawable.card_0;
                 break;
         }
     }

@@ -71,7 +71,7 @@ public class Board extends Observable implements Serializable, Cloneable {
             } else {
                 Card cardTwo = cardStack.pop();
                 if (cardOne.getId() == cardTwo.getId()) {
-                    cardOne.setBackground(R.drawable.tile_0);
+                    cardOne.setBackground(R.drawable.card_0);
                     updateObsevers();
                 } else {
                     if (cardOne.getnum() == cardTwo.getnum()) {
@@ -87,8 +87,8 @@ public class Board extends Observable implements Serializable, Cloneable {
                         t.schedule(new TimerTask() {
                             @Override
                             public void run() {
-                                cardOne.setBackground(R.drawable.tile_0);
-                                cardTwo.setBackground(R.drawable.tile_0);
+                                cardOne.setBackground(R.drawable.card_0);
+                                cardTwo.setBackground(R.drawable.card_0);
                                 updateObsevers();
                             }
                         },500);

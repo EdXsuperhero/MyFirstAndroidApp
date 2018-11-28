@@ -57,23 +57,6 @@ public class BoardManager implements Serializable {
         return (this.board.getMatched() == this.board.getNumCards());
     }
 
-    /**
-     * return whether the user is able to flip the card.
-     * @param position the tile to check
-     * @return whether the card has been matched or not.
-     */
-    boolean isValidTap(int position){
-        int width = this.board.getWidth();
-        int row = position / width;
-        int col = position % width;
-
-        Card c = this.board.getCards()[row][col];
-        if (c.getBackground() == R.drawable.tile_24){
-            return false;
-        }else{
-            return true;
-        }
-    }
 
     /**
      * Process a touch at position in the board, flip over the card.
@@ -84,9 +67,8 @@ public class BoardManager implements Serializable {
         int row = position / width;
         int col = position % width;
 
-        if (isValidTap(position)) {
-            this.board.flipCard(row, col);
-        }
+        this.board.flipCard(row, col);
+
     }
 
 
@@ -98,20 +80,6 @@ public class BoardManager implements Serializable {
         this.boardStack.push(cloneBoard);
     }
 
-    /**
-     * Pop last board from stack to this.board.
-     *
-     * @return whether the pop is successful
-     */
-    boolean popFromStack() {
-        boolean result = false;
-        if (this.boardStack.size() > 1) {
-            this.boardStack.pop();
-            this.board = this.boardStack.pop();
-            result = true;
-        }
-        return result;
-    }
 
     /**
      * Update the duration of this game.
