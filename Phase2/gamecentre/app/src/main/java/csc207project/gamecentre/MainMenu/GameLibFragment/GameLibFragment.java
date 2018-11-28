@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import csc207project.gamecentre.GoFor24.game24Activity;
+import csc207project.gamecentre.MemoryMatchingPics.MatchingStartingActivity;
 import csc207project.gamecentre.R;
 import csc207project.gamecentre.SlidingTiles.StartingActivity;
 
@@ -75,6 +76,12 @@ public class GameLibFragment extends Fragment {
                         R.string.twenty_four_game,
                         R.string.twenty_four_game_des,
                         game24Activity.class)
+        );
+        this.games.add(
+                new Game(R.drawable.twenty_four_game_screenshot,
+                        R.string.memory_matching,
+                        R.string.memory_matching_des,
+                        MatchingStartingActivity.class)
         );
     }
 

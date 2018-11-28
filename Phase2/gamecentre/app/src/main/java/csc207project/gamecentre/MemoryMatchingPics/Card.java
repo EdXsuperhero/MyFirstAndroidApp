@@ -154,6 +154,12 @@ public class Card implements Comparable<Card>, Serializable {
             case 15:
                 this.backside = R.drawable.tile_16;
                 break;
+            case 16:
+                this.backside = R.drawable.tile_17;
+                break;
+            case 17:
+                this.backside = R.drawable.tile_18;
+                break;
             default:
                 this.backside = R.drawable.tile_0;
                 break;

@@ -17,4 +17,7 @@
 
     <string name="twenty_four_game">24 Game</string>
     <string name="twenty_four_game_des"/>
+
+    <string name="memory_matching">Memory Matching</string>
+    <string name="memory_matching_des" />
 </resources>
