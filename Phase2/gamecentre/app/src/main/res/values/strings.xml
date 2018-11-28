@@ -10,6 +10,7 @@
 
     <string name="username_input">Username</string>
     <string name="password_input">Password</string>
+    <string name="password_confirm">Confirm Password</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
     <string name="sign_in_hint">Please sign in if you have an account.</string>
