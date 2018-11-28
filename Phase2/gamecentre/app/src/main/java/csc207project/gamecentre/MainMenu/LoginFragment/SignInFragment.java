@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -42,6 +43,7 @@ public class SignInFragment extends Fragment {
 
         setUsernameInputIndicator(view, "");
         setPasswordInputIndicator(view, "");
+        setStayLoginCheckBoxListener(view);
         addSignInButtonListener(view);
         addSignUpButtonListener(view);
         return view;
@@ -62,8 +64,7 @@ public class SignInFragment extends Fragment {
                     String password = getPasswordInput(view);
                     if (userManager.signIn(username, password)) {
                         userManager.setCurrentUser(username);
-                        userManager.setStayLogin(getStayLoginCheckBox(view));
-                        getActivity().finish();
+                        ((LoginActivity) getActivity()).finish();
                     } else {
                         setPasswordInputIndicator(view, "Wrong Password");
                     }
@@ -117,9 +118,14 @@ public class SignInFragment extends Fragment {
      * @param view current view
      * @return whether stay login is checked
      */
-    private boolean getStayLoginCheckBox(View view) {
+    private void setStayLoginCheckBoxListener(View view) {
         CheckBox stayLogin = view.findViewById(R.id.StayLogin);
-        return stayLogin.isChecked();
+        stayLogin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                userManager.setStayLogin(isChecked);
+            }
+        });
     }
 
     /**

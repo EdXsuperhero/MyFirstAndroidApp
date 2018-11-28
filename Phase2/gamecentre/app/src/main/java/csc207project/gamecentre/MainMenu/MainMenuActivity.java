@@ -1,5 +1,6 @@
 package csc207project.gamecentre.MainMenu;
 
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,9 +39,9 @@ public class MainMenuActivity extends AppCompatActivity {
     private UserManager userManager;
 
     /**
-     * The FragmentTransaction that manages fragments.
+     * The FragmentManager that manages fragments.
      */
-    private FragmentTransaction mFragmentTransaction;
+    private FragmentManager mFragmentManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,16 +52,34 @@ public class MainMenuActivity extends AppCompatActivity {
         if (this.userManager.getCurrentUser() == null) {
             Intent startLogin = new Intent(this, LoginActivity.class);
             startLogin.putExtra("user_manager", this.userManager);
-            startActivity(startLogin);
+            startActivityForResult(startLogin, 0);
         }
 
-        this.mFragmentTransaction = getFragmentManager().beginTransaction();
+        this.mFragmentManager = getFragmentManager();
 
+        FragmentTransaction fragmentTransaction = this.mFragmentManager.beginTransaction();
         GameLibFragment fragment = new GameLibFragment();
-        this.mFragmentTransaction.add(R.id.MainMenuActivity, fragment);
-        this.mFragmentTransaction.commit();
+        fragmentTransaction.add(R.id.MainMenuActivity, fragment);
+        fragmentTransaction.commit();
 
         addBottomNavigationViewListener();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        this.userManager = (UserManager) data.getSerializableExtra("user_manager");
+        saveToFile(SAVE_USER_FILENAME);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (!this.userManager.isStayLogin()) {
+            this.userManager.setCurrentUser(null);
+            this.userManager.setStayLogin(false);
+            saveToFile(SAVE_USER_FILENAME);
+        }
+        super.onDestroy();
     }
 
     /**
@@ -100,9 +119,10 @@ public class MainMenuActivity extends AppCompatActivity {
      * Replace the current fragment to GameLibFragment.
      */
     private void replaceGameLibFragment() {
+        FragmentTransaction fragmentTransaction = this.mFragmentManager.beginTransaction();
         GameLibFragment fragment = new GameLibFragment();
-        this.mFragmentTransaction.replace(R.id.MainMenuActivity, fragment);
-        this.mFragmentTransaction.commit();
+        fragmentTransaction.replace(R.id.MainMenuActivity, fragment);
+        fragmentTransaction.commit();
     }
 
     /**

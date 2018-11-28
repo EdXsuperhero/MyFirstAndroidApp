@@ -2,6 +2,7 @@ package csc207project.gamecentre.MainMenu.LoginFragment;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -40,9 +41,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        getIntent().putExtra("user_manager", this.userManager);
+    public void finish() {
+        Intent backToMain = new Intent();
+        backToMain.putExtra("user_manager", this.userManager);
+        setResult(0, backToMain);
+        super.finish();
     }
 
     /**
