@@ -1,4 +1,4 @@
-/*package csc207project.gamecentre.filemanagement;
+package csc207project.gamecentre.filemanagement;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,4 +31,3 @@ public class TestFileManager {
     }
 
 }
-*/
