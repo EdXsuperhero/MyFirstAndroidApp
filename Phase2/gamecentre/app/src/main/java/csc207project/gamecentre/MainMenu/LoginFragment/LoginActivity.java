@@ -1,4 +1,4 @@
-package csc207project.gamecentre.MainMenu;
+package csc207project.gamecentre.MainMenu.LoginFragment;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

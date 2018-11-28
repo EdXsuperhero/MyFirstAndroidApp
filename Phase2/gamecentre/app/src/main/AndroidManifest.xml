@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainMenu.LoginActivity" />
+        <activity android:name=".MainMenu.LoginFragment.LoginActivity" />
         <activity android:name=".SlidingTiles.GameActivity" />
         <activity android:name=".SlidingTiles.StartingActivity" />
         <activity android:name=".SlidingTiles.ChooseComplexity" />
