@@ -1,21 +1,41 @@
 package csc207project.gamecentre.MainMenu;
 
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import csc207project.gamecentre.MainMenu.GameLibFragment.GameLibFragment;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+
+import csc207project.gamecentre.MainMenu.LoginFragment.LoginActivity;
 import csc207project.gamecentre.R;
+import csc207project.gamecentre.MainMenu.GameLibFragment.GameLibFragment;
 
 /**
  * The Main Menu for Game Centre
  */
 public class MainMenuActivity extends AppCompatActivity {
+
+    /**
+     * The save file for users.
+     */
+    public static final String SAVE_USER_FILENAME = "save_user.ser";
+
+    /**
+     * A user manager.
+     */
+    private UserManager userManager;
 
     /**
      * The FragmentTransaction that manages fragments.
@@ -26,6 +46,13 @@ public class MainMenuActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+
+        loadFromFile(SAVE_USER_FILENAME);
+        if (this.userManager.getCurrentUser() == null) {
+            Intent startLogin = new Intent(this, LoginActivity.class);
+            startLogin.putExtra("user_manager", this.userManager);
+            startActivity(startLogin);
+        }
 
         this.mFragmentTransaction = getFragmentManager().beginTransaction();
 
@@ -76,5 +103,47 @@ public class MainMenuActivity extends AppCompatActivity {
         GameLibFragment fragment = new GameLibFragment();
         this.mFragmentTransaction.replace(R.id.MainMenuActivity, fragment);
         this.mFragmentTransaction.commit();
+    }
+
+    /**
+     * Load the user manager from fileName.
+     *
+     * @param fileName the name of the file
+     */
+    private void loadFromFile(String fileName) {
+
+        try {
+            InputStream inputStream = this.openFileInput(fileName);
+            if (inputStream != null) {
+                ObjectInputStream input = new ObjectInputStream(inputStream);
+                this.userManager = (UserManager) input.readObject();
+                inputStream.close();
+            }
+        } catch (FileNotFoundException e) {
+            Log.e("Main Menu Activity", "File not found: " + e.toString());
+            this.userManager = new UserManager();
+            saveToFile(SAVE_USER_FILENAME);
+        } catch (IOException e) {
+            Log.e("Main Menu Activity", "Can not read file: " + e.toString());
+        } catch (ClassNotFoundException e) {
+            Log.e("Main Menu Activity", "File contained unexpected data type: " + e.toString());
+        }
+    }
+
+    /**
+     * Save the user manager to fileName.
+     *
+     * @param fileName the name of the file
+     */
+    private void saveToFile(String fileName) {
+
+        try {
+            OutputStream outputStream = this.openFileOutput(fileName, MODE_PRIVATE);
+            ObjectOutputStream output = new ObjectOutputStream(outputStream);
+            output.writeObject(this.userManager);
+            output.close();
+        } catch (IOException e) {
+            Log.e("Main Menu Activity", "File write failed: " + e.toString());
+        }
     }
 }
