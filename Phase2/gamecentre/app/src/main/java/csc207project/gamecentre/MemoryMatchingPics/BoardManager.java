@@ -137,12 +137,5 @@ public class BoardManager implements Serializable {
     }
 
 
-//    public boolean matched(int position){
-//        int width = this.board.getWidth();
-//        int row = position / width;
-//        int col = position % width;
-//
-//        return board.match(row, col);
-//    }
 
 }

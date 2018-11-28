@@ -55,8 +55,14 @@ public class MatchingMainActivity extends AppCompatActivity implements Observer{
      */
     // Display
     public void display() {
-        updateTileButtons();
-        gridView.setAdapter(new CustomAdapter(tileButtons, columnWidth, columnHeight));
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                updateTileButtons();
+                gridView.setAdapter(new CustomAdapter(tileButtons, columnWidth, columnHeight));
+            }
+        });
+
     }
 
     /**
