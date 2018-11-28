@@ -6,7 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.widget.Toast;
 
-import csc207project.gamecentre.SlidingTiles.StartingActivity;
+import csc207project.gamecentre.MemoryMatchingPics.MatchingStartingActivity;
 
 public class MovementController {
 
@@ -24,25 +24,25 @@ public class MovementController {
 
         boardManager.touchMove(position);
         if (boardManager.cardAllMatched()) {
-            Toast.makeText(context, "YOU WIN", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "YOU WIN", Toast.LENGTH_SHORT).show();
             mContext.deleteFile(MatchingStartingActivity.TEMP_SAVE_FILENAME);
-//                long duration = boardManager.getDuration();
-//                String min = getUsedTime(duration)[0];
-//                String sec = getUsedTime(duration)[1];
-//                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-//                builder.setTitle("You Win!")
-//                        .setMessage("You have used " + minutes + "minutes " + seconds + "seconds.")
-//                        .setPositiveButton("Take me to ScoreBoard",
-//                                new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog, int which) {
-//                                        Intent toScoreBoardIntent =
-//                                                new Intent(mContext, ScoreBoardActivity.class);//TODO: create scoreBoard.
-//                                        toScoreBoardIntent.putExtra("score", duration);
-//                                        mContext.startActivity(toScoreBoardIntent);
-//                                    }
-//                                })
-//                        .show();
+                long duration = boardManager.getDuration();
+            String min = getUsedTime(duration)[0];
+            String sec = getUsedTime(duration)[1];
+            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+            builder.setTitle("You Win!")
+                    .setMessage("You have used " + min + " minutes " + sec + " seconds.")
+                    .setPositiveButton("Take me to ScoreBoard",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent toScoreBoardIntent =
+                                            new Intent(mContext, MatchingScoreBoardActivity.class);
+                                    toScoreBoardIntent.putExtra("score", duration);
+                                    mContext.startActivity(toScoreBoardIntent);
+                                }
+                            })
+                    .show();
         }
     }
 

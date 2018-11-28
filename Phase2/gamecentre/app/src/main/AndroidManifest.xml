@@ -24,6 +24,7 @@
 	    <activity android:name=".MemoryMatchingPics.MatchingStartingActivity" />
         <activity android:name=".MemoryMatchingPics.MatchingMainActivity" />
         <activity android:name=".MemoryMatchingPics.ChooseComplex" />
+        <activity android:name=".MemoryMatchingPics.MatchingScoreBoardActivity" />
         <activity android:name=".GoFor24.game24Activity" />
     </application>
 
