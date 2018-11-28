@@ -56,6 +56,11 @@ public class Board extends Observable implements Serializable, Cloneable {
         }
     }
 
+    /**
+     * flipping a card in the given position.
+     * @param row the row of the card on the board;
+     * @param col the column of the card on the board;
+     */
     void flipCard(int row, int col) {
         Card cardOne = cards[row][col];
         if (cardOne.getFlipable() == true) {
@@ -63,7 +68,6 @@ public class Board extends Observable implements Serializable, Cloneable {
                 cardOne.setBackground(cardOne.getBackside());
                 cardStack.push(cardOne);
                 updateObsevers();
-
             } else {
                 Card cardTwo = cardStack.pop();
                 if (cardOne.getId() == cardTwo.getId()) {
@@ -88,11 +92,9 @@ public class Board extends Observable implements Serializable, Cloneable {
                                 updateObsevers();
                             }
                         },500);
-
                     }
                 }
             }
-
         }
     }
 
