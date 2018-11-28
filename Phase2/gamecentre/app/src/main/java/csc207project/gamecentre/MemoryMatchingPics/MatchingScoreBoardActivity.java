@@ -39,7 +39,7 @@ public class MatchingScoreBoardActivity extends AppCompatActivity {
     /**
      * The username of whom is playing this game.
      */
-    public String username = LoginActivity.getCurrentUser();
+    //public String username = LoginActivity.getCurrentUser();
 
     /**
      * A score manager.
@@ -51,7 +51,7 @@ public class MatchingScoreBoardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         loadFromFile(SAVE_SCORE);
         long score = getIntent().getLongExtra("score", Long.MAX_VALUE);
-        this.matchingscoreManager.addScore(this.username, score);
+        //this.matchingscoreManager.addScore(this.username, score);
         saveToFile(SAVE_SCORE);
 
         setContentView(R.layout.activity_scoreboard);
@@ -81,7 +81,7 @@ public class MatchingScoreBoardActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     private void addUserHighestScoreListener() {
         TextView userHighestScoreText = findViewById(R.id.HighestScore);
-        userHighestScoreText.setText(formatUsedTime(this.matchingscoreManager.getScore(username)));
+     //   userHighestScoreText.setText(formatUsedTime(this.matchingscoreManager.getScore(username)));
     }
 
     /**
