@@ -21,7 +21,7 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * The FragmentTransaction that manages fragments.
      */
-    private FragmentTransaction mFragmentTranscation;
+    private FragmentTransaction fragmentTransaction;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,11 +30,17 @@ public class LoginActivity extends AppCompatActivity {
 
         this.userManager = (UserManager) getIntent().getSerializableExtra("user_manager");
 
-        this.mFragmentTranscation = getFragmentManager().beginTransaction();
+        this.fragmentTransaction = getFragmentManager().beginTransaction();
 
         SignInFragment fragment = new SignInFragment();
-        this.mFragmentTranscation.add(R.id.LoginActivity, fragment);
-        this.mFragmentTranscation.commit();
+        this.fragmentTransaction.add(R.id.LoginActivity, fragment);
+        this.fragmentTransaction.commit();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        getIntent().putExtra("user_manager", this.userManager);
     }
 
     /**
@@ -42,8 +48,8 @@ public class LoginActivity extends AppCompatActivity {
      */
     public void replaceSignInFragment() {
         SignInFragment fragment = new SignInFragment();
-        this.mFragmentTranscation.replace(R.id.LoginActivity, fragment);
-        this.mFragmentTranscation.commit();
+        this.fragmentTransaction.replace(R.id.LoginActivity, fragment);
+        this.fragmentTransaction.commit();
     }
 
     /**
@@ -51,11 +57,14 @@ public class LoginActivity extends AppCompatActivity {
      */
     public void replaceSignUpFragment() {
         SignUpFragment fragment = new SignUpFragment();
-        this.mFragmentTranscation.replace(R.id.LoginActivity, fragment);
-        this.mFragmentTranscation.commit();
+        this.fragmentTransaction.replace(R.id.LoginActivity, fragment);
+        this.fragmentTransaction.commit();
     }
 
-    public String getCurrentUsername() {
-        return this.userManager.getCurrentUser();
+    /**
+     * @return get current user manager
+     */
+    public UserManager getUserManager() {
+        return userManager;
     }
 }

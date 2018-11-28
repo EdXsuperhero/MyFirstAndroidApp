@@ -18,54 +18,32 @@ public class UserManager implements Serializable {
      */
     private String currentUser;
 
+    /**
+     * If the user want to stay logged in.
+     */
     private boolean stayLogin = false;
 
     /**
-     * Sign up a new user.
+     * Sign In a user.
      *
-     * @param username the username to be signed up
-     * @param password the password to be signed up
-     * @return a string indicates current login status
+     * @param username inputted username
+     * @param password inputted password
+     * @return if the inputted password matched the stored password
      */
-    public String signUp(String username, String password) {
-
-        String returnText;
-
-        if (isStoredUser(username)) {
-            returnText = "UsernameError: Username Exists!";
-        } else {
-            User user = new User(username, password);
-            this.users.put(username, user);
-            returnText = "Sign Up Successful, " + username + "! Please Sign In.";
-        }
-
-        return returnText;
+    public boolean signIn(String username, String password) {
+        User user = this.users.get(username);
+        return user.getPassword().equals(password);
     }
 
     /**
-     * Sign in a user.
+     * Sign Up a user.
      *
-     * @param username the username to be signed in
-     * @param password the password to be signed in
-     * @return a string indicates current login status
+     * @param username inputted username
+     * @param password inputted password
      */
-    public String signIn(String username, String password) {
-
-        String returnText;
-
-        if (isStoredUser(username)) {
-            User user = this.users.get(username);
-            if (user.getPassword().equals(password)) {
-                returnText = "Welcome, " + username + "!";
-                currentUser = username;
-            } else {
-                returnText = "Wrong Password!";
-            }
-        } else {
-            returnText = "This username is not Registered!";
-        }
-
-        return returnText;
+    public void signUp(String username, String password) {
+        User user = new User(username, password);
+        this.users.put(username, user);
     }
 
     /**
@@ -74,8 +52,17 @@ public class UserManager implements Serializable {
      * @param username the username to check
      * @return whether the username is in the users
      */
-    private boolean isStoredUser(String username) {
+    public boolean isStoredUser(String username) {
         return this.users.containsKey(username);
+    }
+
+    /**
+     * To set current user.
+     *
+     * @param currentUser the user that is using game centre
+     */
+    public void setCurrentUser(String currentUser) {
+        this.currentUser = currentUser;
     }
 
     /**
@@ -85,4 +72,19 @@ public class UserManager implements Serializable {
         return this.currentUser;
     }
 
+    /**
+     * @return if the user want to stay logged in
+     */
+    public boolean isStayLogin() {
+        return this.stayLogin;
+    }
+
+    /**
+     * Change the stay logged in status.
+     *
+     * @param stayLogin a boolean indicates whether user want to stay logged in
+     */
+    public void setStayLogin(boolean stayLogin) {
+        this.stayLogin = stayLogin;
+    }
 }

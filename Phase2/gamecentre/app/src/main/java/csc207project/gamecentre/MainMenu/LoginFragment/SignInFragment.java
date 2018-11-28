@@ -8,21 +8,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import csc207project.gamecentre.R;
+import csc207project.gamecentre.MainMenu.UserManager;
 
 public class SignInFragment extends Fragment {
 
     /**
-     * Current Activity for data interaction.
+     * Current user manager we are working on.
      */
-    private LoginActivity mActivity;
+    private UserManager userManager;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (LoginActivity) getActivity();
+        LoginActivity activity = (LoginActivity) getActivity();
+        this.userManager = activity.getUserManager();
     }
 
     @Nullable
@@ -30,21 +34,17 @@ public class SignInFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sign_in, container, false);
 
-        String currentUser = mActivity.getCurrentUsername();
+        String currentUser = this.userManager.getCurrentUser();
         if (currentUser != null) {
             EditText usernameInput = view.findViewById(R.id.UsernameSignInInput);
             usernameInput.setText(currentUser);
         }
 
+        setUsernameInputIndicator(view, "");
+        setPasswordInputIndicator(view, "");
         addSignInButtonListener(view);
         addSignUpButtonListener(view);
         return view;
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mActivity = null;
     }
 
     /**
@@ -58,8 +58,18 @@ public class SignInFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String username = getUsernameInput(view);
-                String password = getPasswordInput(view);
-
+                if (userManager.isStoredUser(username)) {
+                    String password = getPasswordInput(view);
+                    if (userManager.signIn(username, password)) {
+                        userManager.setCurrentUser(username);
+                        userManager.setStayLogin(getStayLoginCheckBox(view));
+                        getActivity().finish();
+                    } else {
+                        setPasswordInputIndicator(view, "Wrong Password");
+                    }
+                } else {
+                    setUsernameInputIndicator(view, "User not Registered");
+                }
             }
         });
     }
@@ -70,11 +80,11 @@ public class SignInFragment extends Fragment {
      * @param view current view
      */
     private void addSignUpButtonListener(View view) {
-        Button signUpButton = view.findViewById(R.id.SignUpButton);
+        Button signUpButton = view.findViewById(R.id.SwitchToSignUpButton);
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mActivity.replaceSignUpFragment();
+                ((LoginActivity) getActivity()).replaceSignUpFragment();
             }
         });
     }
@@ -99,5 +109,38 @@ public class SignInFragment extends Fragment {
     private String getPasswordInput(View view) {
         EditText passwordInput = view.findViewById(R.id.PasswordSignInInput);
         return passwordInput.getText().toString();
+    }
+
+    /**
+     * Get stay login status.
+     *
+     * @param view current view
+     * @return whether stay login is checked
+     */
+    private boolean getStayLoginCheckBox(View view) {
+        CheckBox stayLogin = view.findViewById(R.id.StayLogin);
+        return stayLogin.isChecked();
+    }
+
+    /**
+     * Set warning for username input.
+     *
+     * @param view current view
+     * @param warning warning for username input
+     */
+    private void setUsernameInputIndicator(View view, String warning) {
+        TextView usernameIndicator = view.findViewById(R.id.UsernameSignInIndicator);
+        usernameIndicator.setText(warning);
+    }
+
+    /**
+     * Set warning for password input.
+     *
+     * @param view current view
+     * @param warning warning for password input
+     */
+    private void setPasswordInputIndicator(View view, String warning) {
+        TextView passwordIndicator = view.findViewById(R.id.PasswordSignInIndicator);
+        passwordIndicator.setText(warning);
     }
 }
