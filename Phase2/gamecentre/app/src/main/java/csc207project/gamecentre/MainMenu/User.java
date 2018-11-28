@@ -1,4 +1,4 @@
-package csc207project.gamecentre.UserManager;
+package csc207project.gamecentre.MainMenu;
 
 import java.io.Serializable;
 

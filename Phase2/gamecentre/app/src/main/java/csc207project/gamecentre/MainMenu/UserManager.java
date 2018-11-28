@@ -1,4 +1,4 @@
-package csc207project.gamecentre.UserManager;
+package csc207project.gamecentre.MainMenu;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -14,6 +14,13 @@ public class UserManager implements Serializable {
     private HashMap<String, User> users = new HashMap<>();
 
     /**
+     * Current username of user who is using game centre
+     */
+    private String currentUser;
+
+    private boolean stayLogin = false;
+
+    /**
      * Sign up a new user.
      *
      * @param username the username to be signed up
@@ -25,7 +32,7 @@ public class UserManager implements Serializable {
         String returnText;
 
         if (isStoredUser(username)) {
-            returnText = "Username Exists!";
+            returnText = "UsernameError: Username Exists!";
         } else {
             User user = new User(username, password);
             this.users.put(username, user);
@@ -50,6 +57,7 @@ public class UserManager implements Serializable {
             User user = this.users.get(username);
             if (user.getPassword().equals(password)) {
                 returnText = "Welcome, " + username + "!";
+                currentUser = username;
             } else {
                 returnText = "Wrong Password!";
             }
@@ -69,4 +77,12 @@ public class UserManager implements Serializable {
     private boolean isStoredUser(String username) {
         return this.users.containsKey(username);
     }
+
+    /**
+     * @return current user that is using game centre
+     */
+    public String getCurrentUser() {
+        return this.currentUser;
+    }
+
 }
