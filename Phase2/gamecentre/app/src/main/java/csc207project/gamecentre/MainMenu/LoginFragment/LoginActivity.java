@@ -1,5 +1,7 @@
 package csc207project.gamecentre.MainMenu.LoginFragment;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,9 +21,9 @@ public class LoginActivity extends AppCompatActivity {
     private UserManager userManager;
 
     /**
-     * The FragmentTransaction that manages fragments.
+     * The FragmentManager that manages fragments.
      */
-    private FragmentTransaction fragmentTransaction;
+    private FragmentManager mFragmanager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,11 +32,12 @@ public class LoginActivity extends AppCompatActivity {
 
         this.userManager = (UserManager) getIntent().getSerializableExtra("user_manager");
 
-        this.fragmentTransaction = getFragmentManager().beginTransaction();
+        this.mFragmanager = getFragmentManager();
 
+        FragmentTransaction fragmentTransaction = this.mFragmanager.beginTransaction();
         SignInFragment fragment = new SignInFragment();
-        this.fragmentTransaction.add(R.id.LoginActivity, fragment);
-        this.fragmentTransaction.commit();
+        fragmentTransaction.add(R.id.LoginActivity, fragment);
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -47,18 +50,20 @@ public class LoginActivity extends AppCompatActivity {
      * Replace the current fragment with signinfragment.
      */
     public void replaceSignInFragment() {
+        FragmentTransaction fragmentTransaction = this.mFragmanager.beginTransaction();
         SignInFragment fragment = new SignInFragment();
-        this.fragmentTransaction.replace(R.id.LoginActivity, fragment);
-        this.fragmentTransaction.commit();
+        fragmentTransaction.replace(R.id.LoginActivity, fragment);
+        fragmentTransaction.commit();
     }
 
     /**
      * Replace the current fragment with signupfragment.
      */
     public void replaceSignUpFragment() {
+        FragmentTransaction fragmentTransaction = this.mFragmanager.beginTransaction();
         SignUpFragment fragment = new SignUpFragment();
-        this.fragmentTransaction.replace(R.id.LoginActivity, fragment);
-        this.fragmentTransaction.commit();
+        fragmentTransaction.replace(R.id.LoginActivity, fragment);
+        fragmentTransaction.commit();
     }
 
     /**
