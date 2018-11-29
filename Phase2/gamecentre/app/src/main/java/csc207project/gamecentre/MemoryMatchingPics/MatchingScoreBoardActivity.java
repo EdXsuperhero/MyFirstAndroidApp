@@ -39,7 +39,7 @@ public class MatchingScoreBoardActivity extends AppCompatActivity {
     /**
      * The username of whom is playing this game.
      */
-    public String username = LoginActivity.getCurrentUser();
+    public String username = "ME";//TODO:LoginActivity.getUserManager().getCurrentUser();
 
     /**
      * A score manager.

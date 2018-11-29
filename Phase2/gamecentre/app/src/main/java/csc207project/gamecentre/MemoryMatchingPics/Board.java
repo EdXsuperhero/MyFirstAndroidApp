@@ -58,6 +58,19 @@ public class Board extends Observable implements Serializable, Cloneable {
 
     /**
      * flipping a card in the given position.
+     *
+     * If the card is the first one that has been flipped over, keep it on the board;
+     * Other wise if the card is the second one that has been flipped over, then:
+     *
+     * 1. if the position of the second card we flip on the board is the same as the position of
+     * the first card, which means we flip a card twice, then the card will be flipped back.
+     *
+     * 2. if the second card that has been flipped over has the same picture with the first one,
+     * which means they are matched, then we add 2 to matched.
+     *
+     * 3. if the second card that has been flipped over has a different picture with the first one,
+     * which means they are not matched, then after 0.5 second, both cards will be flipped back.
+     *
      * @param row the row of the card on the board;
      * @param col the column of the card on the board;
      */
@@ -134,16 +147,6 @@ public class Board extends Observable implements Serializable, Cloneable {
      */
     public Card[][] getCards() {
         return this.cards;
-    }
-
-
-    /**
-     * get the stack of cards
-     *
-     * @return cardStack
-     */
-    public Stack<Card> getCardStack() {
-        return this.cardStack;
     }
 
     /**
