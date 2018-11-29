@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 
 import csc207project.gamecentre.R;
-import csc207project.gamecentre.MainMenu.LoginFragment.LoginActivity;
 
 /**
  * The scoreboard activity for sliding tiles.
@@ -40,7 +39,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
     /**
      * The username of whom is playing this game.
      */
-  //  public String username = LoginActivity.;
+    public String currentUser;
 
     /**
      * A score manager.
@@ -51,8 +50,11 @@ public class ScoreBoardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadFromFile(SAVE_SCORE);
-        long score = getIntent().getLongExtra("score", Long.MAX_VALUE);
-     //   this.scoreManager.addScore(this.username, score);
+        long score = getIntent().getLongExtra("score", 0);
+        this.currentUser = getIntent().getStringExtra("current_user");
+        if (score != 0) {
+            this.scoreManager.addScore(this.currentUser, score);
+        }
         saveToFile(SAVE_SCORE);
 
         setContentView(R.layout.activity_scoreboard);
@@ -71,7 +73,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 saveToFile(SAVE_SCORE);
-                switchToStart();
+                finish();
             }
         });
     }
@@ -82,7 +84,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     private void addUserHighestScoreListener() {
         TextView userHighestScoreText = findViewById(R.id.HighestScore);
-      //  userHighestScoreText.setText(formatUsedTime(this.scoreManager.getScore(username)));
+        userHighestScoreText.setText(formatUsedTime(this.scoreManager.getScore(this.currentUser)));
     }
 
     /**
@@ -181,13 +183,5 @@ public class ScoreBoardActivity extends AppCompatActivity {
         } catch (ClassNotFoundException e) {
             Log.e("Source Board", "File contained unexpected data type: " + e.toString());
         }
-    }
-
-    /**
-     * Switch to StartingActivity.
-     */
-    private void switchToStart() {
-        Intent toStartingIntent = new Intent(mContext, StartingActivity.class);
-        startActivity(toStartingIntent);
     }
 }

@@ -9,12 +9,9 @@ import android.widget.Toast;
 
 class MovementController {
 
-    private BoardManager boardManager = null;
+    private BoardManager boardManager;
 
     private Context mContext;
-
-    MovementController() {
-    }
 
     void setBoardManager(BoardManager boardManager) {
         this.boardManager = boardManager;
@@ -25,7 +22,7 @@ class MovementController {
         if (boardManager.isValidTap(position)) {
             boardManager.touchMove(position);
             if (boardManager.puzzleSolved()) {
-                mContext.deleteFile(StartingActivity.TEMP_SAVE_FILENAME);
+                mContext.deleteFile(GameActivity.TEMP_SAVE_FILENAME);
                 long duration = this.boardManager.getDuration();
                 String minutes = getUsedTime(duration)[0];
                 String seconds = getUsedTime(duration)[1];
@@ -39,7 +36,10 @@ class MovementController {
                                         Intent toScoreBoardIntent =
                                                 new Intent(mContext, ScoreBoardActivity.class);
                                         toScoreBoardIntent.putExtra("score", duration);
+                                        toScoreBoardIntent.putExtra("current_user",
+                                                ((GameActivity)mContext).getCurrentUser());
                                         mContext.startActivity(toScoreBoardIntent);
+                                        ((GameActivity) mContext).finish();
                                     }
                                 })
                         .show();

@@ -12,10 +12,10 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import csc207project.gamecentre.SlidingTiles.GameActivity;
 import csc207project.gamecentre.TwentyFourGame.game24Activity;
 import csc207project.gamecentre.MemoryMatching.MatchingStartingActivity;
 import csc207project.gamecentre.R;
-import csc207project.gamecentre.SlidingTiles.StartingActivity;
 
 /**
  * A Fragment showing the game library.
@@ -69,7 +69,7 @@ public class GameLibFragment extends Fragment {
                 new Game(R.drawable.sliding_tiles_screenshot,
                         R.string.sliding_tiles,
                         R.string.sliding_tiles_des,
-                        StartingActivity.class)
+                        GameActivity.class)
         );
         this.games.add(
                 new Game(R.drawable.twenty_four_game_screenshot,

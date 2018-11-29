@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import csc207project.gamecentre.MainMenu.MainMenuActivity;
 import csc207project.gamecentre.R;
 
 /**
@@ -61,6 +62,8 @@ public class GameViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 Intent gameIntent = new Intent(mContext, game.getStartGameClass());
+                gameIntent.putExtra("current_user",
+                        ((MainMenuActivity)mContext).getUserManager().getCurrentUser());
                 mContext.startActivity(gameIntent);
             }
         });

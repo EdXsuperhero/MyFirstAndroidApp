@@ -18,7 +18,6 @@
         </activity>
         <activity android:name=".MainMenu.LoginFragment.LoginActivity" />
         <activity android:name=".SlidingTiles.GameActivity" />
-        <activity android:name=".SlidingTiles.StartingActivity" />
         <activity android:name=".SlidingTiles.ChooseComplexity" />
         <activity android:name=".SlidingTiles.ScoreBoardActivity" />
 	    <activity android:name=".MemoryMatching.MatchingStartingActivity" />

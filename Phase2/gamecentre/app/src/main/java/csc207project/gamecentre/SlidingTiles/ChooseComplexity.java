@@ -1,6 +1,8 @@
 package csc207project.gamecentre.SlidingTiles;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
@@ -9,16 +11,27 @@ import csc207project.gamecentre.R;
 /**
  * The activity for selecting complexity.
  */
-public class ChooseComplexity extends StartingActivity {
+public class ChooseComplexity extends AppCompatActivity {
+
+    /**
+     * Intent for sending back result.
+     */
+    private Intent returnIntent = new Intent();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_choose_complexity);
+
         addThreeComplexityListener();
         addFourComplexityListener();
         addFiveComplexityListener();
+    }
+
+    @Override
+    public void finish() {
+        setResult(0, returnIntent);
+        super.finish();
     }
 
     /**
@@ -29,8 +42,8 @@ public class ChooseComplexity extends StartingActivity {
         three_by_three.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boardManager = new BoardManager(3);
-                switchToGame();
+                returnIntent.putExtra("complexity", 3);
+                finish();
             }
         });
     }
@@ -43,8 +56,8 @@ public class ChooseComplexity extends StartingActivity {
         four_by_four.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boardManager = new BoardManager(4);
-                switchToGame();
+                returnIntent.putExtra("complexity", 4);
+                finish();
             }
         });
     }
@@ -57,8 +70,8 @@ public class ChooseComplexity extends StartingActivity {
         five_by_five.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boardManager = new BoardManager(5);
-                switchToGame();
+                returnIntent.putExtra("complexity", 5);
+                finish();
             }
         });
     }

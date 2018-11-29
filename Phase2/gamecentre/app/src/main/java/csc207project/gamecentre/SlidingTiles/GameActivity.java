@@ -1,8 +1,11 @@
 package csc207project.gamecentre.SlidingTiles;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -28,24 +31,25 @@ import csc207project.gamecentre.R;
 public class GameActivity extends AppCompatActivity implements Observer {
 
     /**
+     * A temporary save file.
+     */
+    public static final String TEMP_SAVE_FILENAME = "slidingtiles_save_file_tmp.ser";
+    /**
      * The board manager.
      */
     private BoardManager boardManager;
-
     /**
      * The buttons to display.
      */
     private ArrayList<Button> tileButtons;
-
     /**
      * The Chronometer
      */
-    Chronometer timer;
-
+    private Chronometer timer;
     /**
      * Set context.
      */
-    private Context mContext = GameActivity.this;
+    private Context mContext = this;
 
     /**
      * Constants for swiping directions. Should be an enum, probably.
@@ -73,11 +77,54 @@ public class GameActivity extends AppCompatActivity implements Observer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadFromFile(StartingActivity.TEMP_SAVE_FILENAME);
-        createTileButtons(mContext);
         setContentView(R.layout.activity_main);
 
+
         addUndoButtonListener();
+
+        startNewGame();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        int complexity = data.getIntExtra("complexity", 3);
+        this.boardManager = new BoardManager(complexity);
+        setupGame();
+    }
+
+    /**
+     * Start a new game if there's no previous saved games,
+     * else ask the user whether reload the game.
+     */
+    private void startNewGame() {
+        if (checkTempFileExists()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+            builder.setTitle("You have an unsolved puzzle!");
+            builder.setMessage("Do you wan to continue?");
+            builder.setPositiveButton("YES",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            loadFromFile(TEMP_SAVE_FILENAME);
+                            setupGame();
+                        }
+                    });
+            builder.setNegativeButton("NO",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switchToChooseComplexity();
+                        }
+                    });
+            builder.show();
+        } else {
+            switchToChooseComplexity();
+        }
+    }
+
+    private void setupGame() {
+        createTileButtons(mContext);
 
         this.timer = findViewById(R.id.Timer);
         startTimer();
@@ -104,6 +151,32 @@ public class GameActivity extends AppCompatActivity implements Observer {
                         display();
                     }
                 });
+    }
+
+    /**
+     * Check whether there is an unsolved puzzle.
+     *
+     * @return whether there is an unsolved puzzle
+     */
+    private boolean checkTempFileExists() {
+
+        String[] filesLists = this.fileList();
+        boolean exists = false;
+        for (String file : filesLists) {
+            if (file.equals(TEMP_SAVE_FILENAME)) {
+                exists = true;
+            }
+        }
+
+        return exists;
+    }
+
+    /**
+     * Switch to ChooseComplexity to choose game complexity.
+     */
+    private void switchToChooseComplexity() {
+        Intent intent = new Intent(this, ChooseComplexity.class);
+        startActivityForResult(intent, 0);
     }
 
     /**
@@ -158,10 +231,20 @@ public class GameActivity extends AppCompatActivity implements Observer {
         });
     }
 
+    /**
+     * Start running the time.
+     */
     private void startTimer() {
         long duration = this.boardManager.getDuration();
         this.timer.setBase(SystemClock.elapsedRealtime() - duration);
         this.timer.start();
+    }
+
+    /**
+     * @return current user that is playing this game.
+     */
+    public String getCurrentUser() {
+        return getIntent().getStringExtra("current_user");
     }
 
     /**
@@ -208,6 +291,6 @@ public class GameActivity extends AppCompatActivity implements Observer {
         display();
         this.boardManager.pushToStack();
         this.boardManager.setDuration(SystemClock.elapsedRealtime() - this.timer.getBase());
-        saveToFile(StartingActivity.TEMP_SAVE_FILENAME);
+        saveToFile(TEMP_SAVE_FILENAME);
     }
 }
