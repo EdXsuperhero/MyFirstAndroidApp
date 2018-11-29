@@ -18,14 +18,13 @@
         </activity>
         <activity android:name=".MainMenu.LoginFragment.LoginActivity" />
         <activity android:name=".SlidingTiles.GameActivity" />
-        <activity android:name=".SlidingTiles.StartingActivity" />
         <activity android:name=".SlidingTiles.ChooseComplexity" />
         <activity android:name=".SlidingTiles.ScoreBoardActivity" />
-	    <activity android:name=".MemoryMatchingPics.MatchingStartingActivity" />
-        <activity android:name=".MemoryMatchingPics.MatchingMainActivity" />
-        <activity android:name=".MemoryMatchingPics.ChooseComplex" />
-        <activity android:name=".MemoryMatchingPics.MatchingScoreBoardActivity" />
-        <activity android:name=".GoFor24.game24Activity" />
+	    <activity android:name=".MemoryMatching.MatchingStartingActivity" />
+        <activity android:name=".MemoryMatching.MatchingMainActivity" />
+        <activity android:name=".MemoryMatching.ChooseComplex" />
+        <activity android:name=".MemoryMatching.MatchingScoreBoardActivity" />
+        <activity android:name=".TwentyFourGame.game24Activity" />
     </application>
 
 </manifest>

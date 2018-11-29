@@ -1,5 +1,8 @@
-package csc207project.gamecentre.SlidingTiles;
+package csc207project.gamecentre.MemoryMatching;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,32 +24,34 @@ import csc207project.gamecentre.R;
 /**
  * The scoreboard activity for sliding tiles.
  */
-public class ScoreBoardActivity extends AppCompatActivity {
+public class MatchingScoreBoardActivity extends AppCompatActivity {
+
+    /**
+     * Set Context.
+     */
+    private Context mContext = csc207project.gamecentre.MemoryMatching.MatchingScoreBoardActivity.this;
 
     /**
      * The save file for scores.
      */
-    public static final String SAVE_SCORE = "slidingtiles_save_score.ser";
+    public static final String SAVE_SCORE = "matching_save_score.ser";
 
     /**
      * The username of whom is playing this game.
      */
-    public String currentUser;
+    public String username = "ME";//TODO:LoginActivity.getUserManager().getCurrentUser();
 
     /**
      * A score manager.
      */
-    private ScoreManager scoreManager;
+    private MatchingScoreManager matchingscoreManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadFromFile(SAVE_SCORE);
-        Long score = getIntent().getLongExtra("score", Long.MAX_VALUE);
-        this.currentUser = getIntent().getStringExtra("current_user");
-        if (score != Long.MAX_VALUE) {
-            this.scoreManager.addScore(this.currentUser, score);
-        }
+        long score = getIntent().getLongExtra("score", Long.MAX_VALUE);
+        //this.matchingscoreManager.addScore(this.username, score);
         saveToFile(SAVE_SCORE);
 
         setContentView(R.layout.activity_scoreboard);
@@ -65,7 +70,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 saveToFile(SAVE_SCORE);
-                finish();
+                switchToStart();
             }
         });
     }
@@ -73,16 +78,18 @@ public class ScoreBoardActivity extends AppCompatActivity {
     /**
      * Show user's highest score.
      */
+    @SuppressLint("SetTextI18n")
     private void addUserHighestScoreListener() {
         TextView userHighestScoreText = findViewById(R.id.HighestScore);
-        userHighestScoreText.setText(formatUsedTime(this.scoreManager.getScore(this.currentUser)));
+        //userHighestScoreText.setText(formatUsedTime(this.matchingscoreManager.getScore(username)));
     }
 
     /**
      * Show highest 5 scores on the activity.
      */
+    @SuppressLint("SetTextI18n")
     private void addHighestFiveScoresListener() {
-        List<Map.Entry<String, Long>> highest5Scores = this.scoreManager.getHighestFiveScores();
+        List<Map.Entry<String, Long>> highest5Scores = this.matchingscoreManager.getHighestFiveScores();
 
         TextView top1UserText = findViewById(R.id.Top1User);
         TextView top1ScoreText = findViewById(R.id.Top1Score);
@@ -118,27 +125,17 @@ public class ScoreBoardActivity extends AppCompatActivity {
      */
     @NonNull
     private String formatUsedTime (@NonNull Long time) {
-        String format = new String();
-
-        if (time == Long.MAX_VALUE) {
+        String format = "";
+        if (time.equals(Long.MAX_VALUE)) {
             format = "00:00";
         } else {
-
-            Long minute = (time / 1000) / 60;
-            Long second = (time / 1000) % 60;
-
-            if (minute > 9) {
-                format += minute.toString();
-            } else {
-                format += "0" + minute.toString();
-            }
-
-            format += ":";
-
+            long minute = (time / 1000) / 60;
+            long second = (time / 1000) % 60;
+            format = String.valueOf(minute) + ":";
             if (second > 9) {
-                format += second.toString();
+                format = format + String.valueOf(second);
             } else {
-                format += "0" + second.toString();
+                format = format + "0" + String.valueOf(second);
             }
         }
         return format;
@@ -153,7 +150,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
         try {
             ObjectOutputStream outputStream = new ObjectOutputStream(
                     this.openFileOutput(fileName, MODE_PRIVATE));
-            outputStream.writeObject(this.scoreManager);
+            outputStream.writeObject(this.matchingscoreManager);
             outputStream.close();
         } catch (IOException e) {
             Log.e("Exception", "File write failed: " + e.toString());
@@ -171,17 +168,25 @@ public class ScoreBoardActivity extends AppCompatActivity {
             InputStream inputStream = this.openFileInput(fileName);
             if (inputStream != null) {
                 ObjectInputStream input = new ObjectInputStream(inputStream);
-                this.scoreManager = (ScoreManager) input.readObject();
+                this.matchingscoreManager = (MatchingScoreManager) input.readObject();
                 inputStream.close();
             }
         } catch (FileNotFoundException e) {
             Log.e("Source Board", "File not found: " + e.toString());
-            this.scoreManager = new ScoreManager();
+            this.matchingscoreManager = new MatchingScoreManager();
             saveToFile(SAVE_SCORE);
         } catch (IOException e) {
             Log.e("Source Board", "Can not read file: " + e.toString());
         } catch (ClassNotFoundException e) {
             Log.e("Source Board", "File contained unexpected data type: " + e.toString());
         }
+    }
+
+    /**
+     * Switch to StartingActivity.
+     */
+    private void switchToStart() {
+        Intent toStartingIntent = new Intent(mContext, MatchingStartingActivity.class);
+        startActivity(toStartingIntent);
     }
 }

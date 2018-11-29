@@ -1,5 +1,4 @@
-package csc207project.gamecentre.SlidingTiles;
-
+package csc207project.gamecentre.MemoryMatching;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,15 +8,15 @@ import java.util.Map;
 /**
  * Manage a scores list with username and score.
  */
-class ScoreManager implements Serializable {
+class MatchingScoreManager implements Serializable {
 
     /**
      * A HashMap storing usernames and scores.
      */
     private HashMap<String, Long> scores = new HashMap<>();
 
-    ScoreManager() {
-        for (int i = 0; i <= 5; i++) {
+    MatchingScoreManager() {
+        for (int i = 0; i < 5; i++) {
             scores.put("Nobody_" + i, Long.MAX_VALUE);
         }
     }
@@ -46,11 +45,10 @@ class ScoreManager implements Serializable {
      * @return the highest score of username
      */
     Long getScore(String username) {
-        Long score = Long.MAX_VALUE;
         if (isStoredUser(username)) {
-            score = this.scores.get(username);
+            return this.scores.get(username);
         }
-        return score;
+        return null;
     }
 
     /**

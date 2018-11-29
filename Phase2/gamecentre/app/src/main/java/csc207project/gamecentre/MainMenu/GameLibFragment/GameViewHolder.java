@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import csc207project.gamecentre.MainMenu.MainMenuActivity;
 import csc207project.gamecentre.R;
 
 /**
@@ -27,12 +28,12 @@ public class GameViewHolder extends RecyclerView.ViewHolder {
     /**
      * ImageView for showing the game's screenshot.
      */
-    ImageView gameImage;
+    private ImageView gameImage;
 
     /**
      * TextView for showing the game's name and description.
      */
-    private TextView gameName, gameDescription, gameStarter;
+    private TextView gameName, gameDescription, gameStarter, scoreboardStarter;
 
     /**
      * Set a new ViewHolder for a game.
@@ -46,6 +47,7 @@ public class GameViewHolder extends RecyclerView.ViewHolder {
         this.gameName = itemView.findViewById(R.id.GameName);
         this.gameDescription = itemView.findViewById(R.id.GameDescription);
         this.gameStarter = itemView.findViewById(R.id.GameStarter);
+        this.scoreboardStarter = itemView.findViewById(R.id.ScoreBoard);
     }
 
     /**
@@ -61,7 +63,18 @@ public class GameViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 Intent gameIntent = new Intent(mContext, game.getStartGameClass());
+                gameIntent.putExtra("current_user",
+                        ((MainMenuActivity)mContext).getUserManager().getCurrentUser());
                 mContext.startActivity(gameIntent);
+            }
+        });
+        this.scoreboardStarter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent scoreboardIntent = new Intent(mContext, game.getScoreboardClass());
+                scoreboardIntent.putExtra("current_user",
+                        ((MainMenuActivity)mContext).getUserManager().getCurrentUser());
+                mContext.startActivity(scoreboardIntent);
             }
         });
     }

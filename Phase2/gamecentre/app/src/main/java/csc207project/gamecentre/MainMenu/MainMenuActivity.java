@@ -1,5 +1,6 @@
 package csc207project.gamecentre.MainMenu;
 
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,9 +19,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
-import csc207project.gamecentre.MainMenu.LoginFragment.LoginActivity;
 import csc207project.gamecentre.R;
 import csc207project.gamecentre.MainMenu.GameLibFragment.GameLibFragment;
+import csc207project.gamecentre.MainMenu.LoginFragment.LoginActivity;
 
 /**
  * The Main Menu for Game Centre
@@ -38,9 +39,9 @@ public class MainMenuActivity extends AppCompatActivity {
     private UserManager userManager;
 
     /**
-     * The FragmentTransaction that manages fragments.
+     * The FragmentManager that manages fragments.
      */
-    private FragmentTransaction mFragmentTransaction;
+    private FragmentManager mFragmentManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,19 +49,33 @@ public class MainMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
 
         loadFromFile(SAVE_USER_FILENAME);
-        if (this.userManager.getCurrentUser() == null) {
+        if (!this.userManager.isStayLogin()) {
             Intent startLogin = new Intent(this, LoginActivity.class);
             startLogin.putExtra("user_manager", this.userManager);
-            startActivity(startLogin);
+            startActivityForResult(startLogin, 0);
         }
 
-        this.mFragmentTransaction = getFragmentManager().beginTransaction();
+        this.mFragmentManager = getFragmentManager();
 
+        FragmentTransaction fragmentTransaction = this.mFragmentManager.beginTransaction();
         GameLibFragment fragment = new GameLibFragment();
-        this.mFragmentTransaction.add(R.id.MainMenuActivity, fragment);
-        this.mFragmentTransaction.commit();
+        fragmentTransaction.add(R.id.MainMenuActivity, fragment);
+        fragmentTransaction.commit();
 
         addBottomNavigationViewListener();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        this.userManager = (UserManager) data.getSerializableExtra("user_manager");
+        saveToFile(SAVE_USER_FILENAME);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        saveToFile(SAVE_USER_FILENAME);
     }
 
     /**
@@ -78,6 +93,7 @@ public class MainMenuActivity extends AppCompatActivity {
                         return true;
                     case R.id.navigate_user:
                         setNavigationTitle(R.string.navigate_user);
+                        replaceUserFragment();
                         return true;
                     default:
                         return false;
@@ -99,10 +115,28 @@ public class MainMenuActivity extends AppCompatActivity {
     /**
      * Replace the current fragment to GameLibFragment.
      */
-    private void replaceGameLibFragment() {
+    public void replaceGameLibFragment() {
+        FragmentTransaction fragmentTransaction = this.mFragmentManager.beginTransaction();
         GameLibFragment fragment = new GameLibFragment();
-        this.mFragmentTransaction.replace(R.id.MainMenuActivity, fragment);
-        this.mFragmentTransaction.commit();
+        fragmentTransaction.replace(R.id.MainMenuActivity, fragment);
+        fragmentTransaction.commit();
+    }
+
+    /**
+     * Replace the current fragment to UserFragment.
+     */
+    public void replaceUserFragment() {
+        FragmentTransaction fragmentTransaction = this.mFragmentManager.beginTransaction();
+        UserFragment fragment = new UserFragment();
+        fragmentTransaction.replace(R.id.MainMenuActivity, fragment);
+        fragmentTransaction.commit();
+    }
+
+    /**
+     * @return the user manger that this activity is holding
+     */
+    public UserManager getUserManager() {
+        return this.userManager;
     }
 
     /**
