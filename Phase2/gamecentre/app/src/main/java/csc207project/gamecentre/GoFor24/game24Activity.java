@@ -41,20 +41,40 @@ import csc207project.gamecentre.filemanagement.FileManagerSingleton;
  * Disabling the phone keyboard when the game st arts citation:
  * https://stackoverflow.com/questions/46024100/how-to-completely-disable-keyboard-when-using-edittext-in-android
  */
-public class game24Activity extends AppCompatActivity implements Serializable, Observer {
+public class game24Activity extends AppCompatActivity {
 
-    Random random = new Random();
-    int a1 = random.nextInt(9) + 1;
-    int a2 = random.nextInt(9) + 1;
-    int a3 = random.nextInt(9) + 1;
-    int a4 = random.nextInt(9) + 1;
 
-    ImageView imageView1 = null;
-    ImageView imageView2 = null;
-    ImageView imageView3 = null;
-    ImageView imageView4 = null;
 
     String inputString = "";
+
+    int a1,a2,a3,a4;
+
+    public int[] generateNumber(){
+        int[] numberList = new int[4];
+        Random random = new Random();
+        for(int i = 0; i < 4; i++)
+            numberList[i] = random.nextInt(9)+1;
+        return numberList;
+    }
+
+    int[] getSolvableDigits(){
+        checkSolvable checkSolvable = new checkSolvable();
+        int[] resultList;
+        boolean result;
+        do{
+            resultList = generateNumber();
+            result = checkSolvable.judgePoint24(resultList);
+        }while(!result);
+        return resultList;
+    }
+
+    void getValidNumber(){
+        int[] validList = getSolvableDigits();
+        a1 = validList[0];
+        a2 = validList[1];
+        a3 = validList[2];
+        a4 = validList[3];
+    }
 
 
     /**
@@ -88,8 +108,8 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
         editText.setEnabled(false);
         editText.setFocusable(false);
         editText.setInputType(0);
-        Button btnComfirm = findViewById(R.id.btnComfirm);
-        btnComfirm.setEnabled(false);
+        Button btnConfirm = findViewById(R.id.btnComfirm);
+        btnConfirm.setEnabled(false);
         final Button undo = findViewById(R.id.undoBtn);
         final Button btnLoad = findViewById(R.id.btnLoad);
 
@@ -114,6 +134,8 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
         chronometer.setFormat("Time: %s");
         chronometer.setBase(SystemClock.elapsedRealtime());
 
+        getValidNumber();
+
         StartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,7 +143,7 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
                 startChronometer();
 
                 //enable confirm
-                btnComfirm.setEnabled(true);
+                btnConfirm.setEnabled(true);
                 editText.setText("");
 
                 //enable editText after StartButton is clicked
@@ -289,7 +311,7 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
             }
         });
 
-        btnComfirm.setOnClickListener(new View.OnClickListener() {
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // disable chronometer
@@ -322,25 +344,31 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
         });
 
 
-        undo.setOnClickListener(new View.OnClickListener() {
+        undo.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
-                if (inputString.length() != 0) {
-//                    if(){
-                    //检查是否数字，恢复数字按钮的clickable
-//
-//                    }
-                    inputString = inputString.substring(0, inputString.length() - 1);
+            public void onClick(View v){
+                if(inputString.length() > 0){
+                    String lastStr = inputString.substring(inputString.length()-1);
+                    int indicator =checkIfNumber(lastStr);
+                    if(indicator > 0){
+                        if(indicator == a1){
+                            imageView1.setClickable(true);
+                        }if(indicator == a2){
+                            imageView2.setClickable(true);
+                        }if(indicator == a3){
+                            imageView3.setClickable(true);
+                        }else{
+                            imageView4.setClickable(true);
+                        }
+                    }
+                    inputString = inputString.substring(0,inputString.length()-1);
                     editText.setText(inputString);
-
-                } else {
+                }else{
                     editText.setText("No Step to Undo!");
                 }
             }
 
         });
-
-
     }
 
     /**
@@ -354,17 +382,24 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
         }
     }
 
-//    public void resetChronometer(View v) {
-//        chronometer.setBase(SystemClock.elapsedRealtime());
-//        pauseOffset = 0;
-//    }
+
+    public int checkIfNumber(String lastC) {
+        int lastInt = 0;
+        try {
+            lastInt = Integer.valueOf(lastC).intValue();
+        } catch (Exception e) {
+            System.out.println("It is not integer");
+        }
+        return lastInt;
+    }
 
 
-    public String getFinalResult(String str) {
+
+    public String getFinalResult(String str){
         int re = judgeTransferable(str);
-        if (re == 0) {
+        if(re == 0){
             return "Ooop! Computer cannot do this math!";
-        } else {
+        }else{
             String result = String.valueOf(re);
             return result;
         }
@@ -422,16 +457,7 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
         }
 
     }
-    @Override
-    public void update(Observable o, Object arg) {
-//        display();
-//        this.boardManager.pushToStack();
-//        this.boardManager.setDuration(SystemClock.elapsedRealtime() - this.timer.getBase());
-//        FileManager fileManager = new FileManager();
-//        fileManager.saveToFile(GAME24POINTS_FILE_NAME, inputString);
-        FileManagerSingleton fileManagerSingleton= new FileManagerSingleton();
-//        fileManagerSingleton.writeToFile(GAME24POINTS_FILE_NAME, inputString));
-    }
+
 
 
 }
