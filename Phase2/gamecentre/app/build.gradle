@@ -16,7 +16,7 @@ android {
             res.srcDirs = [
                     'src/main/res/MainMenu',
                     'src/main/res/drawable/SlidingTiles',
-                    'src/main/res/drawable/24Game',
+                    'src/main/res/TwentyFourGame',
                     'src/main/res/drawable/MemoryMatching',
                     'src/main/res'
             ]

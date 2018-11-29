@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import csc207project.gamecentre.GoFor24.game24Activity;
+import csc207project.gamecentre.TwentyFourGame.game24Activity;
 import csc207project.gamecentre.MemoryMatchingPics.MatchingStartingActivity;
 import csc207project.gamecentre.R;
 import csc207project.gamecentre.SlidingTiles.StartingActivity;

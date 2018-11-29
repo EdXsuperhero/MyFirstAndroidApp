@@ -1,4 +1,4 @@
-package csc207project.gamecentre.GoFor24;
+package csc207project.gamecentre.TwentyFourGame;
 
 //https://blog.csdn.net/yhhazr/article/details/7947962
 

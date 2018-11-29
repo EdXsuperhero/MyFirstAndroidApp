@@ -16,7 +16,6 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import csc207project.gamecentre.GoFor24.game24Activity;
 import csc207project.gamecentre.R;
 
 
