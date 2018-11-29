@@ -33,8 +33,8 @@ public class SignUpFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
 
-        setUsernameInputIndicator(view, "");
-        setPasswordConfirmIndicator(view, "");
+        setUsernameInputIndicator(view, R.string.empty);
+        setPasswordConfirmIndicator(view, R.string.empty);
         addSignUpButtonListener(view);
 
         return view;
@@ -52,7 +52,7 @@ public class SignUpFragment extends Fragment {
             public void onClick(View v) {
                 String username = getUsernameInput(view);
                 if (userManager.isStoredUser(username)) {
-                    setUsernameInputIndicator(view, "Username Registered");
+                    setUsernameInputIndicator(view, R.string.username_exists);
                 } else {
                     String password = getPasswordInput(view);
                     String confirmPassword = getConfirmPasswordInput(view);
@@ -61,7 +61,7 @@ public class SignUpFragment extends Fragment {
                         userManager.setCurrentUser(username);
                         ((LoginActivity) getActivity()).replaceSignInFragment();
                     } else {
-                        setPasswordConfirmIndicator(view, "Password doesn't Match");
+                        setPasswordConfirmIndicator(view, R.string.password_doesnt_match);
                     }
                 }
             }
@@ -107,7 +107,7 @@ public class SignUpFragment extends Fragment {
      * @param view current view
      * @param warning warning for username input
      */
-    private void setUsernameInputIndicator(View view, String warning) {
+    private void setUsernameInputIndicator(View view, int warning) {
         TextView usernameIndicator = view.findViewById(R.id.UsernameSignUpIndicator);
         usernameIndicator.setText(warning);
     }
@@ -118,7 +118,7 @@ public class SignUpFragment extends Fragment {
      * @param view current view
      * @param warning warning for confirm password input
      */
-    private void setPasswordConfirmIndicator(View view, String warning) {
+    private void setPasswordConfirmIndicator(View view, int warning) {
         TextView passwordIndicator = view.findViewById(R.id.PasswordConfirmIndicator);
         passwordIndicator.setText(warning);
     }

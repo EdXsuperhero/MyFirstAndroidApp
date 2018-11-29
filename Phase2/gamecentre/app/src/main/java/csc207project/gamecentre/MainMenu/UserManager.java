@@ -47,6 +47,31 @@ public class UserManager implements Serializable {
     }
 
     /**
+     * Change current user's username.
+     *
+     * @param newUsername new username to be changed
+     */
+    public void changeUsername(String newUsername) {
+        User user = this.users.get(this.currentUser);
+        this.users.remove(this.currentUser);
+
+        this.currentUser = newUsername;
+        user.setUsername(this.currentUser);
+        this.users.put(this.currentUser, user);
+    }
+
+    /**
+     * Change current user's password.
+     *
+     * @param newPassword new password to be changed
+     */
+    public void changePassword(String newPassword) {
+        User user = this.users.get(this.currentUser);
+        user.setPassword(newPassword);
+        this.users.replace(this.currentUser, user);
+    }
+
+    /**
      * Return whether the username is in the users.
      *
      * @param username the username to check

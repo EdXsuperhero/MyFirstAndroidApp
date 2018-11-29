@@ -41,8 +41,8 @@ public class SignInFragment extends Fragment {
             usernameInput.setText(currentUser);
         }
 
-        setUsernameInputIndicator(view, "");
-        setPasswordInputIndicator(view, "");
+        setUsernameInputIndicator(view, R.string.empty);
+        setPasswordInputIndicator(view, R.string.empty);
         setStayLoginCheckBoxListener(view);
         addSignInButtonListener(view);
         addSignUpButtonListener(view);
@@ -66,10 +66,10 @@ public class SignInFragment extends Fragment {
                         userManager.setCurrentUser(username);
                         ((LoginActivity) getActivity()).finish();
                     } else {
-                        setPasswordInputIndicator(view, "Wrong Password");
+                        setPasswordInputIndicator(view, R.string.wrong_password);
                     }
                 } else {
-                    setUsernameInputIndicator(view, "User not Registered");
+                    setUsernameInputIndicator(view, R.string.user_not_registered);
                 }
             }
         });
@@ -116,7 +116,6 @@ public class SignInFragment extends Fragment {
      * Get stay login status.
      *
      * @param view current view
-     * @return whether stay login is checked
      */
     private void setStayLoginCheckBoxListener(View view) {
         CheckBox stayLogin = view.findViewById(R.id.StayLogin);
@@ -134,7 +133,7 @@ public class SignInFragment extends Fragment {
      * @param view current view
      * @param warning warning for username input
      */
-    private void setUsernameInputIndicator(View view, String warning) {
+    private void setUsernameInputIndicator(View view, int warning) {
         TextView usernameIndicator = view.findViewById(R.id.UsernameSignInIndicator);
         usernameIndicator.setText(warning);
     }
@@ -145,7 +144,7 @@ public class SignInFragment extends Fragment {
      * @param view current view
      * @param warning warning for password input
      */
-    private void setPasswordInputIndicator(View view, String warning) {
+    private void setPasswordInputIndicator(View view, int warning) {
         TextView passwordIndicator = view.findViewById(R.id.PasswordSignInIndicator);
         passwordIndicator.setText(warning);
     }
