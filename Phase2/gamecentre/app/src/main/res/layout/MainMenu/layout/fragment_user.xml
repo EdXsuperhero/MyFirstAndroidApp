@@ -16,10 +16,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="25dp"
         android:layout_alignParentTop="true"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="25dp"
-        tools:srcCompat="@tools:sample/avatars[14]"/>
+        tools:srcCompat="@tools:sample/avatars[3]"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/welcomeTitle"
@@ -33,6 +34,7 @@
         android:textStyle="bold"/>
 
     <TextView
+        android:id="@+id/welcomeUser"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_alignStart="@id/welcomeTitle"
@@ -45,9 +47,36 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_marginTop="200dp"
-        android:background="@drawable/custom_border">
+        android:background="@drawable/custom_layout_border">
 
+            <TextView
+                android:id="@+id/ChangeUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="0dp"
+                android:background="@drawable/custom_textview_border"
+                android:text="@string/change_username"
+                android:textStyle="bold"/>
 
+            <TextView
+                android:id="@+id/ChangePassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/ChangeUsername"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/custom_textview_border"
+                android:text="@string/change_password"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/Logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/custom_logout_border"
+                android:text="@string/logout"
+                android:textStyle="bold"/>
 
     </RelativeLayout>
 
