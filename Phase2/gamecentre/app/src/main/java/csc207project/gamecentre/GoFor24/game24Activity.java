@@ -1,5 +1,6 @@
 package csc207project.gamecentre.GoFor24;
 
+import android.content.Intent;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,19 +23,16 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.Random;
 
 import csc207project.gamecentre.R;
-import csc207project.gamecentre.filemanagement.FileManagerSingleton;
 
 /**
  * The idea of chronometer is cited from https://codinginflow.com/tutorials/android/chronometer
  * Disabling the phone keyboard when the game st arts citation:
  * https://stackoverflow.com/questions/46024100/how-to-completely-disable-keyboard-when-using-edittext-in-android
  */
-public class game24Activity extends AppCompatActivity implements Serializable, Observer {
+public class game24Activity extends AppCompatActivity implements Serializable{
 
     Random random = new Random();
     int a1 = random.nextInt(9) + 1;
@@ -47,12 +45,11 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
     ImageView imageView3 = null;
     ImageView imageView4 = null;
 
-//    String inputString = "";
     String inputString;
 
     HashMap<String, String> hm = new HashMap<String, String>();
     /**
-     * A Chronometer to calculate time.
+     * A Chronometer to record how many time is taken for the game.
      */
     private Chronometer chronometer;
 
@@ -70,6 +67,10 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
      * The file GAME24POINTS_FILE_NAME that store the strings.
      */
     public final static String GAME24POINTS_FILE_NAME = "game24.ser";
+    /**
+     * The file TIMER_OFFSET that store the time as string.
+     */
+    public final static String TIMER_OFFSET = "chronometer.ser";
 
 
     @Override
@@ -78,17 +79,18 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game24);
 
-        FileManagerSingleton fm = FileManagerSingleton.getInstance();
-//        HashMap<String,String> mapfromFile = fm.loadFromFile(GAME24POINTS_FILE_NAME);
         final Button StartButton = findViewById(R.id.startBtn);
         EditText editText = findViewById(R.id.inputText);
         editText.setEnabled(false);
         editText.setFocusable(false);
         editText.setInputType(0);
-        Button btnComfirm = findViewById(R.id.btnComfirm);
-        btnComfirm.setEnabled(false);
+        Button btnConfirm = findViewById(R.id.btnConfirm);
+        btnConfirm.setEnabled(false);
         final Button undo = findViewById(R.id.undoBtn);
         final Button btnLoad = findViewById(R.id.btnLoad);
+        final Button btnResult = findViewById(R.id.btnResult);
+        btnResult.setEnabled(false);
+        btnResult.setFocusable(false);
 
         final ImageView imageView1 = findViewById(R.id.imageView1);
         final ImageView imageView2 = findViewById(R.id.imageView2);
@@ -121,7 +123,7 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
                 startChronometer();
 
                 //enable confirm
-                btnComfirm.setEnabled(true);
+                btnConfirm.setEnabled(true);
                 editText.setText("");
 
                 //enable editText after StartButton is clicked
@@ -164,7 +166,8 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
         btnLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnComfirm.setEnabled(true);
+                btnLoad.setClickable(false);
+                btnConfirm.setEnabled(true);
 
                 //Set StartButton unclickable
                 StartButton.setClickable(false);
@@ -189,8 +192,7 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
                 btnMultiply.setClickable(true);
                 btnDivide.setClickable(true);
 
-                //enable editText after StartButton is clicked
-                //enable editText after StartButton is clicked
+                //enable editText after LoadButton is clicked
                 editText.setEnabled(true);
                 editText.setFocusable(true);
 
@@ -202,6 +204,17 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
                     editText.setEnabled(true);
                     editText.setFocusable(true);
                 }
+
+                HashMap<String, String> chm = loadTimeFromFile(TIMER_OFFSET);
+                if (chm!= null){
+                    System.out.println(chm);
+                    if (chm.get("userName") != null)
+                             {
+                        pauseOffset = Long.parseLong(chm.get("userName"));
+                    }
+                }
+                startChronometer();
+
             }
         });
 
@@ -216,18 +229,16 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                String txt = editText.getText().toString();
                 System.out.println("onchange..");
                 loadFromFile(GAME24POINTS_FILE_NAME);
                 if (hm== null){
-                    System.out.println("mapfromFile = null");
+//                    System.out.println("mapfromFile = null");
                     HashMap<String, String> hm = new HashMap<String, String>();
                     hm.put("user1", editText.getText().toString());
                     saveToFile(GAME24POINTS_FILE_NAME);
                 }else {
-                    System.out.println("mapfromFile = not null");
+//                    System.out.println("mapfromFile = not null");
                     hm.put("user1", editText.getText().toString());
-//                    fm.writeToFile(GAME24POINTS_FILE_NAME,hm);
                     saveToFile(GAME24POINTS_FILE_NAME);
                 }
             }
@@ -237,14 +248,11 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
 
             }
         });
-//        final SharedPreferences prefs = PreferenceManager
-//                .getDefaultSharedPreferences(this);
-
-
 
         imageView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                
                 imageView1.setClickable(false);
                 inputString += a1;
                 editText.setText(inputString);
@@ -326,13 +334,19 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
             }
         });
 
-        btnComfirm.setOnClickListener(new View.OnClickListener() {
+
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                undo.setClickable(false);
+                undo.setEnabled(false);
                 // disable chronometer
                 pauseChronometer();
-
+                btnResult.setEnabled(true);
+                btnResult.setFocusable(true);
+                btnResult.setClickable(true);
                 StartButton.setClickable(false);
+                btnLoad.setClickable(false);
 
                 btnLeft.setClickable(false);
                 btnRight.setClickable(false);
@@ -345,16 +359,11 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
                 editText.setText(finalResult);
 
             }
-
-            /**
-             * A method that pause the chronometer.
-             */
-            private void pauseChronometer() {
-                if (running) {
-                    chronometer.stop();
-                    pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
-                    running = false;
-                }
+        });
+        btnResult.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchToScore();
             }
         });
 
@@ -379,7 +388,26 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
 
         });
 
+    }
+    @Override
+    protected void onPause(){
+        super.onPause();
+        pauseChronometer();
+        HashMap<String, String> chm = new HashMap<>();
+        chm.put("userName", String.valueOf(pauseOffset));
+        saveTimeToFile(TIMER_OFFSET, chm);
 
+    }
+
+    /**
+     * A method that pause the chronometer.
+     */
+    private void pauseChronometer() {
+        if (running) {
+            chronometer.stop();
+            pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
+            running = false;
+        }
     }
 
     /**
@@ -393,6 +421,7 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
             running = true;
         }
     }
+
 
 
     public String getFinalResult(String str) {
@@ -457,6 +486,7 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
         }
 
     }
+
     /**
      * Load the string from fileName to ediText.
      *
@@ -472,16 +502,47 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
                 inputStream.close();
             }
         } catch (FileNotFoundException e) {
-            Log.e("login activity", "File not found: " + e.toString());
+            Log.e("game24 activity", "File not found: " + e.toString());
         } catch (IOException e) {
-            Log.e("login activity", "Can not read file: " + e.toString());
+            Log.e("game24 activity", "Can not read file: " + e.toString());
         } catch (ClassNotFoundException e) {
-            Log.e("login activity", "File contained unexpected data type: " + e.toString());
+            Log.e("game24 activity", "File contained unexpected data type: " + e.toString());
         }
+    }
+    /**
+     * Load the time taken from the fileName to the HashMap.
+     *
+     * @param fileName the name of the file,
+     */
+    private HashMap<String, String> loadTimeFromFile(String fileName) {
+
+        try {
+            InputStream inputStream = this.openFileInput(fileName);
+            if (inputStream != null) {
+                ObjectInputStream input = new ObjectInputStream(inputStream);
+                HashMap<String, String> chm = (HashMap<String, String>) input.readObject();
+                inputStream.close();
+                return chm;
+            }
+        } catch (FileNotFoundException e) {
+            Log.e("game24 activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("game24 activity", "Can not read file: " + e.toString());
+        } catch (ClassNotFoundException e) {
+            Log.e("game24 activity", "File contained unexpected data type: " + e.toString());
+        }
+        return null;
+    }
+    /**
+     * Switch to Score Board when the game is ended.
+     */
+    private void switchToScore(){
+        Intent scoreboard = new Intent(getApplicationContext(), ScoreBoard24GameActivity.class);
+        startActivity(scoreboard);
     }
 
     /**
-     * Save the editText strings to fileName.
+     * Save the time taken to fileName.
      *
      * @param fileName the name of the file
      */
@@ -495,13 +556,21 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
             Log.e("Exception", "File write failed: " + e.toString());
         }
     }
-
-    @Override
-    public void update(Observable o, Object arg) {
-//        display();
-//        this.boardManager.pushToStack();
-//        this.boardManager.setDuration(SystemClock.elapsedRealtime() - this.timer.getBase());
-        saveToFile(game24Activity.GAME24POINTS_FILE_NAME);
+    /**
+     * Save the time taken from HashMap to fileName.
+     *
+     * @param fileName the name of the file,
+     * @param chm the name of the HashMap.
+     */
+    public void saveTimeToFile(String fileName, HashMap<String,String> chm) {
+        try {
+            ObjectOutputStream outputStream = new ObjectOutputStream(
+                    this.openFileOutput(fileName, MODE_PRIVATE));
+            outputStream.writeObject(chm);
+            outputStream.close();
+        } catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
     }
 
 }
