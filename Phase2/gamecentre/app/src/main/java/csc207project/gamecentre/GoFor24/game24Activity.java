@@ -1,10 +1,6 @@
 package csc207project.gamecentre.GoFor24;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.SystemClock;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,16 +12,13 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import java.io.BufferedReader;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,9 +47,10 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
     ImageView imageView3 = null;
     ImageView imageView4 = null;
 
-    String inputString = "";
+//    String inputString = "";
+    String inputString;
 
-
+    HashMap<String, String> hm = new HashMap<String, String>();
     /**
      * A Chronometer to calculate time.
      */
@@ -77,14 +71,17 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
      */
     public final static String GAME24POINTS_FILE_NAME = "game24.ser";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game24);
 
+        FileManagerSingleton fm = FileManagerSingleton.getInstance();
+//        HashMap<String,String> mapfromFile = fm.loadFromFile(GAME24POINTS_FILE_NAME);
         final Button StartButton = findViewById(R.id.startBtn);
-        final EditText editText = findViewById(R.id.inputText);
+        EditText editText = findViewById(R.id.inputText);
         editText.setEnabled(false);
         editText.setFocusable(false);
         editText.setInputType(0);
@@ -114,6 +111,9 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
         chronometer.setFormat("Time: %s");
         chronometer.setBase(SystemClock.elapsedRealtime());
 
+        /**
+         * Activity the start button.
+         */
         StartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,57 +152,94 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
                 btnDivide.setClickable(true);
 
                 inputString = "";
+
+
             }
         });
+
+        /**
+         * Activity the load button.
+         */
 
         btnLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FileManagerSingleton fileManagerSingleton = new FileManagerSingleton();
-                fileManagerSingleton.loadFromFile(GAME24POINTS_FILE_NAME);
-                editText.setText(inputString);
+                btnComfirm.setEnabled(true);
+
+                //Set StartButton unclickable
+                StartButton.setClickable(false);
+
+                //Make 4 imageViews clickable after click start button
+                imageView1.setClickable(true);
+                imageView2.setClickable(true);
+                imageView3.setClickable(true);
+                imageView4.setClickable(true);
+
+
+                //set random picture to 4 imageViews
+                setImage(imageView1, a1);
+                setImage(imageView2, a2);
+                setImage(imageView3, a3);
+                setImage(imageView4, a4);
+
+                btnLeft.setClickable(true);
+                btnRight.setClickable(true);
+                btnPlus.setClickable(true);
+                btnMinus.setClickable(true);
+                btnMultiply.setClickable(true);
+                btnDivide.setClickable(true);
+
+                //enable editText after StartButton is clicked
+                //enable editText after StartButton is clicked
+                editText.setEnabled(true);
+                editText.setFocusable(true);
+
+                loadFromFile(GAME24POINTS_FILE_NAME);
+                if (hm != null){
+                    editText.setText(hm.get("user1"));
+                } else {
+                    editText.setText(inputString);
+                    editText.setEnabled(true);
+                    editText.setFocusable(true);
+                }
             }
         });
-//        editText.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                FileManager fileManager = new FileManager();
-//                fileManager.saveToFile(GAME24POINTS_FILE_NAME, "username" + "," +
-//                        editText.getText().toString());
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
-        final SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(this);
 
+        /**
+         * To save and load strings from editText
+         */
         editText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onTextChanged(CharSequence s, int start, int before,
-                                      int count)
-            {
-                prefs.edit().putString("autoSave", s.toString()).commit();
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after)
-            {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                String txt = editText.getText().toString();
+                System.out.println("onchange..");
+                loadFromFile(GAME24POINTS_FILE_NAME);
+                if (hm== null){
+                    System.out.println("mapfromFile = null");
+                    HashMap<String, String> hm = new HashMap<String, String>();
+                    hm.put("user1", editText.getText().toString());
+                    saveToFile(GAME24POINTS_FILE_NAME);
+                }else {
+                    System.out.println("mapfromFile = not null");
+                    hm.put("user1", editText.getText().toString());
+//                    fm.writeToFile(GAME24POINTS_FILE_NAME,hm);
+                    saveToFile(GAME24POINTS_FILE_NAME);
+                }
             }
 
             @Override
-            public void afterTextChanged(Editable s)
-            {
+            public void afterTextChanged(Editable s) {
+
             }
         });
+//        final SharedPreferences prefs = PreferenceManager
+//                .getDefaultSharedPreferences(this);
+
 
 
         imageView1.setOnClickListener(new View.OnClickListener() {
@@ -321,7 +358,9 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
             }
         });
 
-
+        /**
+         * Activity the undo button.
+         */
         undo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -344,7 +383,8 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
     }
 
     /**
-     * A method that enables the chronometer.
+     * A method that start
+     * s the chronometer.
      */
     private void startChronometer() {
         if (!running) {
@@ -353,11 +393,6 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
             running = true;
         }
     }
-
-//    public void resetChronometer(View v) {
-//        chronometer.setBase(SystemClock.elapsedRealtime());
-//        pauseOffset = 0;
-//    }
 
 
     public String getFinalResult(String str) {
@@ -372,14 +407,14 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
     }
 
 
-    public int judgeTransferable(String s){
+    public int judgeTransferable(String s) {
         int i = 0;
-        try{
+        try {
             ChangeString changeString = new ChangeString();
             ArrayList result = changeString.getStringList(s);
             result = changeString.getPostOrder(result);
             i = changeString.calculate(result);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("invalid message");
 
         }
@@ -422,16 +457,51 @@ public class game24Activity extends AppCompatActivity implements Serializable, O
         }
 
     }
+    /**
+     * Load the string from fileName to ediText.
+     *
+     * @param fileName the name of the file
+     */
+    private void loadFromFile(String fileName) {
+
+        try {
+            InputStream inputStream = this.openFileInput(fileName);
+            if (inputStream != null) {
+                ObjectInputStream input = new ObjectInputStream(inputStream);
+                hm = (HashMap<String, String>) input.readObject();
+                inputStream.close();
+            }
+        } catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        } catch (ClassNotFoundException e) {
+            Log.e("login activity", "File contained unexpected data type: " + e.toString());
+        }
+    }
+
+    /**
+     * Save the editText strings to fileName.
+     *
+     * @param fileName the name of the file
+     */
+    public void saveToFile(String fileName) {
+        try {
+            ObjectOutputStream outputStream = new ObjectOutputStream(
+                    this.openFileOutput(fileName, MODE_PRIVATE));
+            outputStream.writeObject(hm);
+            outputStream.close();
+        } catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+    }
+
     @Override
     public void update(Observable o, Object arg) {
 //        display();
 //        this.boardManager.pushToStack();
 //        this.boardManager.setDuration(SystemClock.elapsedRealtime() - this.timer.getBase());
-//        FileManager fileManager = new FileManager();
-//        fileManager.saveToFile(GAME24POINTS_FILE_NAME, inputString);
-        FileManagerSingleton fileManagerSingleton= new FileManagerSingleton();
-//        fileManagerSingleton.writeToFile(GAME24POINTS_FILE_NAME, inputString));
+        saveToFile(game24Activity.GAME24POINTS_FILE_NAME);
     }
-
 
 }
