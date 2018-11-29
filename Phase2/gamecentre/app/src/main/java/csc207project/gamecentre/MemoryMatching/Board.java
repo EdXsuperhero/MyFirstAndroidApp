@@ -160,4 +160,11 @@ public class Board extends Observable implements Serializable, Cloneable {
     public int getNumCards() {
         return (int) Math.pow(this.width, 2);
     }
+
+    /**
+     * return the card stack.
+     */
+    public Stack<Card> getCardStack(){
+        return this.cardStack;
+    }
 }

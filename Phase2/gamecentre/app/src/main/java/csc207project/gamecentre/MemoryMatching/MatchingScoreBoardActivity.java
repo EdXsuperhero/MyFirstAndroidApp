@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import csc207project.gamecentre.R;
+import csc207project.gamecentre.MainMenu.LoginFragment.LoginActivity;
 
 /**
  * The scoreboard activity for sliding tiles.
@@ -39,7 +40,7 @@ public class MatchingScoreBoardActivity extends AppCompatActivity {
     /**
      * The username of whom is playing this game.
      */
-    public String username = "ME";//TODO:LoginActivity.getUserManager().getCurrentUser();
+    public String username = "ME";//LoginActivity.getUserManager().getCurrentUser();
 
     /**
      * A score manager.

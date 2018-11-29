@@ -69,7 +69,6 @@ public class BoardManager implements Serializable {
 
     }
 
-
     /**
      * push current board to stack.
      */
@@ -98,10 +97,15 @@ public class BoardManager implements Serializable {
     /**
      * @return the current board
      */
-    Board getBoard() {
+    public Board getBoard() {
         return this.board;
     }
 
-
+    /**
+     * @return the current board stack
+     */
+    public Stack<Board> getBoardStack() {
+        return boardStack;
+    }
 
 }

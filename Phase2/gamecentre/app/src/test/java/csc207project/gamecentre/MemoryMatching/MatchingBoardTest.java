@@ -60,7 +60,6 @@ public class MatchingBoardTest {
         Board b = new Board(4, cards);
         b.flipCard(0,0);
         assertEquals(R.drawable.card_1,b.getCards()[0][0].getBackground());
-
     }
 
     @Test
@@ -151,35 +150,6 @@ public class MatchingBoardTest {
     }
 
     @Test
-    public void getMatchedTest() {
-
-        List<Card> cards = new ArrayList<>();
-
-        for (int i = 0; i < 8; i++){
-            cards.add(new Card(i, i));
-        }
-        for (int i = 0; i < 8; i++){
-            cards.add(new Card(i + 8, i));
-        }
-        Board b = new Board(4, cards);
-        b.flipCard(0,0);
-        b.flipCard(2,0);
-        int matched1 = b.getMatched();
-        assertEquals(2,matched1);
-
-        b.flipCard(0,1);
-        b.flipCard(0,1);
-        int matched2 = b.getMatched();
-        assertEquals(2,matched2);
-
-        b.flipCard(0,1);
-        b.flipCard(0,2);
-        int matched3 = b.getMatched();
-        assertEquals(2,matched3);
-
-    }
-
-    @Test
     public void getNumCardsTest() {
         int res = 0;
         List<Card> cards = new ArrayList<>();
@@ -194,6 +164,24 @@ public class MatchingBoardTest {
         Board b = new Board(4,cards);
 
         assertEquals(16, b.getNumCards());
+    }
+
+    @Test
+    public void getCardStackTest(){
+        int res = 0;
+        List<Card> cards = new ArrayList<>();
+
+        for (int i = 0; i < 8; i++){
+            cards.add(new Card(i, i));
+        }
+        for (int i = 0; i < 8; i++){
+            cards.add(new Card(i + 8, i));
+        }
+
+        Board b = new Board(4,cards);
+
+        b.flipCard(0,0);
+        assertEquals(R.drawable.card_1,b.getCardStack().pop().getBackground());
     }
 
 }
