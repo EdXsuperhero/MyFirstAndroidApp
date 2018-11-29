@@ -1,4 +1,4 @@
-package csc207project.gamecentre.MemoryMatchingPics;
+package csc207project.gamecentre.MemoryMatching;
 
 import org.junit.Test;
 
@@ -8,8 +8,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class BoardUnitTest {
-
+public class MatchingBoardTest {
     @Test
     public void flipCardTest() {
         List<Card> cards = new ArrayList<>();
@@ -152,4 +151,5 @@ public class BoardUnitTest {
 
         assertEquals(16, b.getNumCards());
     }
+
 }
