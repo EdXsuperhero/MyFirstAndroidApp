@@ -1,6 +1,4 @@
-package csc207project.gamecentre.MemoryMatchingPics;
-
-import android.support.annotation.NonNull;
+package csc207project.gamecentre.MemoryMatching;
 
 import java.io.Serializable;
 import java.util.ArrayList;

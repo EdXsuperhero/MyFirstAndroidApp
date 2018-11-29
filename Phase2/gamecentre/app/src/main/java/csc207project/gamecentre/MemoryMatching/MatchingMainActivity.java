@@ -1,15 +1,13 @@
-package csc207project.gamecentre.MemoryMatchingPics;
+package csc207project.gamecentre.MemoryMatching;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Context;
 import android.os.SystemClock;
 import android.util.Log;
-import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.Chronometer;
-import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

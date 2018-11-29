@@ -1,4 +1,4 @@
-package csc207project.gamecentre.MemoryMatchingPics;
+package csc207project.gamecentre.MemoryMatching;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,12 +1,10 @@
-package csc207project.gamecentre.MemoryMatchingPics;
+package csc207project.gamecentre.MemoryMatching;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
-
-import csc207project.gamecentre.R;
 
 /**
  * manage a board, including flip the tile, check for match, check for win, and managing taps.

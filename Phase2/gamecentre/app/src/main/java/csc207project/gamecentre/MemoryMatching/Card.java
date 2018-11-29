@@ -1,4 +1,4 @@
-package csc207project.gamecentre.MemoryMatchingPics;
+package csc207project.gamecentre.MemoryMatching;
 
 import android.support.annotation.NonNull;
 

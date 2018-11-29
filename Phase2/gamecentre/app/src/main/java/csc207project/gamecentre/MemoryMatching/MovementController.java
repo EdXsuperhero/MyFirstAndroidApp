@@ -1,12 +1,9 @@
-package csc207project.gamecentre.MemoryMatchingPics;
+package csc207project.gamecentre.MemoryMatching;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.widget.Toast;
-
-import csc207project.gamecentre.MemoryMatchingPics.MatchingStartingActivity;
 
 public class MovementController {
 

@@ -1,5 +1,5 @@
 
-package csc207project.gamecentre.MemoryMatchingPics;
+package csc207project.gamecentre.MemoryMatching;
 
 import android.os.Bundle;
 import android.view.View;

@@ -1,4 +1,4 @@
-package csc207project.gamecentre.MemoryMatchingPics;
+package csc207project.gamecentre.MemoryMatching;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import csc207project.gamecentre.R;
-import csc207project.gamecentre.MainMenu.LoginFragment.LoginActivity;
+
 /**
  * The scoreboard activity for sliding tiles.
  */
@@ -29,7 +29,7 @@ public class MatchingScoreBoardActivity extends AppCompatActivity {
     /**
      * Set Context.
      */
-    private Context mContext = csc207project.gamecentre.MemoryMatchingPics.MatchingScoreBoardActivity.this;
+    private Context mContext = csc207project.gamecentre.MemoryMatching.MatchingScoreBoardActivity.this;
 
     /**
      * The save file for scores.
