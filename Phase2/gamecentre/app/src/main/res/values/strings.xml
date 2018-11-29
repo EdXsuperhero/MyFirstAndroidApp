@@ -30,4 +30,6 @@
 
     <string name="memory_matching">Memory Matching</string>
     <string name="memory_matching_des" />
+
+    <string name="welcome">Welcome,</string>
 </resources>
