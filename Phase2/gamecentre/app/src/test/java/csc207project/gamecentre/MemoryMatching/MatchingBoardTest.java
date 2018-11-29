@@ -6,11 +6,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import csc207project.gamecentre.R;
+
 import static org.junit.Assert.*;
 
 public class MatchingBoardTest {
     @Test
-    public void flipCardTest() {
+    public void flipTwoCardMatchedTest() {
         List<Card> cards = new ArrayList<>();
 
         for (int i = 0; i < 8; i++){
@@ -25,15 +27,57 @@ public class MatchingBoardTest {
         int matched1 = b.getMatched();
         assertEquals(2,matched1);
 
-        b.flipCard(0,1);
-        b.flipCard(0,1);
-        int matched2 = b.getMatched();
-        assertEquals(2,matched2);
+    }
 
-        b.flipCard(0,1);
-        b.flipCard(0,2);
-        int matched3 = b.getMatched();
-        assertEquals(2,matched3);
+    @Test
+    public void flipTwoCardUnmatchedTest() {
+        List<Card> cards = new ArrayList<>();
+
+        for (int i = 0; i < 8; i++){
+            cards.add(new Card(i, i));
+        }
+        for (int i = 0; i < 8; i++){
+            cards.add(new Card(i + 8, i));
+        }
+        Board b = new Board(4, cards);
+        b.flipCard(0,0);
+        b.flipCard(1,0);
+        int matched = b.getMatched();
+        assertEquals(0,matched);
+
+    }
+
+    @Test
+    public void flipOneCardOnceTest() {
+        List<Card> cards = new ArrayList<>();
+
+        for (int i = 0; i < 8; i++){
+            cards.add(new Card(i, i));
+        }
+        for (int i = 0; i < 8; i++){
+            cards.add(new Card(i + 8, i));
+        }
+        Board b = new Board(4, cards);
+        b.flipCard(0,0);
+        assertEquals(R.drawable.card_1,b.getCards()[0][0].getBackground());
+
+    }
+
+    @Test
+    public void flipOneCardTwiceTest() {
+        List<Card> cards = new ArrayList<>();
+
+        for (int i = 0; i < 8; i++){
+            cards.add(new Card(i, i));
+        }
+        for (int i = 0; i < 8; i++){
+            cards.add(new Card(i + 8, i));
+        }
+        Board b = new Board(4, cards);
+        b.flipCard(0,0);
+        b.flipCard(0,0);
+        assertEquals(R.drawable.card_0,b.getCards()[0][0].getBackground());
+
     }
 
     @Test
