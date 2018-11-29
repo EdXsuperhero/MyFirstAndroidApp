@@ -22,7 +22,7 @@
         <activity android:name=".SlidingTiles.ScoreBoardActivity" />
 	    <activity android:name=".MemoryMatching.MatchingStartingActivity" />
         <activity android:name=".MemoryMatching.MatchingMainActivity" />
-        <activity android:name=".MemoryMatching.ChooseComplex" />
+        <activity android:name=".MemoryMatching.ChooseComplexActivity" />
         <activity android:name=".MemoryMatching.MatchingScoreBoardActivity" />
         <activity android:name=".TwentyFourGame.game24Activity" />
     </application>

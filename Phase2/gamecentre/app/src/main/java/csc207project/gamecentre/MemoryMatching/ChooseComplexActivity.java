@@ -11,7 +11,7 @@ import csc207project.gamecentre.R;
 /**
  * The activity for selecting complexity.
  */
-public class ChooseComplex extends MatchingStartingActivity {
+public class ChooseComplexActivity extends MatchingStartingActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

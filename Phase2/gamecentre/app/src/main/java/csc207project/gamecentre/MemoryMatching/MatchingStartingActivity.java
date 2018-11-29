@@ -80,7 +80,7 @@ public class MatchingStartingActivity extends AppCompatActivity {
      * Switch to ChooseComplexity to choose game complexity.
      */
     private void switchToChooseComplexity() {
-        Intent chooseComplexityIntent = new Intent(this, ChooseComplex.class);
+        Intent chooseComplexityIntent = new Intent(this, ChooseComplexActivity.class);
         startActivity(chooseComplexityIntent);
     }
 
