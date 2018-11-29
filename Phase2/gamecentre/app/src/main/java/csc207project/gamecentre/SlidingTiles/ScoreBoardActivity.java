@@ -1,8 +1,5 @@
 package csc207project.gamecentre.SlidingTiles;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,14 +24,9 @@ import csc207project.gamecentre.R;
 public class ScoreBoardActivity extends AppCompatActivity {
 
     /**
-     * Set Context.
-     */
-    private Context mContext = ScoreBoardActivity.this;
-
-    /**
      * The save file for scores.
      */
-    public static final String SAVE_SCORE = "save_score.ser";
+    public static final String SAVE_SCORE = "slidingtiles_save_score.ser";
 
     /**
      * The username of whom is playing this game.
@@ -50,9 +42,9 @@ public class ScoreBoardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadFromFile(SAVE_SCORE);
-        long score = getIntent().getLongExtra("score", 0);
+        Long score = getIntent().getLongExtra("score", Long.MAX_VALUE);
         this.currentUser = getIntent().getStringExtra("current_user");
-        if (score != 0) {
+        if (score != Long.MAX_VALUE) {
             this.scoreManager.addScore(this.currentUser, score);
         }
         saveToFile(SAVE_SCORE);
@@ -81,7 +73,6 @@ public class ScoreBoardActivity extends AppCompatActivity {
     /**
      * Show user's highest score.
      */
-    @SuppressLint("SetTextI18n")
     private void addUserHighestScoreListener() {
         TextView userHighestScoreText = findViewById(R.id.HighestScore);
         userHighestScoreText.setText(formatUsedTime(this.scoreManager.getScore(this.currentUser)));
@@ -90,7 +81,6 @@ public class ScoreBoardActivity extends AppCompatActivity {
     /**
      * Show highest 5 scores on the activity.
      */
-    @SuppressLint("SetTextI18n")
     private void addHighestFiveScoresListener() {
         List<Map.Entry<String, Long>> highest5Scores = this.scoreManager.getHighestFiveScores();
 
@@ -128,17 +118,27 @@ public class ScoreBoardActivity extends AppCompatActivity {
      */
     @NonNull
     private String formatUsedTime (@NonNull Long time) {
-        String format = "";
-        if (time.equals(Long.MAX_VALUE)) {
+        String format = new String();
+
+        if (time == Long.MAX_VALUE) {
             format = "00:00";
         } else {
-            long minute = (time / 1000) / 60;
-            long second = (time / 1000) % 60;
-            format = String.valueOf(minute) + ":";
-            if (second > 9) {
-                format = format + String.valueOf(second);
+
+            Long minute = (time / 1000) / 60;
+            Long second = (time / 1000) % 60;
+
+            if (minute > 9) {
+                format += minute.toString();
             } else {
-                format = format + "0" + String.valueOf(second);
+                format += "0" + minute.toString();
+            }
+
+            format += ":";
+
+            if (second > 9) {
+                format += second.toString();
+            } else {
+                format += "0" + second.toString();
             }
         }
         return format;
