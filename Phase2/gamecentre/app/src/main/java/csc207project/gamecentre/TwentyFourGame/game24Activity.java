@@ -26,6 +26,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+
+import csc207project.gamecentre.OASIS.ScoreManager;
 import csc207project.gamecentre.R;
 
 /**
@@ -642,13 +644,14 @@ public class game24Activity extends AppCompatActivity implements Serializable{
      * Switch to Score Board when the game is ended.
      */
     private void switchToScore(){
-        Intent scoreboard = new Intent(getApplicationContext(), ScoreBoard24GameActivity.class);
+        Intent scoreboard = new Intent(getApplicationContext(), TwentyFourGameScoreBoardActivity.class);
 //        if (win == false){
 //            pauseOffset = null;
 //        }
         scoreboard.putExtra("score", pauseOffset);
         scoreboard.putExtra("current_user", getIntent().getStringExtra("current_user"));
         startActivity(scoreboard);
+        finish();
     }
 
     /**

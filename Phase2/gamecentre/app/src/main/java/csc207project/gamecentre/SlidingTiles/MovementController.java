@@ -34,7 +34,7 @@ class MovementController {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         Intent toScoreBoardIntent =
-                                                new Intent(mContext, ScoreBoardActivity.class);
+                                                new Intent(mContext, SlidingTilesScoreBoardActivity.class);
                                         toScoreBoardIntent.putExtra("score", duration);
                                         toScoreBoardIntent.putExtra("current_user",
                                                 ((GameActivity)mContext).getCurrentUser());

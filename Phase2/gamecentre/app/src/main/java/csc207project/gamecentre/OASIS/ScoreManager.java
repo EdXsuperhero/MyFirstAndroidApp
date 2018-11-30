@@ -1,4 +1,4 @@
-package csc207project.gamecentre.TwentyFourGame;
+package csc207project.gamecentre.OASIS;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,14 +9,14 @@ import java.util.Map;
 /**
  * Manage a scores list with username and score.
  */
-class ScoreManager implements Serializable {
+public class ScoreManager implements Serializable {
 
     /**
      * A HashMap storing usernames and scores.
      */
     private HashMap<String, Long> scores = new HashMap<>();
 
-    ScoreManager() {
+    public ScoreManager() {
         for (int i = 0; i <= 5; i++) {
             scores.put("Nobody_" + i, Long.MAX_VALUE);
         }
@@ -28,7 +28,7 @@ class ScoreManager implements Serializable {
      * @param username the username to add new score
      * @param score the new score
      */
-    void addScore(String username, Long score) {
+    public void addScore(String username, Long score) {
         if (isStoredUser(username)) {
             Long prevScore = this.scores.get(username);
             if (score < prevScore) {
@@ -45,7 +45,7 @@ class ScoreManager implements Serializable {
      * @param username the username to get score
      * @return the highest score of username
      */
-    Long getScore(String username) {
+    public Long getScore(String username) {
         Long score = Long.MAX_VALUE;
         if (isStoredUser(username)) {
             score = this.scores.get(username);
@@ -58,7 +58,7 @@ class ScoreManager implements Serializable {
      *
      * @return the highest 5 scores
      */
-    List<Map.Entry<String, Long>> getHighestFiveScores() {
+    public List<Map.Entry<String, Long>> getHighestFiveScores() {
         List<Map.Entry<String, Long>> scoresList = new ArrayList<>(scores.entrySet());
         scoresList.sort(Map.Entry.comparingByValue());
 
