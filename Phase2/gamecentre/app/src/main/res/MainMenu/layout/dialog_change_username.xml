@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageViewNewUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_username"
+        tools:ignore="ContentDescription"/>
+
+    <EditText
+        android:id="@+id/NewUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/imageViewNewUsername"
+        android:layout_alignStart="@id/imageViewNewUsername"
+        android:layout_marginStart="50dp"
+        android:imeOptions="actionNext"
+        android:inputType="textPersonName"
+        android:hint="@string/change_username_input"
+        tools:ignore="Autofill"/>
+
+</RelativeLayout>

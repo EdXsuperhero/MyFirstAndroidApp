@@ -27,6 +27,11 @@ public class Game {
     private Class<?> startGameClass;
 
     /**
+     * The scoreboard activity of this game.
+     */
+    private Class<?> scoreboardClass;
+
+    /**
      * A new game with given name, description and starting activity.
      *
      * @param gameImage the image view of this game
@@ -34,38 +39,46 @@ public class Game {
      * @param gameDescription the description of this game
      * @param startGameClass the starting activity of this game
      */
-    public Game(int gameImage, int gameName, int gameDescription, Class<?> startGameClass) {
+    public Game(int gameImage, int gameName, int gameDescription, Class<?> startGameClass, Class<?> scoreboardClass) {
         this.gameImage = gameImage;
         this.gameName = gameName;
         this.gameDescription = gameDescription;
         this.startGameClass = startGameClass;
+        this.scoreboardClass = scoreboardClass;
     }
 
     /**
      * @return the image view of this game
      */
-    public int getGameImage() {
+    int getGameImage() {
         return gameImage;
     }
 
     /**
      * @return the name of this game
      */
-    public int getGameName() {
+    int getGameName() {
         return gameName;
     }
 
     /**
      * @return the description of this game
      */
-    public int getGameDescription() {
+    int getGameDescription() {
         return gameDescription;
     }
 
     /**
      * @return the starting activity of this game
      */
-    public Class<?> getStartGameClass() {
+    Class<?> getStartGameClass() {
         return startGameClass;
+    }
+
+    /**
+     * @return the scoreboard activity of this game
+     */
+    Class<?> getScoreboardClass() {
+        return scoreboardClass;
     }
 }

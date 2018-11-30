@@ -2,10 +2,12 @@ package csc207project.gamecentre.SlidingTiles;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import java.util.Stack;
+
+import static java.lang.Math.abs;
 
 /**
  * Manage a board, including swapping tiles, checking for a win, and managing taps.
@@ -41,9 +43,53 @@ class BoardManager implements Serializable {
         }
         tiles.add(new Tile(0));
 
-        Collections.shuffle(tiles);
         this.board = new Board(width, tiles);
+        shuffle(this.board);
         pushToStack();
+    }
+
+    /**
+     * Shuffle the board.
+     * 
+     * @param board the board to be shuffle
+     */
+    private void shuffle(Board board) {
+        Random rnd = new Random();
+        long shuffleTimes = abs(rnd.nextInt()) / 12345;
+        System.out.println(shuffleTimes);
+        int blankTileRow = board.getWidth() - 1;
+        int blankTileCol = board.getWidth() - 1;
+        while (shuffleTimes > 0) {
+            int shuffleCondition = rnd.nextInt() % 4;
+            switch (shuffleCondition) {
+                case GameActivity.ABOVE:
+                    if (blankTileRow - 1 >= 0) {
+                        board.swapTiles(blankTileRow, blankTileCol, blankTileRow - 1, blankTileCol);
+                        blankTileRow -= 1;
+                    }
+                    break;
+                case GameActivity.BELOW:
+                    if (blankTileRow + 1 < board.getWidth()) {
+                        board.swapTiles(blankTileRow, blankTileCol, blankTileRow + 1, blankTileCol);
+                        blankTileRow += 1;
+                    }
+                    break;
+                case GameActivity.LEFT:
+                    if (blankTileCol - 1 >= 0) {
+                        board.swapTiles(blankTileRow, blankTileCol, blankTileRow, blankTileCol - 1);
+                        blankTileCol -= 1;
+                    }
+                    break;
+                case GameActivity.RIGHT:
+                    if (blankTileCol + 1 < board.getWidth()) {
+                        board.swapTiles(blankTileRow, blankTileCol, blankTileRow, blankTileCol + 1);
+                        blankTileCol += 1;
+                    }
+                    break;
+            }
+            shuffleTimes--;
+        }
+
     }
 
     /**
