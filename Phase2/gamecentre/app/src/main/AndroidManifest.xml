@@ -25,8 +25,7 @@
         <activity android:name=".MemoryMatching.ChooseComplexActivity" />
         <activity android:name=".MemoryMatching.MatchingScoreBoardActivity" />
         <activity android:name=".TwentyFourGame.game24Activity" />
+        <activity android:name=".TwentyFourGame.ScoreBoard24GameActivity" />
     </application>
 
 </manifest>
-
-
