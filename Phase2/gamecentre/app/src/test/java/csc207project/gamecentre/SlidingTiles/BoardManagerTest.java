@@ -18,6 +18,8 @@ public class BoardManagerTest {
         BoardManager bm = new BoardManager(2);
         if(bm.getBoard().getTile(1, 1).getId() == 0){
             result = false;
+        } else if(bm.getBoard().getTile(0, 0).getId() == 0){
+            result = false;
         }
         boolean valid = bm.isValidTap(3);
         boolean equal = valid == result;
