@@ -129,8 +129,9 @@ public class game24Activity extends AppCompatActivity implements Serializable{
 
         editText = findViewById(R.id.inputText);
 
-        editText.setEnabled(false);
-        editText.setInputType(0);
+//        editText.setEnabled(false);
+//        editText.setInputType(0);
+
         btnConfirm = findViewById(R.id.btnConfirm);
         btnConfirm.setEnabled(false);
 
@@ -163,8 +164,8 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         addMinusButtonListener();
         addMutiplyButtonListener();
         addDivideButtonListener();
-        String finalResult = getFinalResult(inputString);
-        editText.setText(finalResult);
+
+
         SharedPreferences settings = getSharedPreferences(USER_SCORE, 0);
         SharedPreferences.Editor editor = settings.edit();
         String user = "user";
@@ -321,7 +322,8 @@ public class game24Activity extends AppCompatActivity implements Serializable{
 
                 //enable confirm
                 btnConfirm.setEnabled(true);
-                editText.setText("");
+                editText.setHint("GoFor24");
+
 
                 //enable editText after StartButton is clicked
                 editText.setEnabled(true);
