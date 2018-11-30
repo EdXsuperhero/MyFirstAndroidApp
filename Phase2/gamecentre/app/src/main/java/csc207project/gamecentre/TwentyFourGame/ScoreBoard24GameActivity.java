@@ -1,6 +1,5 @@
-package csc207project.gamecentre.GoFor24;
+package csc207project.gamecentre.TwentyFourGame;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -148,12 +147,12 @@ public class ScoreBoard24GameActivity extends AppCompatActivity {
             InputStream inputStream = this.openFileInput(fileName);
             if (inputStream != null) {
                 ObjectInputStream input = new ObjectInputStream(inputStream);
-                this.scoreManager = (csc207project.gamecentre.GoFor24.ScoreManager) input.readObject();
+                this.scoreManager = (ScoreManager) input.readObject();
                 inputStream.close();
             }
         } catch (FileNotFoundException e) {
             Log.e("Source Board", "File not found: " + e.toString());
-            this.scoreManager = new csc207project.gamecentre.GoFor24.ScoreManager();
+            this.scoreManager = new ScoreManager();
             saveScoreToFile(SAVE_SCORE);
         } catch (IOException e) {
             Log.e("Source Board", "Can not read file: " + e.toString());
