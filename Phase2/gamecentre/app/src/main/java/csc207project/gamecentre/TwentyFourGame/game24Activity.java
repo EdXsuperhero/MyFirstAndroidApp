@@ -38,12 +38,18 @@ import csc207project.gamecentre.R;
 
 public class game24Activity extends AppCompatActivity implements Serializable{
 
+    /**
+     * create imageView1,imageView2,imageView3,imageView4
+     */
     ImageView imageView1 = null;
     ImageView imageView2 = null;
     ImageView imageView3 = null;
     ImageView imageView4 = null;
 
 
+    /**
+     * create imageView btnLeft,btnRight,btnPlus,btnMinus,btnMultiply,btnDivide
+     */
     ImageView btnLeft;
     ImageView btnRight;
     ImageView btnPlus;
@@ -51,10 +57,13 @@ public class game24Activity extends AppCompatActivity implements Serializable{
     ImageView btnMultiply;
     ImageView btnDivide;
 
+    /**
+     * create   EditText editText;Button btnConfirm;Button undo;Button startButton;
+     */
     EditText editText;
     Button btnConfirm;
     Button undo;
-    Button StartButton;
+    Button startButton;
 
     String inputString = "";
 
@@ -209,7 +218,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                 btnLoad.setClickable(false);
                 btnConfirm.setEnabled(true);
 
-                StartButton.setClickable(false);
+                startButton.setClickable(false);
 
                 imageView1.setClickable(true);
                 imageView2.setClickable(true);
@@ -338,8 +347,8 @@ public class game24Activity extends AppCompatActivity implements Serializable{
 
 
     private void addStartButtonListener(){
-        StartButton = findViewById(R.id.startBtn);
-        StartButton.setOnClickListener(new View.OnClickListener() {
+        startButton = findViewById(R.id.startBtn);
+        startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -354,7 +363,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                 editText.setEnabled(true);
                 editText.setFocusable(true);
 
-                StartButton.setClickable(false);
+                startButton.setClickable(false);
 
 
 
@@ -368,8 +377,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                 setImage(imageView2, validList[1]);
                 setImage(imageView3, validList[2]);
                 setImage(imageView4, validList[3]);
-//                System.arraycopy(src, 0, validList), src.length;
-//                saveImageToFile(IMAGENUMBER);
                 System.out.println(validList);
 
                 setOperatorClickable(true);
