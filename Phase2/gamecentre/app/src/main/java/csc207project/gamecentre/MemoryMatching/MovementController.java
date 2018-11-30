@@ -17,6 +17,8 @@ public class MovementController {
 
     void setBoardManager(BoardManager boardManager){this.boardManager = boardManager;}
 
+    BoardManager getBoardManager(){return boardManager;}
+
     void processTapMovement(Context context, int position, boolean display){
         this.mContext = context;
 
