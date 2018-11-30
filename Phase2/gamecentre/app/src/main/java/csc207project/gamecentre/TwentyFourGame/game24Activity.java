@@ -90,12 +90,13 @@ public class game24Activity extends AppCompatActivity implements Serializable{
 
     int[] validList = getSolvableDigits();
 
-    void getValidNumber(){
-        a1 = validList[0];
-        a2 = validList[1];
-        a3 = validList[2];
-        a4 = validList[3];
-    }
+
+//    void getValidNumber(){
+//        a1 = validList[0];
+//        a2 = validList[1];
+//        a3 = validList[2];
+//        a4 = validList[3];
+//    }
     /**
      * Creating a file that stores the user's score.
      */
@@ -171,7 +172,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         chronometer.setFormat("Time: %s");
         chronometer.setBase(SystemClock.elapsedRealtime());
 
-        getValidNumber();
+//        getValidNumber();
 
         addUndoButtonListener();
         addStartButtonListener();
@@ -231,6 +232,12 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                 setImage(imageView2, validList[1]);
                 setImage(imageView3, validList[2]);
                 setImage(imageView4, validList[3]);
+
+                setImageView1Listener();
+                setImageView2Listener();
+                setImageView3Listener();
+                setImageView4Listener();
+
 
                 btnLeft.setClickable(true);
                 btnRight.setClickable(true);
@@ -402,22 +409,22 @@ public class game24Activity extends AppCompatActivity implements Serializable{
 
     private void setImageView1Listener(){
         imageView1 = findViewById(R.id.imageView1);
-        numberImageViewListener(imageView1,a1);
+        numberImageViewListener(imageView1,validList[0]);
     }
 
     private void setImageView2Listener(){
         imageView2 = findViewById(R.id.imageView2);
-        numberImageViewListener(imageView2,a2);
+        numberImageViewListener(imageView2,validList[1]);
     }
 
     private void setImageView3Listener(){
         imageView3 = findViewById(R.id.imageView3);
-        numberImageViewListener(imageView3,a3);
+        numberImageViewListener(imageView3,validList[2]);
     }
 
     private void setImageView4Listener(){
         imageView4 = findViewById(R.id.imageView4);
-        numberImageViewListener(imageView4,a4);
+        numberImageViewListener(imageView4,validList[3]);
     }
 
     void operatorImageListener(ImageView opeImaView,String operator){
@@ -472,13 +479,13 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                     int indicator = checkIfNumber(lastStr);
                     if (indicator > 0) {
                         track = 0;
-                        if (indicator == a1) {
+                        if (indicator == validList[0]) {
                             imageView1.setClickable(true);
                         }
-                        if (indicator == a2) {
+                        if (indicator == validList[1]) {
                             imageView2.setClickable(true);
                         }
-                        if (indicator == a3) {
+                        if (indicator == validList[2]) {
                             imageView3.setClickable(true);
                         } else {
                             imageView4.setClickable(true);
@@ -642,8 +649,8 @@ public class game24Activity extends AppCompatActivity implements Serializable{
             InputStream inputStream = this.openFileInput(fileName);
             if (inputStream != null) {
                 ObjectInputStream input = new ObjectInputStream(inputStream);
+//                oldvalidList = (int[]) input.readObject();
                 validList = (int[]) input.readObject();
-//                hm = (HashMap<String, String>) input.readObject();
                 input.close();
                 inputStream.close();
             }
