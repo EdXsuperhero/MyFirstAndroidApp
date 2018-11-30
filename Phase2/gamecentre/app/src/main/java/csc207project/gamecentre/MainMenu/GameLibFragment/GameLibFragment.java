@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import csc207project.gamecentre.MemoryMatching.MatchingMainActivity;
+import csc207project.gamecentre.MemoryMatching.MemoryMatchingGameActivity;
 import csc207project.gamecentre.MemoryMatching.MemoryMatchingScoreBoardActivity;
-import csc207project.gamecentre.SlidingTiles.GameActivity;
+import csc207project.gamecentre.SlidingTiles.SlidingTilesGameActivity;
 import csc207project.gamecentre.SlidingTiles.SlidingTilesScoreBoardActivity;
 import csc207project.gamecentre.TwentyFourGame.TwentyFourGameScoreBoardActivity;
 import csc207project.gamecentre.TwentyFourGame.game24Activity;
@@ -73,7 +73,7 @@ public class GameLibFragment extends Fragment {
                 new Game(R.drawable.sliding_tiles_screenshot,
                         R.string.sliding_tiles,
                         R.string.sliding_tiles_des,
-                        GameActivity.class,
+                        SlidingTilesGameActivity.class,
                         SlidingTilesScoreBoardActivity.class)
         );
         this.games.add(
@@ -87,7 +87,7 @@ public class GameLibFragment extends Fragment {
                 new Game(R.drawable.matching_game_screenshot,
                         R.string.memory_matching,
                         R.string.memory_matching_des,
-                        MatchingMainActivity.class,
+                        MemoryMatchingGameActivity.class,
                         MemoryMatchingScoreBoardActivity.class)
         );
     }

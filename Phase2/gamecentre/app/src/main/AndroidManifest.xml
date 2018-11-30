@@ -18,10 +18,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainMenu.LoginFragment.LoginActivity" />
-        <activity android:name=".SlidingTiles.GameActivity" />
+        <activity android:name=".SlidingTiles.SlidingTilesGameActivity" />
         <activity android:name=".SlidingTiles.ChooseComplexity" />
         <activity android:name=".SlidingTiles.SlidingTilesScoreBoardActivity" />
-        <activity android:name=".MemoryMatching.MatchingMainActivity" />
+        <activity android:name=".MemoryMatching.MemoryMatchingGameActivity" />
         <activity android:name=".MemoryMatching.ChooseComplexActivity" />
         <activity android:name=".MemoryMatching.MemoryMatchingScoreBoardActivity" />
         <activity android:name=".TwentyFourGame.game24Activity" />

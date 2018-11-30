@@ -3,7 +3,6 @@ package csc207project.gamecentre.SlidingTiles;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.widget.Toast;
 
 
@@ -22,24 +21,18 @@ class MovementController {
         if (boardManager.isValidTap(position)) {
             boardManager.touchMove(position);
             if (boardManager.puzzleSolved()) {
-                mContext.deleteFile(GameActivity.TEMP_SAVE_FILENAME);
-                long duration = this.boardManager.getDuration();
+                mContext.deleteFile(SlidingTilesGameActivity.SAVE_FILE_NAME);
+                long duration = ((SlidingTilesGameActivity)mContext).getElapsedTime();
                 String minutes = getUsedTime(duration)[0];
                 String seconds = getUsedTime(duration)[1];
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 builder.setTitle("You Win!")
-                        .setMessage("You have used " + minutes + "minutes " + seconds + "seconds.")
+                        .setMessage("You have used " + minutes + " minutes " + seconds + " seconds.")
                         .setPositiveButton("Take me to ScoreBoard",
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        Intent toScoreBoardIntent =
-                                                new Intent(mContext, SlidingTilesScoreBoardActivity.class);
-                                        toScoreBoardIntent.putExtra("score", duration);
-                                        toScoreBoardIntent.putExtra("current_user",
-                                                ((GameActivity)mContext).getCurrentUser());
-                                        mContext.startActivity(toScoreBoardIntent);
-                                        ((GameActivity) mContext).finish();
+                                        ((SlidingTilesGameActivity)mContext).switchToScoreBoard(duration);
                                     }
                                 })
                         .show();

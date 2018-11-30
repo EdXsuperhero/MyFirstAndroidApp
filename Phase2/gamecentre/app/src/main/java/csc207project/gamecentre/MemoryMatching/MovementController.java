@@ -3,7 +3,6 @@ package csc207project.gamecentre.MemoryMatching;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 
 
 public class MovementController {
@@ -24,9 +23,8 @@ public class MovementController {
 
         boardManager.touchMove(position);
         if (boardManager.cardAllMatched()) {
-            //Toast.makeText(context, "YOU WIN", Toast.LENGTH_SHORT).show();
-            mContext.deleteFile(MatchingMainActivity.TEMP_SAVE_FILENAME);
-            long duration = boardManager.getDuration();
+            mContext.deleteFile(MemoryMatchingGameActivity.SAVE_FILE_NAME);
+            long duration = ((MemoryMatchingGameActivity)mContext).getElapsedTime();
             String min = getUsedTime(duration)[0];
             String sec = getUsedTime(duration)[1];
             AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -36,13 +34,7 @@ public class MovementController {
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Intent toScoreBoardIntent =
-                                            new Intent(mContext, MemoryMatchingScoreBoardActivity.class);
-                                    toScoreBoardIntent.putExtra("score", duration);
-                                    toScoreBoardIntent.putExtra("current_user",
-                                            ((MatchingMainActivity)mContext).getCurrentUser());
-                                    mContext.startActivity(toScoreBoardIntent);
-                                    ((MatchingMainActivity)mContext).finish();
+                                    ((MemoryMatchingGameActivity)mContext).switchToScoreBoard(duration);
                                 }
                             })
                     .show();

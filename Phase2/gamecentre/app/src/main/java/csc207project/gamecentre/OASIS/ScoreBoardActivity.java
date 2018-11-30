@@ -10,7 +10,7 @@ import csc207project.gamecentre.R;
 
 /**
  * Abstract scoreboard activity for factory design.
- * # Exclude from tests because it's a abstract view class.
+ * # Exclude from tests because it's an abstract view class.
  */
 public abstract class ScoreBoardActivity extends AppCompatActivity implements ReadWritePrivilege {
 
@@ -78,12 +78,12 @@ public abstract class ScoreBoardActivity extends AppCompatActivity implements Re
     }
 
     /**
-     * Save the score manager to fileName.
+     * Save the score manager to file.
      */
     public abstract void saveToFile();
 
     /**
-     * Load the score manager from fileName.
+     * Load the score manager from file.
      */
     public abstract void loadFromFile();
 }
