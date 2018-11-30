@@ -58,7 +58,7 @@ public class UserManager implements Serializable {
     public String signUp(String username, String password, String confirmPassword) {
         String result = "Successful";
 
-        if (isStoredUser(username)) {
+        if (isStoredUser(username) | username.equals("")) {
             result = "Username Error";
         } else {
             if (!password.equals(confirmPassword)) {

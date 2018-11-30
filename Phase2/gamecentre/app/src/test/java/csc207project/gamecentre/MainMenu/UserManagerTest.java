@@ -45,6 +45,13 @@ public class UserManagerTest {
     }
 
     @Test
+    public void testUsernameEmptySignUp() {
+        String expected = "Username Error";
+        String actual = this.userManager.signUp("", "test", "test");
+        assertSame("username empty", expected, actual);
+    }
+
+    @Test
     public void testPasswordErrorSignUp() {
         String expected = "Password Error";
         String actual = this.userManager.signUp("testUsername2", "test", "test1");
