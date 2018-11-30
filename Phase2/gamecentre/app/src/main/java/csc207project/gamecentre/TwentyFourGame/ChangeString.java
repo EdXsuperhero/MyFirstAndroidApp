@@ -2,6 +2,11 @@ package csc207project.gamecentre.TwentyFourGame;
 
 //https://blog.csdn.net/yhhazr/article/details/7947962
 
+/*
+Adapted from:
+https://blog.csdn.net/yhhazr/article/details/7947962
+ */
+
 import java.util.ArrayList;
 import java.util.Stack;
 
