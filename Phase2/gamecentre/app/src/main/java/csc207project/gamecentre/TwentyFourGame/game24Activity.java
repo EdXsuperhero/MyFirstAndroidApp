@@ -38,7 +38,6 @@ import csc207project.gamecentre.R;
 
 public class game24Activity extends AppCompatActivity implements Serializable{
 
-
     ImageView imageView1 = null;
     ImageView imageView2 = null;
     ImageView imageView3 = null;
@@ -120,7 +119,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
     public final static String TIMER_OFFSET = "chronometer.ser";
     public final static String IMAGE = "image";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -130,8 +128,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         editText = findViewById(R.id.inputText);
         editText.setEnabled(false);
         editText.setInputType(0);
-
-
 
         btnConfirm = findViewById(R.id.btnConfirm);
         btnConfirm.setEnabled(false);
@@ -166,7 +162,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         addMutiplyButtonListener();
         addDivideButtonListener();
 
-
         SharedPreferences settings = getSharedPreferences(USER_SCORE, 0);
         SharedPreferences.Editor editor = settings.edit();
         String user = "user";
@@ -187,18 +182,13 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                 btnLoad.setClickable(false);
                 btnConfirm.setEnabled(true);
 
-                //Set StartButton unclickable
                 StartButton.setClickable(false);
 
-                //Make 4 imageViews clickable after click start button
                 imageView1.setClickable(true);
                 imageView2.setClickable(true);
                 imageView3.setClickable(true);
                 imageView4.setClickable(true);
 
-
-
-                //set random picture to 4 imageViews
                 setImage(imageView1, a1);
                 setImage(imageView2, a2);
                 setImage(imageView3, a3);
@@ -211,7 +201,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                 btnMultiply.setClickable(true);
                 btnDivide.setClickable(true);
 
-                //enable editText after LoadButton is clicked
                 editText.setEnabled(true);
                 editText.setFocusable(true);
 
@@ -269,7 +258,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
             }
         });
 
-
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -313,39 +301,30 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         });
     }
 
-
     private void addStartButtonListener(){
         StartButton = findViewById(R.id.startBtn);
         StartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                //enable chronometer
                 startChronometer();
 
-                //enable confirm
                 btnConfirm.setEnabled(true);
                 editText.setHint("GoFor24");
                 editText.setEnabled(true);
                 editText.setFocusable(true);
                 editText.setText("");
 
-
-                //enable editText after StartButton is clicked
                 editText.setEnabled(true);
                 editText.setFocusable(true);
 
-                //Set StartButton unclickable
                 StartButton.setClickable(false);
 
-                //Make 4 imageViews clickable after click start button
                 imageView1.setClickable(true);
                 imageView2.setClickable(true);
                 imageView3.setClickable(true);
                 imageView4.setClickable(true);
 
-
-                //set random picture to 4 imageViews
                 setImage(imageView1, a1);
                 setImage(imageView2, a2);
                 setImage(imageView3, a3);
@@ -355,7 +334,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                 }
         });
     }
-
 
      void numberImageViewListener(ImageView numImaView, int a){
         numImaView.setOnClickListener(new View.OnClickListener() {
@@ -401,6 +379,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
             }
         });
     }
+
     private void addLeftBracketListener(){
         btnLeft = findViewById(R.id.btnLeft);
         operatorImageListener(btnLeft,"(");
