@@ -118,6 +118,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
      * The file TIMER_OFFSET that store the time as string.
      */
     public final static String TIMER_OFFSET = "chronometer.ser";
+    public final static String IMAGE = "image";
 
 
     @Override
@@ -129,7 +130,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         editText = findViewById(R.id.inputText);
 
         editText.setEnabled(false);
-        editText.setFocusable(false);
         editText.setInputType(0);
         btnConfirm = findViewById(R.id.btnConfirm);
         btnConfirm.setEnabled(false);
