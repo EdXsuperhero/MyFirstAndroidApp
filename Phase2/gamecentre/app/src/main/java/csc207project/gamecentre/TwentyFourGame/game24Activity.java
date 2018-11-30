@@ -85,6 +85,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
     }
 
     int[] validList = getSolvableDigits();
+
     void getValidNumber(){
         a1 = validList[0];
         a2 = validList[1];
@@ -117,7 +118,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
      * The file TIMER_OFFSET that store the time as string.
      */
     public final static String TIMER_OFFSET = "chronometer.ser";
-    public final static String IMAGE = "image";
+    public final static String IMAGENUMBER = "image_number.ser";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +127,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         setContentView(R.layout.activity_game24);
 
         editText = findViewById(R.id.inputText);
+
         editText.setEnabled(false);
         editText.setInputType(0);
 
@@ -189,10 +191,12 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                 imageView3.setClickable(true);
                 imageView4.setClickable(true);
 
-                setImage(imageView1, a1);
-                setImage(imageView2, a2);
-                setImage(imageView3, a3);
-                setImage(imageView4, a4);
+                loadImageFromFile(IMAGENUMBER);
+                //set random picture to 4 imageViews
+                setImage(imageView1, validList[0]);
+                setImage(imageView2, validList[1]);
+                setImage(imageView3, validList[2]);
+                setImage(imageView4, validList[3]);
 
                 btnLeft.setClickable(true);
                 btnRight.setClickable(true);
@@ -257,6 +261,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
 
             }
         });
+
 
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -324,16 +329,21 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                 imageView2.setClickable(true);
                 imageView3.setClickable(true);
                 imageView4.setClickable(true);
+                saveImageToFile(IMAGENUMBER);
 
-                setImage(imageView1, a1);
-                setImage(imageView2, a2);
-                setImage(imageView3, a3);
-                setImage(imageView4, a4);
+                setImage(imageView1, validList[0]);
+                setImage(imageView2, validList[1]);
+                setImage(imageView3, validList[2]);
+                setImage(imageView4, validList[3]);
+//                System.arraycopy(src, 0, validList), src.length;
+//                saveImageToFile(IMAGENUMBER);
+                System.out.println(validList);
 
                 setOperatorClickable(true);
                 }
         });
     }
+
 
      void numberImageViewListener(ImageView numImaView, int a){
         numImaView.setOnClickListener(new View.OnClickListener() {
@@ -441,6 +451,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         });
     }
 
+
     @Override
     protected void onPause(){
         super.onPause();
@@ -448,6 +459,8 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         HashMap<String, String> chm = new HashMap<>();
         chm.put("userName", String.valueOf(pauseOffset));
         saveTimeToFile(TIMER_OFFSET, chm);
+        saveImageToFile(IMAGENUMBER);
+
     }
 
     /**
@@ -575,6 +588,25 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         }
     }
 
+    private void loadImageFromFile(String fileName) {
+
+        try {
+            InputStream inputStream = this.openFileInput(fileName);
+            if (inputStream != null) {
+                ObjectInputStream input = new ObjectInputStream(inputStream);
+                validList = (int[]) input.readObject();
+//                hm = (HashMap<String, String>) input.readObject();
+                input.close();
+                inputStream.close();
+            }
+        } catch (FileNotFoundException e) {
+            Log.e("game24 activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("game24 activity", "Can not read file: " + e.toString());
+        } catch (ClassNotFoundException e) {
+            Log.e("game24 activity", "File contained unexpected data type: " + e.toString());
+        }
+    }
     /**
      * Load the time taken from the fileName to the HashMap.
      *
@@ -624,6 +656,18 @@ public class game24Activity extends AppCompatActivity implements Serializable{
             ObjectOutputStream outputStream = new ObjectOutputStream(
                     this.openFileOutput(fileName, MODE_PRIVATE));
             outputStream.writeObject(hm);
+            outputStream.close();
+        } catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+    }
+
+    public void saveImageToFile(String fileName) {
+        try {
+            ObjectOutputStream outputStream = new ObjectOutputStream(
+                    this.openFileOutput(fileName, MODE_PRIVATE));
+            outputStream.writeObject(validList);
+            outputStream.flush();
             outputStream.close();
         } catch (IOException e) {
             Log.e("Exception", "File write failed: " + e.toString());
