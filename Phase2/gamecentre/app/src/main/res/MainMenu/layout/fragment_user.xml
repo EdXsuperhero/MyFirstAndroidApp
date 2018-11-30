@@ -18,9 +18,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="25dp"
-        tools:srcCompat="@tools:sample/avatars[3]"
-        tools:ignore="ContentDescription" />
+        android:layout_marginTop="22dp"
+        app:srcCompat="@drawable/ic_head" />
 
     <TextView
         android:id="@+id/welcomeTitle"
@@ -45,38 +44,51 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="200dp"
         android:background="@drawable/custom_layout_border">
 
-            <TextView
-                android:id="@+id/ChangeUsername"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="0dp"
-                android:background="@drawable/custom_textview_border"
-                android:text="@string/change_username"
-                android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/ChangeUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="63dp"
+            android:background="@drawable/custom_textview_border"
+            android:gravity="center"
+            android:text="@string/change_username"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/ChangePassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@id/ChangeUsername"
-                android:layout_marginTop="50dp"
-                android:background="@drawable/custom_textview_border"
-                android:text="@string/change_password"
-                android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/ChangePassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/ChangeUsername"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="86dp"
+            android:background="@drawable/custom_textview_border"
+            android:gravity="center"
+            android:text="@string/change_password"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/Logout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:background="@drawable/custom_logout_border"
-                android:text="@string/logout"
-                android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/Logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/custom_logout_border"
+            android:gravity="center"
+            android:text="@string/logout"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 
