@@ -217,7 +217,8 @@ public class game24Activity extends AppCompatActivity implements Serializable{
 
                 loadFromFile(GAME24POINTS_FILE_NAME);
                 if (hm != null){
-                    editText.setText(hm.get("user1"));
+                    inputString = hm.get("user1");
+                    editText.setText(inputString);
                 } else {
                     editText.setText(inputString);
                     editText.setEnabled(true);
@@ -369,7 +370,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
             }
         });
     }
-
 
     void setImageView1Listener(){
         imageView1 = findViewById(R.id.imageView1);
