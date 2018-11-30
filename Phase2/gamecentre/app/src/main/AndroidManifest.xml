@@ -6,7 +6,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_round1"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
 
@@ -20,12 +20,12 @@
         <activity android:name=".MainMenu.LoginFragment.LoginActivity" />
         <activity android:name=".SlidingTiles.GameActivity" />
         <activity android:name=".SlidingTiles.ChooseComplexity" />
-        <activity android:name=".SlidingTiles.ScoreBoardActivity" />
+        <activity android:name=".SlidingTiles.SlidingTilesScoreBoardActivity" />
         <activity android:name=".MemoryMatching.MatchingMainActivity" />
         <activity android:name=".MemoryMatching.ChooseComplexActivity" />
-        <activity android:name=".MemoryMatching.MatchingScoreBoardActivity" />
+        <activity android:name=".MemoryMatching.MemoryMatchingScoreBoardActivity" />
         <activity android:name=".TwentyFourGame.game24Activity" />
-        <activity android:name=".TwentyFourGame.ScoreBoard24GameActivity" />
+        <activity android:name=".TwentyFourGame.TwentyFourGameScoreBoardActivity" />
     </application>
 
 </manifest>

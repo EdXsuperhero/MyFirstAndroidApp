@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+
+import csc207project.gamecentre.OASIS.ScoreManager;
 import csc207project.gamecentre.R;
 
 /**
@@ -64,6 +66,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
     private ScoreManager sm;
 
     public final static String SAVE_SCORE = "save_score.ser";
+
     public int[] generateNumber(){
         int[] numberList = new int[4];
         Random random = new Random();
@@ -147,7 +150,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         chronometer.setBase(SystemClock.elapsedRealtime());
 
         getValidNumber();
-//        saveImageToFile(IMAGENUMBER);
 
         addUndoButtonListener();
         addStartButtonListener();
@@ -155,7 +157,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         setImageView2Listener();
         setImageView3Listener();
         setImageView4Listener();
-//        saveImageToFile(IMAGENUMBER);
 
         addLeftBracketListener();
         addRightBracketListener();
@@ -163,8 +164,8 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         addMinusButtonListener();
         addMutiplyButtonListener();
         addDivideButtonListener();
-        String finalResult = getFinalResult(inputString);
-        editText.setText(finalResult);
+
+
         SharedPreferences settings = getSharedPreferences(USER_SCORE, 0);
         SharedPreferences.Editor editor = settings.edit();
         String user = "user";
@@ -210,6 +211,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
 
                 //enable editText after LoadButton is clicked
                 editText.setEnabled(true);
+                editText.setFocusable(true);
 
                 loadFromFile(GAME24POINTS_FILE_NAME);
                 if (hm != null){
@@ -229,6 +231,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                     }
                 }
                 startChronometer();
+
             }
         });
 
@@ -319,7 +322,11 @@ public class game24Activity extends AppCompatActivity implements Serializable{
 
                 //enable confirm
                 btnConfirm.setEnabled(true);
+                editText.setHint("GoFor24");
+                editText.setEnabled(true);
+                editText.setFocusable(true);
                 editText.setText("");
+
 
                 //enable editText after StartButton is clicked
                 editText.setEnabled(true);
@@ -500,7 +507,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
     public String getFinalResult(String str){
         int re = judgeTransferable(str);
         if(re == 0){
-            return "Ooop! Computer cannot do this math!";
+            return "Ooops! Invalid Input!";
         }else{
             String result = String.valueOf(re);
             return result;
@@ -640,13 +647,14 @@ public class game24Activity extends AppCompatActivity implements Serializable{
      * Switch to Score Board when the game is ended.
      */
     private void switchToScore(){
-        Intent scoreboard = new Intent(getApplicationContext(), ScoreBoard24GameActivity.class);
+        Intent scoreboard = new Intent(getApplicationContext(), TwentyFourGameScoreBoardActivity.class);
 //        if (win == false){
 //            pauseOffset = null;
 //        }
         scoreboard.putExtra("score", pauseOffset);
         scoreboard.putExtra("current_user", getIntent().getStringExtra("current_user"));
         startActivity(scoreboard);
+        finish();
     }
 
     /**
@@ -710,3 +718,5 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         }
     }
 }
+
+
