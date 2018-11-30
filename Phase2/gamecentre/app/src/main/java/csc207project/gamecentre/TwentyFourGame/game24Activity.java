@@ -344,7 +344,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         });
     }
 
-
      void numberImageViewListener(ImageView numImaView, int a){
         numImaView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -354,6 +353,9 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                     numImaView.setClickable(false);
                     inputString += a;
                     editText.setText(inputString);
+                }else{
+                    String msg = "can not put two number together!";
+                    Toast.makeText(game24Activity.this,msg, Toast.LENGTH_LONG).show();
                 }
             }
         });
