@@ -1,16 +1,10 @@
 package csc207project.gamecentre.TwentyFourGame;
 
-
-
-import android.os.Build;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static android.os.Build.VERSION_CODES.N;
 
 /**
  * Manage a scores list with username and score.
@@ -23,7 +17,7 @@ class ScoreManager implements Serializable {
     private HashMap<String, Long> scores = new HashMap<>();
 
     ScoreManager() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i <= 5; i++) {
             scores.put("Nobody_" + i, Long.MAX_VALUE);
         }
     }
@@ -34,13 +28,11 @@ class ScoreManager implements Serializable {
      * @param username the username to add new score
      * @param score the new score
      */
-    public void addScore(String username, Long score) {
+    void addScore(String username, Long score) {
         if (isStoredUser(username)) {
             Long prevScore = this.scores.get(username);
-            if (score < prevScore){
-                if (Build.VERSION.SDK_INT >= N) {
-                    this.scores.replace(username, score);
-                }
+            if (score < prevScore) {
+                this.scores.replace(username, score);
             }
         } else {
             this.scores.put(username, score);
@@ -54,10 +46,11 @@ class ScoreManager implements Serializable {
      * @return the highest score of username
      */
     Long getScore(String username) {
+        Long score = Long.MAX_VALUE;
         if (isStoredUser(username)) {
-            return this.scores.get(username);
+            score = this.scores.get(username);
         }
-        return null;
+        return score;
     }
 
     /**
@@ -67,9 +60,7 @@ class ScoreManager implements Serializable {
      */
     List<Map.Entry<String, Long>> getHighestFiveScores() {
         List<Map.Entry<String, Long>> scoresList = new ArrayList<>(scores.entrySet());
-        if (Build.VERSION.SDK_INT >= N) {
-            scoresList.sort(Map.Entry.comparingByValue());
-        }
+        scoresList.sort(Map.Entry.comparingByValue());
 
         return scoresList.subList(0, 5);
     }
