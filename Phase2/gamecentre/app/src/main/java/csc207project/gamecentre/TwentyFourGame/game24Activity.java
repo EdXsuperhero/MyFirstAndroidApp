@@ -257,17 +257,12 @@ public class game24Activity extends AppCompatActivity implements Serializable{
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                System.out.println("onchange..");
                 loadFromFile(GAME24POINTS_FILE_NAME);
                 if (hm== null){
-//                    System.out.println("mapfromFile = null");
                     HashMap<String, String> hm = new HashMap<String, String>();
-//                    hm.put("user1", editText.getText().toString());
                     hm.put("user1", inputString);
                     saveToFile(GAME24POINTS_FILE_NAME);
                 }else {
-//                    System.out.println("mapfromFile = not null");
-//                    hm.put("user1", editText.getText().toString());
                     hm.put("user1", inputString);
                     saveToFile(GAME24POINTS_FILE_NAME);
                 }
@@ -363,8 +358,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                 setImage(imageView2, validList[1]);
                 setImage(imageView3, validList[2]);
                 setImage(imageView4, validList[3]);
-//                System.arraycopy(src, 0, validList), src.length;
-//                saveImageToFile(IMAGENUMBER);
                 System.out.println(validList);
 
                 setOperatorClickable(true);
