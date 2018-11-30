@@ -20,6 +20,10 @@ public class SignUpFragment extends Fragment {
      * Current user manager we are working on.
      */
     private UserManager userManager;
+    /**
+     * Current View.
+     */
+    private View view;
 
     @Override
     public void onAttach(Context context) {
@@ -32,37 +36,48 @@ public class SignUpFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
+        this.view = view;
 
-        setUsernameInputIndicator(view, R.string.empty);
-        setPasswordConfirmIndicator(view, R.string.empty);
-        addSignUpButtonListener(view);
+        setUsernameInputIndicator(R.string.empty);
+        setPasswordConfirmIndicator(R.string.empty);
+        addSignInButtonListener();
+        addSignUpButtonListener();
 
         return view;
     }
 
+    private void addSignInButtonListener() {
+        Button signInButton = this.view.findViewById(R.id.SwitchToSignInButton);
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((LoginActivity) getActivity()).replaceSignInFragment();
+            }
+        });
+    }
+
     /**
      * Activate Sign Up button.
-     *
-     * @param view current view
      */
-    private void addSignUpButtonListener(View view) {
-        Button signUpButton = view.findViewById(R.id.SignUpButton);
+    private void addSignUpButtonListener() {
+        Button signUpButton = this.view.findViewById(R.id.SignUpButton);
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = getUsernameInput(view);
-                if (userManager.isStoredUser(username)) {
-                    setUsernameInputIndicator(view, R.string.username_exists);
-                } else {
-                    String password = getPasswordInput(view);
-                    String confirmPassword = getConfirmPasswordInput(view);
-                    if (password.equals(confirmPassword)) {
-                        userManager.signUp(username, password);
-                        userManager.setCurrentUser(username);
+                String username = getUsernameInput();
+                String password = getPasswordInput();
+                String confirmPassword = getConfirmPasswordInput();
+                String result = userManager.signUp(username, password, confirmPassword);
+
+                switch (result) {
+                    case "Username Error":
+                        setUsernameInputIndicator(R.string.username_exists);
+                        break;
+                    case "Password Error":
+                        setPasswordConfirmIndicator(R.string.password_doesnt_match);
+                        break;
+                    default:
                         ((LoginActivity) getActivity()).replaceSignInFragment();
-                    } else {
-                        setPasswordConfirmIndicator(view, R.string.password_doesnt_match);
-                    }
                 }
             }
         });
@@ -71,55 +86,50 @@ public class SignUpFragment extends Fragment {
     /**
      * Get username input.
      *
-     * @param view current view
      * @return a username input
      */
-    private String getUsernameInput(View view) {
-        EditText usernameInput = view.findViewById(R.id.UsernameSignUpInput);
+    private String getUsernameInput() {
+        EditText usernameInput = this.view.findViewById(R.id.UsernameSignUpInput);
         return usernameInput.getText().toString();
     }
 
     /**
      * Get password input.
      *
-     * @param view current view
      * @return a password input
      */
-    private String getPasswordInput(View view) {
-        EditText passwordInput = view.findViewById(R.id.PasswordSignUpInput);
+    private String getPasswordInput() {
+        EditText passwordInput = this.view.findViewById(R.id.PasswordSignUpInput);
         return passwordInput.getText().toString();
     }
 
     /**
      * Get confirm password input.
      *
-     * @param view current view
      * @return a confirm password input
      */
-    private String getConfirmPasswordInput(View view) {
-        EditText confirmPasswordInput = view.findViewById(R.id.PasswordConfirmInput);
+    private String getConfirmPasswordInput() {
+        EditText confirmPasswordInput = this.view.findViewById(R.id.PasswordConfirmInput);
         return confirmPasswordInput.getText().toString();
     }
 
     /**
      * Set warning for username input.
      *
-     * @param view current view
      * @param warning warning for username input
      */
-    private void setUsernameInputIndicator(View view, int warning) {
-        TextView usernameIndicator = view.findViewById(R.id.UsernameSignUpIndicator);
+    private void setUsernameInputIndicator(int warning) {
+        TextView usernameIndicator = this.view.findViewById(R.id.UsernameSignUpIndicator);
         usernameIndicator.setText(warning);
     }
 
     /**
      * Set warning for confirm password input.
      *
-     * @param view current view
      * @param warning warning for confirm password input
      */
-    private void setPasswordConfirmIndicator(View view, int warning) {
-        TextView passwordIndicator = view.findViewById(R.id.PasswordConfirmIndicator);
+    private void setPasswordConfirmIndicator(int warning) {
+        TextView passwordIndicator = this.view.findViewById(R.id.PasswordConfirmIndicator);
         passwordIndicator.setText(warning);
     }
 }
