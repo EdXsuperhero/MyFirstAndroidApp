@@ -90,13 +90,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
 
     int[] validList = getSolvableDigits();
 
-
-//    void getValidNumber(){
-//        a1 = validList[0];
-//        a2 = validList[1];
-//        a3 = validList[2];
-//        a4 = validList[3];
-//    }
     /**
      * Creating a file that stores the user's score.
      */
@@ -172,8 +165,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         chronometer.setFormat("Time: %s");
         chronometer.setBase(SystemClock.elapsedRealtime());
 
-//        getValidNumber();
-
         addUndoButtonListener();
         addStartButtonListener();
         setImageView1Listener();
@@ -237,7 +228,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                 setImageView2Listener();
                 setImageView3Listener();
                 setImageView4Listener();
-
+                
 
                 btnLeft.setClickable(true);
                 btnRight.setClickable(true);
