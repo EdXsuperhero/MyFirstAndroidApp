@@ -108,6 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                 makeToastLoadedText(returnText);
                 if (returnText.startsWith("Welcome")) {
                     currentUser = username;
+
                     switchToStart();
                 }
             }
