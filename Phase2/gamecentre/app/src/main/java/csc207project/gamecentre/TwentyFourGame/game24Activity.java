@@ -3,6 +3,7 @@ package csc207project.gamecentre.TwentyFourGame;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.SystemClock;
+import android.os.UserManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -25,6 +26,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import csc207project.gamecentre.R;
 
@@ -35,7 +37,6 @@ import csc207project.gamecentre.R;
  */
 
 public class game24Activity extends AppCompatActivity implements Serializable{
-
 
     ImageView imageView1 = null;
     ImageView imageView2 = null;
@@ -63,9 +64,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
     private ScoreManager sm;
 
     public final static String SAVE_SCORE = "save_score.ser";
-
-
-
     public int[] generateNumber(){
         int[] numberList = new int[4];
         Random random = new Random();
@@ -86,6 +84,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
     }
 
     int[] validList = getSolvableDigits();
+
     void getValidNumber(){
         a1 = validList[0];
         a2 = validList[1];
@@ -118,8 +117,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
      * The file TIMER_OFFSET that store the time as string.
      */
     public final static String TIMER_OFFSET = "chronometer.ser";
-    public final static String IMAGE = "image";
-
+    public final static String IMAGENUMBER = "image_number.ser";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,6 +147,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         chronometer.setBase(SystemClock.elapsedRealtime());
 
         getValidNumber();
+//        saveImageToFile(IMAGENUMBER);
 
         addUndoButtonListener();
         addStartButtonListener();
@@ -156,6 +155,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         setImageView2Listener();
         setImageView3Listener();
         setImageView4Listener();
+//        saveImageToFile(IMAGENUMBER);
 
         addLeftBracketListener();
         addRightBracketListener();
@@ -194,12 +194,12 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                 imageView3.setClickable(true);
                 imageView4.setClickable(true);
 
-
+                loadImageFromFile(IMAGENUMBER);
                 //set random picture to 4 imageViews
-                setImage(imageView1, a1);
-                setImage(imageView2, a2);
-                setImage(imageView3, a3);
-                setImage(imageView4, a4);
+                setImage(imageView1, validList[0]);
+                setImage(imageView2, validList[1]);
+                setImage(imageView3, validList[2]);
+                setImage(imageView4, validList[3]);
 
                 btnLeft.setClickable(true);
                 btnRight.setClickable(true);
@@ -210,7 +210,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
 
                 //enable editText after LoadButton is clicked
                 editText.setEnabled(true);
-                editText.setFocusable(true);
 
                 loadFromFile(GAME24POINTS_FILE_NAME);
                 if (hm != null){
@@ -230,7 +229,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                     }
                 }
                 startChronometer();
-
             }
         });
 
@@ -335,13 +333,15 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                 imageView2.setClickable(true);
                 imageView3.setClickable(true);
                 imageView4.setClickable(true);
+                saveImageToFile(IMAGENUMBER);
 
-
-                //set random picture to 4 imageViews
-                setImage(imageView1, a1);
-                setImage(imageView2, a2);
-                setImage(imageView3, a3);
-                setImage(imageView4, a4);
+                setImage(imageView1, validList[0]);
+                setImage(imageView2, validList[1]);
+                setImage(imageView3, validList[2]);
+                setImage(imageView4, validList[3]);
+//                System.arraycopy(src, 0, validList), src.length;
+//                saveImageToFile(IMAGENUMBER);
+                System.out.println(validList);
 
                 setOperatorClickable(true);
                 }
@@ -404,28 +404,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         operatorImageListener(btnRight,")");
     }
 
-//                String finalResult = getFinalResult(inputString);
-//                editText.setText(finalResult);
-////                ScoreManager sm;
-////                sm = new ScoreManager();
-////                if(win){
-////                    System.out.println(pauseOffset);
-////                    sm.addScore("userName", Long.valueOf(pauseOffset));
-////                }else{
-////                    sm.addScore("userName", Long.valueOf(0));
-////                }
-////                saveScoreToFile(SAVE_SCORE);
-//
-//                SharedPreferences settings = getSharedPreferences(USER_SCORE, 0);
-//                SharedPreferences.Editor editor = settings.edit();
-//                String user = "user";
-////                String userName = Integer.parseInt(user);// here userName = EditText.getText().toString()
-//
-//                editor.putString("userName",user) ;
-//                SharedPreferences settings1 = getSharedPreferences("score", 0);
-//                SharedPreferences.Editor editor1 = settings1.edit();
-//                editor1.putLong("score", Long.valueOf(pauseOffset));
-//                editor.commit();
 
     private void addPlusButtontListener(){
         btnPlus = findViewById(R.id.btnPlus);
@@ -485,6 +463,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         HashMap<String, String> chm = new HashMap<>();
         chm.put("userName", String.valueOf(pauseOffset));
         saveTimeToFile(TIMER_OFFSET, chm);
+        saveImageToFile(IMAGENUMBER);
 
     }
 
@@ -613,6 +592,25 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         }
     }
 
+    private void loadImageFromFile(String fileName) {
+
+        try {
+            InputStream inputStream = this.openFileInput(fileName);
+            if (inputStream != null) {
+                ObjectInputStream input = new ObjectInputStream(inputStream);
+                validList = (int[]) input.readObject();
+//                hm = (HashMap<String, String>) input.readObject();
+                input.close();
+                inputStream.close();
+            }
+        } catch (FileNotFoundException e) {
+            Log.e("game24 activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("game24 activity", "Can not read file: " + e.toString());
+        } catch (ClassNotFoundException e) {
+            Log.e("game24 activity", "File contained unexpected data type: " + e.toString());
+        }
+    }
     /**
      * Load the time taken from the fileName to the HashMap.
      *
@@ -661,6 +659,18 @@ public class game24Activity extends AppCompatActivity implements Serializable{
             ObjectOutputStream outputStream = new ObjectOutputStream(
                     this.openFileOutput(fileName, MODE_PRIVATE));
             outputStream.writeObject(hm);
+            outputStream.close();
+        } catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+    }
+    
+    public void saveImageToFile(String fileName) {
+        try {
+            ObjectOutputStream outputStream = new ObjectOutputStream(
+                    this.openFileOutput(fileName, MODE_PRIVATE));
+            outputStream.writeObject(validList);
+            outputStream.flush();
             outputStream.close();
         } catch (IOException e) {
             Log.e("Exception", "File write failed: " + e.toString());
