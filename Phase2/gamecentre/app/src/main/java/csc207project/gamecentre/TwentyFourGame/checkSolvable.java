@@ -5,12 +5,17 @@ package csc207project.gamecentre.TwentyFourGame;
 import java.util.ArrayList;
 
 public class checkSolvable {
+
+
+
     public boolean judgePoint24(int[] nums) {
         ArrayList A = new ArrayList<Double>();
         for (int v: nums) A.add((double) v);
         return solve(A);
     }
-    private boolean solve(ArrayList<Double> nums) {
+
+
+     private boolean solve(ArrayList<Double> nums) {
         if (nums.size() == 0) return false;
         if (nums.size() == 1) return Math.abs(nums.get(0) - 24) < 1e-6;
 
