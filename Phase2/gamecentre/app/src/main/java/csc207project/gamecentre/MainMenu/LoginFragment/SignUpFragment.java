@@ -46,6 +46,9 @@ public class SignUpFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Activate Sign In button.
+     */
     private void addSignInButtonListener() {
         Button signInButton = this.view.findViewById(R.id.SwitchToSignInButton);
         signInButton.setOnClickListener(new View.OnClickListener() {
