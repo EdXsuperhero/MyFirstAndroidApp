@@ -62,25 +62,25 @@ class BoardManager implements Serializable {
         while (shuffleTimes > 0) {
             int shuffleCondition = rnd.nextInt() % 4;
             switch (shuffleCondition) {
-                case GameActivity.ABOVE:
+                case SlidingTilesGameActivity.ABOVE:
                     if (blankTileRow - 1 >= 0) {
                         board.swapTiles(blankTileRow, blankTileCol, blankTileRow - 1, blankTileCol);
                         blankTileRow -= 1;
                     }
                     break;
-                case GameActivity.BELOW:
+                case SlidingTilesGameActivity.BELOW:
                     if (blankTileRow + 1 < board.getWidth()) {
                         board.swapTiles(blankTileRow, blankTileCol, blankTileRow + 1, blankTileCol);
                         blankTileRow += 1;
                     }
                     break;
-                case GameActivity.LEFT:
+                case SlidingTilesGameActivity.LEFT:
                     if (blankTileCol - 1 >= 0) {
                         board.swapTiles(blankTileRow, blankTileCol, blankTileRow, blankTileCol - 1);
                         blankTileCol -= 1;
                     }
                     break;
-                case GameActivity.RIGHT:
+                case SlidingTilesGameActivity.RIGHT:
                     if (blankTileCol + 1 < board.getWidth()) {
                         board.swapTiles(blankTileRow, blankTileCol, blankTileRow, blankTileCol + 1);
                         blankTileCol += 1;
@@ -122,7 +122,7 @@ class BoardManager implements Serializable {
 
     /**
      * Return the position of the blank tile.
-     * The return is based on constants in GameActivity.java.
+     * The return is based on constants in SlidingTilesGameActivity.java.
      *
      * @param row the row of the tile to check
      * @param col the col of the tile to check
@@ -130,28 +130,28 @@ class BoardManager implements Serializable {
      */
     private int findBlankTile(int row, int col) {
 
-        int result = GameActivity.CANNOTFIND;
+        int result = SlidingTilesGameActivity.CANNOTFIND;
         int width = this.board.getWidth();
         int blankId = 0;
 
         Tile above = row == 0 ? null : this.board.getTile(row - 1, col);
         if (above != null && above.getId() == blankId) {
-            result = GameActivity.ABOVE;
+            result = SlidingTilesGameActivity.ABOVE;
         }
 
         Tile below = row == width - 1 ? null : board.getTile(row + 1, col);
         if (below != null && below.getId() == blankId) {
-            result = GameActivity.BELOW;
+            result = SlidingTilesGameActivity.BELOW;
         }
 
         Tile left = col == 0 ? null : board.getTile(row, col - 1);
         if (left != null && left.getId() == blankId) {
-            result = GameActivity.LEFT;
+            result = SlidingTilesGameActivity.LEFT;
         }
 
         Tile right = col == width - 1 ? null : board.getTile(row, col + 1);
         if (right != null && right.getId() == blankId) {
-            result = GameActivity.RIGHT;
+            result = SlidingTilesGameActivity.RIGHT;
         }
 
         return result;
@@ -169,7 +169,7 @@ class BoardManager implements Serializable {
         int row = position / width;
         int col = position % width;
 
-        return findBlankTile(row, col) != GameActivity.CANNOTFIND;
+        return findBlankTile(row, col) != SlidingTilesGameActivity.CANNOTFIND;
     }
 
     /**
@@ -185,16 +185,16 @@ class BoardManager implements Serializable {
         int positionBlankTiles = findBlankTile(row, col);
 
         switch (positionBlankTiles) {
-            case GameActivity.ABOVE:
+            case SlidingTilesGameActivity.ABOVE:
                 this.board.swapTiles(row, col, row - 1, col);
                 break;
-            case GameActivity.BELOW:
+            case SlidingTilesGameActivity.BELOW:
                 this.board.swapTiles(row, col, row + 1, col);
                 break;
-            case GameActivity.LEFT:
+            case SlidingTilesGameActivity.LEFT:
                 this.board.swapTiles(row, col, row, col - 1);
                 break;
-            case GameActivity.RIGHT:
+            case SlidingTilesGameActivity.RIGHT:
                 this.board.swapTiles(row, col, row, col + 1);
                 break;
         }

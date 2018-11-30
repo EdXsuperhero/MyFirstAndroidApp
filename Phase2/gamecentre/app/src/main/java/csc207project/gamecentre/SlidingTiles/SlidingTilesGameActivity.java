@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -24,16 +23,17 @@ import java.util.Observable;
 import java.util.Observer;
 
 import csc207project.gamecentre.R;
+import csc207project.gamecentre.OASIS.*;
 
 /**
- * The game activity.
+ * The game activity for sliding tiles.
  */
-public class GameActivity extends AppCompatActivity implements Observer {
+public class SlidingTilesGameActivity extends GameActivity implements Observer {
 
     /**
      * A temporary save file.
      */
-    public static final String TEMP_SAVE_FILENAME = "slidingtiles_save_file_tmp.ser";
+    public static final String SAVE_FILE_NAME = "sliding_tiles_game.ser";
     /**
      * The board manager.
      */
@@ -106,7 +106,7 @@ public class GameActivity extends AppCompatActivity implements Observer {
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            loadFromFile(TEMP_SAVE_FILENAME);
+                            loadFromFile();
                             setupGame();
                         }
                     });
@@ -129,8 +129,11 @@ public class GameActivity extends AppCompatActivity implements Observer {
     private void setupGame() {
         createTileButtons(mContext);
 
-        this.timer = findViewById(R.id.Timer);
-        startTimer();
+        if (this.boardManager.getDuration() != 0) {
+            resumeChronometer(this.boardManager.getDuration());
+        } else {
+            startChronometer();
+        }
 
         // Add View to activity
         gridView = findViewById(R.id.grid);
@@ -166,7 +169,7 @@ public class GameActivity extends AppCompatActivity implements Observer {
         String[] filesLists = this.fileList();
         boolean exists = false;
         for (String file : filesLists) {
-            if (file.equals(TEMP_SAVE_FILENAME)) {
+            if (file.equals(SAVE_FILE_NAME)) {
                 exists = true;
             }
         }
@@ -225,7 +228,7 @@ public class GameActivity extends AppCompatActivity implements Observer {
             public void onClick(View v) {
                 boolean popResult = boardManager.popFromStack();
                 if (popResult) {
-                    boardManager.getBoard().addObserver(GameActivity.this);
+                    boardManager.getBoard().addObserver(SlidingTilesGameActivity.this);
                     boardManager.getBoard().updateObservers();
                 } else {
                     Toast.makeText(mContext, "Can't undo right now", Toast.LENGTH_SHORT).show();
@@ -234,58 +237,61 @@ public class GameActivity extends AppCompatActivity implements Observer {
         });
     }
 
-    /**
-     * Start running the time.
-     */
-    private void startTimer() {
-        long duration = this.boardManager.getDuration();
+    @Override
+    public void startChronometer(){
+        this.timer = findViewById(R.id.Timer);
+        this.timer.setBase(SystemClock.elapsedRealtime());
+        this.timer.start();
+    }
+
+    @Override
+    public void resumeChronometer(long duration) {
+        this.timer = findViewById(R.id.Timer);
         this.timer.setBase(SystemClock.elapsedRealtime() - duration);
         this.timer.start();
     }
 
-    /**
-     * @return current user that is playing this game.
-     */
-    public String getCurrentUser() {
-        return getIntent().getStringExtra("current_user");
+    @Override
+    public long getElapsedTime() {
+        return (SystemClock.elapsedRealtime() - this.timer.getBase());
     }
 
-    /**
-     * Load the board manager from fileName.
-     *
-     * @param fileName the name of the file
-     */
-    private void loadFromFile(String fileName) {
+    @Override
+    protected void switchToScoreBoard(long score) {
+        Intent toScoreIntent = new Intent(mContext, SlidingTilesScoreBoardActivity.class);
+        toScoreIntent.putExtra("score", score);
+        toScoreIntent.putExtra("current_user", getIntent().getStringExtra("current_user"));
+        startActivity(toScoreIntent);
+        finish();
+    }
 
+    @Override
+    public void loadFromFile() {
         try {
-            InputStream inputStream = this.openFileInput(fileName);
+            InputStream inputStream = this.openFileInput(SAVE_FILE_NAME);
             if (inputStream != null) {
                 ObjectInputStream input = new ObjectInputStream(inputStream);
                 boardManager = (BoardManager) input.readObject();
                 inputStream.close();
             }
         } catch (FileNotFoundException e) {
-            Log.e("login activity", "File not found: " + e.toString());
+            Log.e("SlidingTiles Game Activity", "File not found: " + e.toString());
         } catch (IOException e) {
-            Log.e("login activity", "Can not read file: " + e.toString());
+            Log.e("SlidingTiles Game Activity", "Can not read file: " + e.toString());
         } catch (ClassNotFoundException e) {
-            Log.e("login activity", "File contained unexpected data type: " + e.toString());
+            Log.e("SlidingTiles Game Activity", "File contained unexpected data type: " + e.toString());
         }
     }
 
-    /**
-     * Save the board manager to fileName.
-     *
-     * @param fileName the name of the file
-     */
-    public void saveToFile(String fileName) {
+    @Override
+    public void saveToFile() {
         try {
             ObjectOutputStream outputStream = new ObjectOutputStream(
-                    this.openFileOutput(fileName, MODE_PRIVATE));
+                    this.openFileOutput(SAVE_FILE_NAME, MODE_PRIVATE));
             outputStream.writeObject(boardManager);
             outputStream.close();
         } catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
+            Log.e("SlidingTiles Game Activity", "File write failed: " + e.toString());
         }
     }
 
@@ -293,7 +299,7 @@ public class GameActivity extends AppCompatActivity implements Observer {
     public void update(Observable o, Object arg) {
         display();
         this.boardManager.pushToStack();
-        this.boardManager.setDuration(SystemClock.elapsedRealtime() - this.timer.getBase());
-        saveToFile(TEMP_SAVE_FILENAME);
+        this.boardManager.setDuration(getElapsedTime());
+        saveToFile();
     }
 }
