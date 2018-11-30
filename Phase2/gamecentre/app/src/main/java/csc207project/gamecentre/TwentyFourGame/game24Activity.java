@@ -46,7 +46,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
     ImageView imageView3 = null;
     ImageView imageView4 = null;
 
-
     /**
      * create imageView btnLeft,btnRight,btnPlus,btnMinus,btnMultiply,btnDivide
      */
@@ -145,8 +144,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game24);
 
@@ -211,7 +208,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         /**
          * Active the load button.
          */
-
         btnLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -276,16 +272,12 @@ public class game24Activity extends AppCompatActivity implements Serializable{
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                System.out.println("onchange..");
                 loadFromFile(GAME24POINTS_FILE_NAME);
                 if (hm== null){
-//                    System.out.println("mapfromFile = null");
                     HashMap<String, String> hm = new HashMap<String, String>();
-//
                     hm.put("user1", inputString);
                     saveToFile(GAME24POINTS_FILE_NAME);
                 }else {
-//
                     hm.put("user1", editText.getText().toString());
                     saveToFile(GAME24POINTS_FILE_NAME);
                 }
@@ -345,7 +337,9 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         });
     }
 
-
+    /**
+     * enable the events after hitting start button
+     */
     private void addStartButtonListener(){
         startButton = findViewById(R.id.startBtn);
         startButton.setOnClickListener(new View.OnClickListener() {
@@ -365,8 +359,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
 
                 startButton.setClickable(false);
 
-
-
                 imageView1.setClickable(true);
                 imageView2.setClickable(true);
                 imageView3.setClickable(true);
@@ -384,6 +376,11 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         });
     }
 
+    /**
+     * Enable the events after clicking imageView with number images.
+     * @param numImaView input imageView
+     * @param a corresponding number
+     */
      void numberImageViewListener(ImageView numImaView, int a){
         numImaView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -402,26 +399,44 @@ public class game24Activity extends AppCompatActivity implements Serializable{
     }
 
 
+    /**
+     * set imageView1 Listener.
+     */
     private void setImageView1Listener(){
         imageView1 = findViewById(R.id.imageView1);
         numberImageViewListener(imageView1,a1);
     }
 
+    /**
+     * set imageView2 Listener.
+     */
     private void setImageView2Listener(){
         imageView2 = findViewById(R.id.imageView2);
         numberImageViewListener(imageView2,a2);
     }
 
+    /**
+     * set imageView3 Listener.
+     */
     private void setImageView3Listener(){
         imageView3 = findViewById(R.id.imageView3);
         numberImageViewListener(imageView3,a3);
     }
 
+    /**
+     * set imageView4 Listener.
+     */
     private void setImageView4Listener(){
         imageView4 = findViewById(R.id.imageView4);
         numberImageViewListener(imageView4,a4);
     }
 
+    /**
+     * Enable the events after clicking imageView with operator image.
+     * reset track number to 0, add operator to inputString and set editText with input.
+     * @param opeImaView
+     * @param operator
+     */
     void operatorImageListener(ImageView opeImaView,String operator){
         opeImaView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -433,37 +448,57 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         });
     }
 
+    /**
+     *add Left Bracket Listener
+     */
     private void addLeftBracketListener(){
         btnLeft = findViewById(R.id.btnLeft);
         operatorImageListener(btnLeft,"(");
     }
 
+    /**
+     * add Right Bracket Listener
+     */
     private void addRightBracketListener(){
         btnRight = findViewById(R.id.btnRight);
         operatorImageListener(btnRight,")");
     }
 
-
+    /**
+     * add Plus Buttont Listener
+     */
     private void addPlusButtontListener(){
         btnPlus = findViewById(R.id.btnPlus);
         operatorImageListener(btnPlus,"+");
     }
 
+    /**
+     * add Minus Button Listener
+     */
     private void addMinusButtonListener(){
         btnMinus = findViewById(R.id.btnMinus);
         operatorImageListener(btnMinus,"-");
     }
 
+    /**
+     * add Mutiply Button Listener
+     */
     private void addMutiplyButtonListener(){
         btnMultiply = findViewById(R.id.btnMultiply);
         operatorImageListener(btnMultiply,"*");
     }
 
+    /**
+     * add Divide Button Listener
+     */
     private void addDivideButtonListener(){
         btnDivide = findViewById(R.id.btnDivide);
         operatorImageListener(btnDivide,"/");
     }
 
+    /**
+     * add Undo Button Listener
+     */
     private  void addUndoButtonListener(){
         undo = findViewById(R.id.undoBtn);
         undo.setOnClickListener(new View.OnClickListener() {
@@ -519,6 +554,10 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         }
     }
 
+    /**
+     * Set clickable of all imageViews with operator images.
+     * @param bol inout true if making it clickable, false if making it unclickable.
+     */
     private void setOperatorClickable(boolean bol){
         btnLeft.setClickable(bol);
         btnRight.setClickable(bol);
@@ -528,6 +567,11 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         btnDivide.setClickable(bol);
     }
 
+    /**
+     * check if the last element of inputString is number or not.
+     * @param lastC input string
+     * @return return 0 if the last element is not a number, otherwise return its own value.
+     */
     public int checkIfNumber(String lastC) {
         int lastInt = 0;
         try {
@@ -538,6 +582,11 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         return lastInt;
     }
 
+    /**
+     * Get the string of the final result.
+     * @param str input string
+     * @return return the final result string.
+     */
     public String getFinalResult(String str){
         int re = judgeTransferable(str);
         if(re == 0){
@@ -548,6 +597,11 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         }
     }
 
+    /**
+     * Judge if the input string is valid to transform to computable expression or not.
+     * @param s input string
+     * @return return 0 if not transformable, return its own value if transformable
+     */
     public int judgeTransferable(String s) {
         int i = 0;
         try {
@@ -564,6 +618,11 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         return i;
     }
 
+    /**
+     * Set the imageView's image resource.
+     * @param imageView input imageView
+     * @param num the corresponding randomly generated nuber
+     */
     private void setImage(ImageView imageView, int num) {
         switch (num) {
             case 1:
@@ -632,6 +691,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
             Log.e("game24 activity", "File contained unexpected data type: " + e.toString());
         }
     }
+
     /**
      * Load the array validList from fileName imageView.
      *
@@ -644,7 +704,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
             if (inputStream != null) {
                 ObjectInputStream input = new ObjectInputStream(inputStream);
                 validList = (int[]) input.readObject();
-//                hm = (HashMap<String, String>) input.readObject();
                 input.close();
                 inputStream.close();
             }
