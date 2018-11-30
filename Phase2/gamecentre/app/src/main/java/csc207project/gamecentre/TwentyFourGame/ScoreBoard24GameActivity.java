@@ -106,16 +106,26 @@ public class ScoreBoard24GameActivity extends AppCompatActivity {
     @NonNull
     private String formatUsedTime (@NonNull Long time) {
         String format = "";
-        if (time.equals(Long.MAX_VALUE)) {
+
+        if (time == Long.MAX_VALUE) {
             format = "00:00";
         } else {
-            long minute = (time / 1000) / 60;
-            long second = (time / 1000) % 60;
-            format = String.valueOf(minute) + ":";
-            if (second > 9) {
-                format = format + String.valueOf(second);
+
+            Long minute = (time / 1000) / 60;
+            Long second = (time / 1000) % 60;
+
+            if (minute > 9) {
+                format += minute.toString();
             } else {
-                format = format + "0" + String.valueOf(second);
+                format += "0" + minute.toString();
+            }
+
+            format += ":";
+
+            if (second > 9) {
+                format += second.toString();
+            } else {
+                format += "0" + second.toString();
             }
         }
         return format;
