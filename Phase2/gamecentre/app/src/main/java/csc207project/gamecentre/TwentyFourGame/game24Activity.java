@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -25,7 +26,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
-
 import csc207project.gamecentre.R;
 
 /**
@@ -269,16 +269,24 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnResult.setEnabled(true);
+                btnLoad.setEnabled(false);
                 // disable chronometer
                 pauseChronometer();
 
-                undo.setClickable(false);
+                undo.setEnabled(false);
 
                 setOperatorClickable(false);
 
                 String finalResult = getFinalResult(inputString);
                 editText.setText(finalResult);
+                if (win){
+                    btnResult.setEnabled(true);
+                    String msg = "You Win :)";
+                    Toast.makeText(game24Activity.this,msg, Toast.LENGTH_LONG).show();
+                }else{
+                    String msg = "You Lose :(";
+                    Toast.makeText(game24Activity.this,msg, Toast.LENGTH_LONG).show();
+                }
             }
 
             /**
