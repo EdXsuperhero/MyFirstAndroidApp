@@ -16,6 +16,7 @@ import csc207project.gamecentre.MemoryMatching.MatchingMainActivity;
 import csc207project.gamecentre.MemoryMatching.MatchingScoreBoardActivity;
 import csc207project.gamecentre.SlidingTiles.GameActivity;
 import csc207project.gamecentre.SlidingTiles.ScoreBoardActivity;
+import csc207project.gamecentre.TwentyFourGame.ScoreBoard24GameActivity;
 import csc207project.gamecentre.TwentyFourGame.game24Activity;
 import csc207project.gamecentre.R;
 
@@ -80,7 +81,7 @@ public class GameLibFragment extends Fragment {
                         R.string.twenty_four_game,
                         R.string.twenty_four_game_des,
                         game24Activity.class,
-                        null)
+                        ScoreBoard24GameActivity.class)
         );
         this.games.add(
                 new Game(R.drawable.matching_game_screenshot,
