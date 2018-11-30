@@ -404,28 +404,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         operatorImageListener(btnRight,")");
     }
 
-//                String finalResult = getFinalResult(inputString);
-//                editText.setText(finalResult);
-////                ScoreManager sm;
-////                sm = new ScoreManager();
-////                if(win){
-////                    System.out.println(pauseOffset);
-////                    sm.addScore("userName", Long.valueOf(pauseOffset));
-////                }else{
-////                    sm.addScore("userName", Long.valueOf(0));
-////                }
-////                saveScoreToFile(SAVE_SCORE);
-//
-//                SharedPreferences settings = getSharedPreferences(USER_SCORE, 0);
-//                SharedPreferences.Editor editor = settings.edit();
-//                String user = "user";
-////                String userName = Integer.parseInt(user);// here userName = EditText.getText().toString()
-//
-//                editor.putString("userName",user) ;
-//                SharedPreferences settings1 = getSharedPreferences("score", 0);
-//                SharedPreferences.Editor editor1 = settings1.edit();
-//                editor1.putLong("score", Long.valueOf(pauseOffset));
-//                editor.commit();
 
     private void addPlusButtontListener(){
         btnPlus = findViewById(R.id.btnPlus);
@@ -484,7 +462,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         HashMap<String, String> chm = new HashMap<>();
         chm.put("userName", String.valueOf(pauseOffset));
         saveTimeToFile(TIMER_OFFSET, chm);
-
     }
 
     /**
@@ -520,7 +497,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
     public String getFinalResult(String str){
         int re = judgeTransferable(str);
         if(re == 0){
-            return "Ooop! Invalid Input!";
+            return "Ooops! Invalid Input!";
         }else{
             String result = String.valueOf(re);
             return result;
