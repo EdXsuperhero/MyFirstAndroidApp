@@ -14,12 +14,12 @@ public class BoardManagerTest {
 
     @Test
     public void isValidTap() {
-        boolean result = false;
-        BoardManager bm = new BoardManager(4);
+        boolean result = true;
+        BoardManager bm = new BoardManager(2);
         if(bm.getBoard().getTile(1, 1).getId() == 0){
-            result = true;
+            result = false;
         }
-        boolean valid = bm.isValidTap(5);
+        boolean valid = bm.isValidTap(3);
         boolean equal = valid == result;
         assertTrue(equal);
     }
