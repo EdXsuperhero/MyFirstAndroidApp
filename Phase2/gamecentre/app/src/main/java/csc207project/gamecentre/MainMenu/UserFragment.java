@@ -15,6 +15,10 @@ import android.widget.TextView;
 
 import csc207project.gamecentre.R;
 
+/**
+ * A fragment that handles user modify processes.
+ * # Exclude from code coverage because it's a view class.
+ */
 public class UserFragment extends Fragment {
 
     /**

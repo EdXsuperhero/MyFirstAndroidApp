@@ -3,6 +3,7 @@ package csc207project.gamecentre.MainMenu.GameLibFragment;
 /**
  * Game information.
  * A POJO.
+ * # Exclude from code coverage because it's a model class.
  */
 public class Game {
 

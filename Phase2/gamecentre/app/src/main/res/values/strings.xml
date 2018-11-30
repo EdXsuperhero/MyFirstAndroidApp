@@ -35,14 +35,14 @@
     <string name="sliding_tiles_des">A Puzzle Game where you must arrange the numbers in the correct order.</string>
 
     <string name="twenty_four_game">Twenty-Four Game</string>
-    <string name="twenty_four_game_des"/>
+    <string name="twenty_four_game_des">An Arithmetic Card Game where the goal is to get 24 from 4 random cards.</string>
 
     <string name="memory_matching">Memory Matching</string>
     <string name="memory_matching_des" >A Memory Game where you can flip two cards over and match them together.</string>
 
-    <string name="welcome">Welcome,</string>
-    <string name="change_username">Change Username</string>
-    <string name="change_password">Change Password</string>
+    <string name="welcome">WELCOME!</string>
+    <string name="change_username">CHANGE USERNAME</string>
+    <string name="change_password">CHANGE PASSWORD</string>
     <string name="cancel">Cancel</string>
-    <string name="logout">Log Out</string>
+    <string name="logout">LOG OUT</string>
 </resources>

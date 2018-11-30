@@ -30,9 +30,9 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:layout_marginEnd="110dp"
+        android:layout_marginEnd="124dp"
         android:layout_marginBottom="31dp"
-        android:text="Back to Main Menu" />
+        android:text="Start Again" />
 
     <TableLayout
         android:layout_width="match_parent"

@@ -24,7 +24,8 @@ import csc207project.gamecentre.MainMenu.GameLibFragment.GameLibFragment;
 import csc207project.gamecentre.MainMenu.LoginFragment.LoginActivity;
 
 /**
- * The Main Menu for Game Centre
+ * The Main Menu for Game Centre.
+ * # Exclude from code coverage because it's a view class.
  */
 public class MainMenuActivity extends AppCompatActivity {
 

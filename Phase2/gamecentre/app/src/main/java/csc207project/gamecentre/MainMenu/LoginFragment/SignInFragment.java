@@ -16,6 +16,10 @@ import android.widget.TextView;
 import csc207project.gamecentre.R;
 import csc207project.gamecentre.MainMenu.UserManager;
 
+/**
+ * The fragment that handles sign in process.
+ * # Exclude from code coverage because it's a view class.
+ */
 public class SignInFragment extends Fragment {
 
     /**

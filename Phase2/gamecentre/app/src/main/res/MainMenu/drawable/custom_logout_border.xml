@@ -13,6 +13,6 @@
         android:bottom="10dp"/>
 
     <solid
-        android:color="@color/warning"/>
+        android:color="#424242"/>
 
 </shape>
