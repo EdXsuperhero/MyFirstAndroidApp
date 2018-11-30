@@ -43,6 +43,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
     ImageView imageView3 = null;
     ImageView imageView4 = null;
 
+
     ImageView btnLeft;
     ImageView btnRight;
     ImageView btnPlus;
@@ -123,6 +124,8 @@ public class game24Activity extends AppCompatActivity implements Serializable{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game24);
 
@@ -153,16 +156,26 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         addUndoButtonListener();
         addStartButtonListener();
         setImageView1Listener();
+        imageView1.setClickable(false);
         setImageView2Listener();
+        imageView2.setClickable(false);
         setImageView3Listener();
+        imageView3.setClickable(false);
         setImageView4Listener();
+        imageView4.setClickable(false);
 
         addLeftBracketListener();
+        btnLeft.setClickable(false);
         addRightBracketListener();
+        btnRight.setClickable(false);
         addPlusButtontListener();
+        btnPlus.setClickable(false);
         addMinusButtonListener();
+        btnMinus.setClickable(false);
         addMutiplyButtonListener();
+        btnMultiply.setClickable(false);
         addDivideButtonListener();
+        btnDivide.setClickable(false);
 
         SharedPreferences settings = getSharedPreferences(USER_SCORE, 0);
         SharedPreferences.Editor editor = settings.edit();
@@ -185,6 +198,8 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                 btnConfirm.setEnabled(true);
 
                 StartButton.setClickable(false);
+
+
 
                 imageView1.setClickable(true);
                 imageView2.setClickable(true);
@@ -324,6 +339,8 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                 editText.setFocusable(true);
 
                 StartButton.setClickable(false);
+
+
 
                 imageView1.setClickable(true);
                 imageView2.setClickable(true);
