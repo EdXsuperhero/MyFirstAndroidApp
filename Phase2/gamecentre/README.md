@@ -39,6 +39,22 @@ git config --local core.autocrlf true
    
    **DON'T COMMIT ANY NONFUNCTIONAL CODE IN MASTER BRANCH PLEASE!**
 
-   [Where you can learn basic skills about branching and merging](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging)
+   [Where you can learn basic skills about branching and merging.](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging)
 
 7. Go on to your work!
+
+## Current Games We Have
+
+1. Sliding Tiles:
+
+- A Puzzle Game where you must arrange the numbers in the correct order.
+
+2. Memory Matching:
+
+- A Memory Game where you can flip two cards over and match them together.
+
+3. Twenty-Four Game:
+
+- An Arithmetic Card Game where the goal is to get 24 from 4 random cards.
+
+**Just a Reminder: Users have to login to play this game.**
