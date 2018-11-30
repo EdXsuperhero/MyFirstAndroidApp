@@ -91,7 +91,7 @@
         android:layout_marginEnd="76dp"
         android:layout_marginBottom="124dp"
         android:ems="10"
-        android:hint="Entre Expression Here"
+        android:hint="Press Start to Go!"
         android:inputType="number"
         android:singleLine="true"
         app:layout_constraintBottom_toTopOf="@+id/imageView2"
