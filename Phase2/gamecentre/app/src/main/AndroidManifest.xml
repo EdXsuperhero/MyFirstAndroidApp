@@ -21,7 +21,6 @@
         <activity android:name=".SlidingTiles.GameActivity" />
         <activity android:name=".SlidingTiles.ChooseComplexity" />
         <activity android:name=".SlidingTiles.ScoreBoardActivity" />
-	    <activity android:name=".MemoryMatching.MatchingStartingActivity" />
         <activity android:name=".MemoryMatching.MatchingMainActivity" />
         <activity android:name=".MemoryMatching.ChooseComplexActivity" />
         <activity android:name=".MemoryMatching.MatchingScoreBoardActivity" />

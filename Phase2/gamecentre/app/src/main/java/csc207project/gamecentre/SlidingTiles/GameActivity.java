@@ -123,6 +123,9 @@ public class GameActivity extends AppCompatActivity implements Observer {
         }
     }
 
+    /**
+     * Setup the game board and view for user to play.
+     */
     private void setupGame() {
         createTileButtons(mContext);
 

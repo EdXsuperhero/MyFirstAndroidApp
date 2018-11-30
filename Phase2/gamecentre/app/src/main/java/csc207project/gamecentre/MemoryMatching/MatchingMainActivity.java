@@ -1,5 +1,8 @@
 package csc207project.gamecentre.MemoryMatching;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Context;
@@ -23,24 +26,25 @@ import csc207project.gamecentre.R;
 public class MatchingMainActivity extends AppCompatActivity implements Observer{
 
     /**
+     * A temporary save file.
+     */
+    public static final String TEMP_SAVE_FILENAME = "memorymatching_save_file_tmp.ser";
+    /**
      * The board manager.
      */
     private BoardManager boardManager;
-
     /**
      * The buttons to display.
      */
     private ArrayList<Button> tileButtons;
-
     /**
      * The Chronometer
      */
-    Chronometer timer;
-
+    private Chronometer timer;
     /**
      * Set context.
      */
-    private Context mContext = MatchingMainActivity.this;
+    private Context mContext = this;
 
     // Grid View and calculated column height and width based on device size
     private GestureDetectGridView gridView;
@@ -63,27 +67,58 @@ public class MatchingMainActivity extends AppCompatActivity implements Observer{
 
     }
 
-    /**
-     * Update the backgrounds on the buttons to match the cards.
-     */
-    private void updateTileButtons() {
-        Board board = boardManager.getBoard();
-        int width = board.getWidth();
-        int nextPos = 0;
-        for (Button b : tileButtons) {
-            int row = nextPos / width;
-            int col = nextPos % width;
-            b.setBackgroundResource(board.getCards()[row][col].getBackground());
-            nextPos++;
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadFromFile(MatchingStartingActivity.TEMP_SAVE_FILENAME);
-        createTileButtons(mContext);
         setContentView(R.layout.activity_matching_main);
+
+        startNewGame();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        int complexity = data.getIntExtra("complexity", 2);
+        this.boardManager = new BoardManager(complexity);
+        setupGame();
+    }
+
+    /**
+     * Start a new game if there's no previous saved games,
+     * else ask the user whether reload the game.
+     */
+    private void startNewGame() {
+        if (checkTempFileExists()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+            builder.setTitle("You have an unsolved game!");
+            builder.setMessage("Do you want to continue?");
+            builder.setPositiveButton("YES",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            loadFromFile(TEMP_SAVE_FILENAME);
+                            setupGame();
+                        }
+            });
+            builder.setNegativeButton("NO",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switchToChooseComplexity();
+                        }
+            });
+            builder.show();
+        } else {
+            switchToChooseComplexity();
+        }
+    }
+
+    /**
+     * Setup the game board and view for user to play.
+     */
+    private void setupGame() {
+        createTileButtons(mContext);
 
         this.timer = findViewById(R.id.timer1);
         startTimer();
@@ -111,7 +146,32 @@ public class MatchingMainActivity extends AppCompatActivity implements Observer{
                     }
                 });
 
+    }
 
+    /**
+     * Check whether there is an unsolved puzzle.
+     *
+     * @return whether there is an unsolved puzzle
+     */
+    private boolean checkTempFileExists() {
+
+        String[] filesLists = this.fileList();
+        boolean exists = false;
+        for (String file: filesLists) {
+            if (file.equals(TEMP_SAVE_FILENAME)){
+                exists = true;
+            }
+        }
+
+        return exists;
+    }
+
+    /**
+     * Switch to ChooseComplexity to choose game complexity.
+     */
+    private void switchToChooseComplexity() {
+        Intent intent = new Intent(this, ChooseComplexActivity.class);
+        startActivityForResult(intent, 0);
     }
 
     /**
@@ -132,6 +192,20 @@ public class MatchingMainActivity extends AppCompatActivity implements Observer{
         }
     }
 
+    /**
+     * Update the backgrounds on the buttons to match the cards.
+     */
+    private void updateTileButtons() {
+        Board board = boardManager.getBoard();
+        int width = board.getWidth();
+        int nextPos = 0;
+        for (Button b : tileButtons) {
+            int row = nextPos / width;
+            int col = nextPos % width;
+            b.setBackgroundResource(board.getCards()[row][col].getBackground());
+            nextPos++;
+        }
+    }
 
     /**
      * Start the timer for this round.
@@ -140,6 +214,13 @@ public class MatchingMainActivity extends AppCompatActivity implements Observer{
         long duration = this.boardManager.getDuration();
         this.timer.setBase(SystemClock.elapsedRealtime() - duration);
         this.timer.start();
+    }
+
+    /**
+     * @return current user that is playing this game.
+     */
+    public String getCurrentUser() {
+        return getIntent().getStringExtra("current_user");
     }
 
 
@@ -188,6 +269,6 @@ public class MatchingMainActivity extends AppCompatActivity implements Observer{
         display();
         this.boardManager.pushToStack();
         this.boardManager.setDuration(SystemClock.elapsedRealtime() - this.timer.getBase());
-        saveToFile(MatchingStartingActivity.TEMP_SAVE_FILENAME);
+        saveToFile(TEMP_SAVE_FILENAME);
     }
 }

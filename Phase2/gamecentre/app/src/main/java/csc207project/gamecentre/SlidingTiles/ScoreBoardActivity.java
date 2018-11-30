@@ -118,7 +118,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
      */
     @NonNull
     private String formatUsedTime (@NonNull Long time) {
-        String format = new String();
+        String format = "";
 
         if (time == Long.MAX_VALUE) {
             format = "00:00";

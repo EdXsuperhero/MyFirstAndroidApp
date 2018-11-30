@@ -16,7 +16,7 @@ class MatchingScoreManager implements Serializable {
     private HashMap<String, Long> scores = new HashMap<>();
 
     MatchingScoreManager() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i <= 5; i++) {
             scores.put("Nobody_" + i, Long.MAX_VALUE);
         }
     }
@@ -45,10 +45,11 @@ class MatchingScoreManager implements Serializable {
      * @return the highest score of username
      */
     Long getScore(String username) {
+        Long score = Long.MAX_VALUE;
         if (isStoredUser(username)) {
-            return this.scores.get(username);
+            score = this.scores.get(username);
         }
-        return null;
+        return score;
     }
 
     /**

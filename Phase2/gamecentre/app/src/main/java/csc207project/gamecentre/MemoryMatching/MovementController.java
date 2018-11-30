@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
+
 public class MovementController {
 
     private BoardManager boardManager;
@@ -22,8 +23,8 @@ public class MovementController {
         boardManager.touchMove(position);
         if (boardManager.cardAllMatched()) {
             //Toast.makeText(context, "YOU WIN", Toast.LENGTH_SHORT).show();
-            mContext.deleteFile(MatchingStartingActivity.TEMP_SAVE_FILENAME);
-                long duration = boardManager.getDuration();
+            mContext.deleteFile(MatchingMainActivity.TEMP_SAVE_FILENAME);
+            long duration = boardManager.getDuration();
             String min = getUsedTime(duration)[0];
             String sec = getUsedTime(duration)[1];
             AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -36,7 +37,10 @@ public class MovementController {
                                     Intent toScoreBoardIntent =
                                             new Intent(mContext, MatchingScoreBoardActivity.class);
                                     toScoreBoardIntent.putExtra("score", duration);
+                                    toScoreBoardIntent.putExtra("current_user",
+                                            ((MatchingMainActivity)mContext).getCurrentUser());
                                     mContext.startActivity(toScoreBoardIntent);
+                                    ((MatchingMainActivity)mContext).finish();
                                 }
                             })
                     .show();
