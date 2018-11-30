@@ -23,8 +23,4 @@ public class MovementControllerTest {
         boolean result2 = move2.getBoardManager().equals(manager2);
         assertTrue(result2);
     }
-
-    @Test
-    public void processTapMovementTest() {
-    }
 }
