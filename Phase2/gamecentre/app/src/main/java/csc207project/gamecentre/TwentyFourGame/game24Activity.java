@@ -357,7 +357,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                 imageView2.setClickable(true);
                 imageView3.setClickable(true);
                 imageView4.setClickable(true);
-                saveImageToFile(IMAGENUMBER);
+                saveImageToFile(IMAGE_NUMBER);
 
                 setImage(imageView1, validList[0]);
                 setImage(imageView2, validList[1]);
