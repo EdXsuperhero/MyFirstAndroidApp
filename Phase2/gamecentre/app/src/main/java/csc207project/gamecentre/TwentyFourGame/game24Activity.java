@@ -3,7 +3,6 @@ package csc207project.gamecentre.TwentyFourGame;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.SystemClock;
-import android.os.UserManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -26,7 +25,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
 
 import csc207project.gamecentre.OASIS.ScoreManager;
@@ -191,6 +189,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         /**
          * Active the load button.
          */
+
         btnLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -226,7 +225,8 @@ public class game24Activity extends AppCompatActivity implements Serializable{
 
                 loadFromFile(GAME24POINTS_FILE_NAME);
                 if (hm != null){
-                    editText.setText(hm.get("user1"));
+                    inputString = hm.get("user1");
+                    editText.setText(inputString);
                 } else {
                     editText.setText(inputString);
                     editText.setEnabled(true);
@@ -327,6 +327,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         });
     }
 
+
     private void addStartButtonListener(){
         StartButton = findViewById(R.id.startBtn);
         StartButton.setOnClickListener(new View.OnClickListener() {
@@ -356,7 +357,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                 imageView2.setClickable(true);
                 imageView3.setClickable(true);
                 imageView4.setClickable(true);
-                saveImageToFile(IMAGE_NUMBER);
+                saveImageToFile(IMAGENUMBER);
 
                 setImage(imageView1, validList[0]);
                 setImage(imageView2, validList[1]);
@@ -381,6 +382,9 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                     numImaView.setClickable(false);
                     inputString += a;
                     editText.setText(inputString);
+                }else{
+                    String msg = "can not put two number together!";
+                    Toast.makeText(game24Activity.this,msg, Toast.LENGTH_LONG).show();
                 }
             }
         });
