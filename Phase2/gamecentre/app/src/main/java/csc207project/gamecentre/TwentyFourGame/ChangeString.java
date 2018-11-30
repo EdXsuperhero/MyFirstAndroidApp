@@ -1,12 +1,20 @@
 package csc207project.gamecentre.TwentyFourGame;
-
-//https://blog.csdn.net/yhhazr/article/details/7947962
-
+/*
+Adapted from:
+https://blog.csdn.net/yhhazr/article/details/7947962
+ */
 import java.util.ArrayList;
 import java.util.Stack;
-
+/**
+ *  A changString class that transform valid input string to an expression that is computable,
+ *  give the result if that is the not valid input.
+ */
 public class ChangeString {
-
+    /**
+     * Transform input string to an ArrayList of String.
+     * @param str input string
+     * @return an ArrayList
+     */
     public ArrayList<String> getStringList(String str){
         ArrayList<String> result = new ArrayList<String>();
         String num = "";
@@ -27,7 +35,11 @@ public class ChangeString {
         return result;
     }
 
-
+    /**
+     * get the post oder of input arrayList.
+     * @param inOrderList input arrayList
+     * @return an ArrayList of String
+     */
     public ArrayList<String> getPostOrder(ArrayList<String> inOrderList){
 
         ArrayList<String> result = new ArrayList<String>();
@@ -61,6 +73,11 @@ public class ChangeString {
         return result;
     }
 
+    /**
+     * Calculate the final of integer with the input ArrayList postOrder
+     * @param postOrder an input arrayList
+     * @return an integer which is the result
+     */
     public Integer calculate(ArrayList<String> postOrder){
         Stack stack = new Stack();
         for (int i = 0; i < postOrder.size(); i++) {
@@ -90,7 +107,12 @@ public class ChangeString {
         return (Integer)stack.pop();
     }
 
-
+    /**
+     * Compare the current and peek operator with string peek and string cur.
+     * @param peek string peek
+     * @param cur string curr
+     * @return true if peek and cur are the same, otherwise return false
+     */
     public static boolean compare(String peek, String cur){
         if("*".equals(peek) && ("/".equals(cur) || "*".equals(cur) ||"+".equals(cur) ||"-".equals(cur))){
             return true;
