@@ -128,9 +128,10 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         setContentView(R.layout.activity_game24);
 
         editText = findViewById(R.id.inputText);
+        editText.setEnabled(false);
+        editText.setInputType(0);
 
-//        editText.setEnabled(false);
-//        editText.setInputType(0);
+
 
         btnConfirm = findViewById(R.id.btnConfirm);
         btnConfirm.setEnabled(false);
@@ -194,6 +195,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                 imageView2.setClickable(true);
                 imageView3.setClickable(true);
                 imageView4.setClickable(true);
+
 
 
                 //set random picture to 4 imageViews
@@ -323,6 +325,9 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                 //enable confirm
                 btnConfirm.setEnabled(true);
                 editText.setHint("GoFor24");
+                editText.setEnabled(true);
+                editText.setFocusable(true);
+                editText.setText("");
 
 
                 //enable editText after StartButton is clicked
