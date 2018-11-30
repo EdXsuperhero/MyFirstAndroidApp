@@ -78,7 +78,7 @@ public class UserManager implements Serializable {
      *
      * @param newUsername new username to be changed
      */
-    public void changeUsername(String newUsername) {
+    void changeUsername(String newUsername) {
         User user = this.users.get(this.currentUser);
         this.users.remove(this.currentUser);
 
@@ -92,7 +92,7 @@ public class UserManager implements Serializable {
      *
      * @param newPassword new password to be changed
      */
-    public void changePassword(String newPassword) {
+    void changePassword(String newPassword) {
         User user = this.users.get(this.currentUser);
         user.setPassword(newPassword);
         this.users.replace(this.currentUser, user);
@@ -104,7 +104,7 @@ public class UserManager implements Serializable {
      * @param username the username to check
      * @return whether the username is in the users
      */
-    public boolean isStoredUser(String username) {
+    boolean isStoredUser(String username) {
         return this.users.containsKey(username);
     }
 
