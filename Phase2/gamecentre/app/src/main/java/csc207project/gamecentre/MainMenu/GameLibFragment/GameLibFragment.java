@@ -12,11 +12,11 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import csc207project.gamecentre.MemoryMatching.MatchingMainActivity;
 import csc207project.gamecentre.MemoryMatching.MatchingScoreBoardActivity;
 import csc207project.gamecentre.SlidingTiles.GameActivity;
 import csc207project.gamecentre.SlidingTiles.ScoreBoardActivity;
 import csc207project.gamecentre.TwentyFourGame.game24Activity;
-import csc207project.gamecentre.MemoryMatching.MatchingStartingActivity;
 import csc207project.gamecentre.R;
 
 /**
@@ -85,7 +85,7 @@ public class GameLibFragment extends Fragment {
                 new Game(R.drawable.twenty_four_game_screenshot,
                         R.string.memory_matching,
                         R.string.memory_matching_des,
-                        MatchingStartingActivity.class,
+                        MatchingMainActivity.class,
                         MatchingScoreBoardActivity.class)
         );
     }
