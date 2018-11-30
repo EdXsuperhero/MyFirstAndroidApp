@@ -66,7 +66,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
 
     String inputString = "";
 
-    int track,a1,a2,a3,a4;
+    int track,a1,a2,a3,a4,checkEnd;
 
     public int[] generateNumber(){
         int[] numberList = new int[4];
@@ -295,8 +295,13 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(checkEnd != 4){
+                    String msg = "Numbers waiting to use!";
+                    Toast.makeText(game24Activity.this,msg, Toast.LENGTH_LONG).show();
+                }else{
                 btnLoad.setEnabled(false);
-                // disable chronometer
+
                 pauseChronometer();
 
                 undo.setEnabled(false);
@@ -312,6 +317,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                 }else{
                     String msg = "You Lose :(";
                     Toast.makeText(game24Activity.this,msg, Toast.LENGTH_LONG).show();
+                }
                 }
             }
 
@@ -346,34 +352,35 @@ public class game24Activity extends AppCompatActivity implements Serializable{
             @Override
             public void onClick(View v) {
 
-                startChronometer();
+                    startChronometer();
 
-                btnConfirm.setEnabled(true);
-                editText.setHint("GoFor24");
-                editText.setEnabled(true);
-                editText.setFocusable(true);
-                editText.setText("");
+                    btnConfirm.setEnabled(true);
+                    editText.setHint("GoFor24");
+                    editText.setEnabled(true);
+                    editText.setFocusable(true);
+                    editText.setText("");
 
-                editText.setEnabled(true);
-                editText.setFocusable(true);
+                    editText.setEnabled(true);
+                    editText.setFocusable(true);
 
-                startButton.setClickable(false);
+                    startButton.setClickable(false);
 
-                imageView1.setClickable(true);
-                imageView2.setClickable(true);
-                imageView3.setClickable(true);
-                imageView4.setClickable(true);
-                saveImageToFile(IMAGE_NUMBER);
+                    imageView1.setClickable(true);
+                    imageView2.setClickable(true);
+                    imageView3.setClickable(true);
+                    imageView4.setClickable(true);
+                    saveImageToFile(IMAGE_NUMBER);
 
-                setImage(imageView1, validList[0]);
-                setImage(imageView2, validList[1]);
-                setImage(imageView3, validList[2]);
-                setImage(imageView4, validList[3]);
-                System.out.println(validList);
+                    setImage(imageView1, validList[0]);
+                    setImage(imageView2, validList[1]);
+                    setImage(imageView3, validList[2]);
+                    setImage(imageView4, validList[3]);
+                    System.out.println(validList);
 
-                setOperatorClickable(true);
+                    setOperatorClickable(true);
                 }
         });
+
     }
 
     /**
@@ -386,6 +393,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
             @Override
             public void onClick(View v) {
                 if(track == 0) {
+                    checkEnd += 1;
                     track = a;
                     numImaView.setClickable(false);
                     inputString += a;
