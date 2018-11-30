@@ -366,22 +366,22 @@ public class game24Activity extends AppCompatActivity implements Serializable{
     }
 
 
-    private void setImageView1Listener(){
+    void setImageView1Listener(){
         imageView1 = findViewById(R.id.imageView1);
         numberImageViewListener(imageView1,a1);
     }
 
-    private void setImageView2Listener(){
+    void setImageView2Listener(){
         imageView2 = findViewById(R.id.imageView2);
         numberImageViewListener(imageView2,a2);
     }
 
-    private void setImageView3Listener(){
+    void setImageView3Listener(){
         imageView3 = findViewById(R.id.imageView3);
         numberImageViewListener(imageView3,a3);
     }
 
-    private void setImageView4Listener(){
+    void setImageView4Listener(){
         imageView4 = findViewById(R.id.imageView4);
         numberImageViewListener(imageView4,a4);
     }
