@@ -1,11 +1,11 @@
 package csc207project.gamecentre.GoFor24;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -47,6 +47,14 @@ public class game24Activity extends AppCompatActivity implements Serializable{
 
     String inputString;
 
+    public static final String USER_SCORE = "user_score";
+
+    private boolean win = false;
+
+    private ScoreManager sm;
+
+    public final static String SAVE_SCORE = "save_score.ser";
+
     HashMap<String, String> hm = new HashMap<String, String>();
     /**
      * A Chronometer to record how many time is taken for the game.
@@ -83,7 +91,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         EditText editText = findViewById(R.id.inputText);
         editText.setEnabled(false);
         editText.setFocusable(false);
-        editText.setInputType(0);
+//        editText.setInputType(0);
         Button btnConfirm = findViewById(R.id.btnConfirm);
         btnConfirm.setEnabled(false);
         final Button undo = findViewById(R.id.undoBtn);
@@ -103,11 +111,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         final ImageView btnMinus = findViewById(R.id.btnMinus);
         final ImageView btnMultiply = findViewById(R.id.btnMultiply);
         final ImageView btnDivide = findViewById(R.id.btnDivide);
-
-
-        editText.setShowSoftInputOnFocus(false);
-        editText.setInputType(InputType.TYPE_NULL);
-        editText.setFocusable(false);
 
         this.chronometer = findViewById(R.id.chronometer);
         chronometer.setFormat("Time: %s");
@@ -252,7 +255,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         imageView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+
                 imageView1.setClickable(false);
                 inputString += a1;
                 editText.setText(inputString);
@@ -357,9 +360,31 @@ public class game24Activity extends AppCompatActivity implements Serializable{
 
                 String finalResult = getFinalResult(inputString);
                 editText.setText(finalResult);
+//                ScoreManager sm;
+//                sm = new ScoreManager();
+//                if(win){
+//                    System.out.println(pauseOffset);
+//                    sm.addScore("userName", Long.valueOf(pauseOffset));
+//                }else{
+//                    sm.addScore("userName", Long.valueOf(0));
+//                }
+//                saveScoreToFile(SAVE_SCORE);
+
+                SharedPreferences settings = getSharedPreferences(USER_SCORE, 0);
+                SharedPreferences.Editor editor = settings.edit();
+                String user = "user";
+//                String userName = Integer.parseInt(user);// here userName = EditText.getText().toString()
+
+                editor.putString("userName",user) ;
+                SharedPreferences settings1 = getSharedPreferences("score", 0);
+                SharedPreferences.Editor editor1 = settings1.edit();
+                editor1.putLong("score", Long.valueOf(pauseOffset));
+                editor.commit();
 
             }
+
         });
+
         btnResult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -373,11 +398,19 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         undo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String lastStr = inputString.substring(inputString.length()-1);
+                int indicator = checkIfNumber(lastStr);
                 if (inputString.length() != 0) {
-//                    if(){
-                    //检查是否数字，恢复数字按钮的clickable
-//
-//                    }
+                    if(indicator == a1)
+                    if(indicator == a1){
+                        imageView1.setClickable(true);
+                    } if(indicator == a2){
+                        imageView2.setClickable(true);
+                    } if(indicator == a3){
+                        imageView3.setClickable(true);
+                    }else {
+                        imageView4.setClickable(true);
+                    }
                     inputString = inputString.substring(0, inputString.length() - 1);
                     editText.setText(inputString);
 
@@ -388,7 +421,11 @@ public class game24Activity extends AppCompatActivity implements Serializable{
 
         });
 
+
+
     }
+
+    
     @Override
     protected void onPause(){
         super.onPause();
@@ -422,7 +459,15 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         }
     }
 
-
+    public int checkIfNumber(String lastC) {
+        int lastInt = 0;
+        try {
+            lastInt = Integer.valueOf(lastC).intValue();
+        } catch (Exception e) {
+            System.out.println("It is not integer");
+        }
+        return lastInt;
+    }
 
     public String getFinalResult(String str) {
         int re = judgeTransferable(str);
@@ -443,6 +488,9 @@ public class game24Activity extends AppCompatActivity implements Serializable{
             ArrayList result = changeString.getStringList(s);
             result = changeString.getPostOrder(result);
             i = changeString.calculate(result);
+            if (i == 24){
+                win = true;
+            }
         } catch (Exception e) {
             System.out.println("invalid message");
 
@@ -537,7 +585,9 @@ public class game24Activity extends AppCompatActivity implements Serializable{
      * Switch to Score Board when the game is ended.
      */
     private void switchToScore(){
-        Intent scoreboard = new Intent(getApplicationContext(), ScoreBoard24GameActivity.class);
+        Intent scoreboard = new Intent(this, ScoreBoard24GameActivity.class);
+        scoreboard.putExtra("score", pauseOffset);
+        scoreboard.putExtra("current_user", getIntent().getStringExtra("current_user"));
         startActivity(scoreboard);
     }
 
@@ -572,5 +622,19 @@ public class game24Activity extends AppCompatActivity implements Serializable{
             Log.e("Exception", "File write failed: " + e.toString());
         }
     }
-
+    /**
+     * Save the score manager to fileName.
+     *
+     * @param fileName the name of the file
+     */
+    private void saveScoreToFile(String fileName) {
+        try {
+            ObjectOutputStream outputStream = new ObjectOutputStream(
+                    this.openFileOutput(fileName, MODE_PRIVATE));
+            outputStream.writeObject(this.sm);
+            outputStream.close();
+        } catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+    }
 }
