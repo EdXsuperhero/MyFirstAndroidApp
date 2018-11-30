@@ -1,11 +1,7 @@
-package csc207project.gamecentre.TwentyFourGame;
+package csc207project.gamecentre.MemoryMatching;
 
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.FileNotFoundException;
@@ -17,59 +13,51 @@ import java.util.List;
 import java.util.Map;
 
 import csc207project.gamecentre.R;
+import csc207project.gamecentre.OASIS.*;
 
+/**
+ * The scoreboard activity for memory matching.
+ */
+public class MemoryMatchingScoreBoardActivity extends ScoreBoardActivity {
 
-public class ScoreBoard24GameActivity extends AppCompatActivity {
-
-    public final static String SAVE_SCORE = "24game_save_score.ser";
-
-    private ScoreManager scoreManager;
-
+    /**
+     * The save file name for storing score manager;
+     */
+    private String saveFileName = "memory_matching_score.ser";
+    /**
+     * The username of whom is playing this game.
+     */
     private String currentUser;
+    /**
+     * A score manager.
+     */
+    private ScoreManager scoreManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_score_board24_game);
-
-        loadScoreFromFile(SAVE_SCORE);
+        loadFromFile();
         Long score = getIntent().getLongExtra("score", Long.MAX_VALUE);
         this.currentUser = getIntent().getStringExtra("current_user");
         if (score != Long.MAX_VALUE) {
             this.scoreManager.addScore(this.currentUser, score);
-            saveScoreToFile(SAVE_SCORE);
         }
-        addBackToStartButtonListener();
+        saveToFile();
+
+        setContentView(R.layout.activity_scoreboard);
+        super.addBackToStartButtonListener();
         addUserHighestScoreListener();
         addHighestFiveScoresListener();
-
-    }
-    /**
-     * Activate the button for navigating back to starting activity.
-     */
-    private void addBackToStartButtonListener() {
-        Button backToStartButton = findViewById(R.id.BackToStart);
-        backToStartButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveScoreToFile(SAVE_SCORE);
-                finish();
-            }
-        });
     }
 
-    /**
-     * Show user's highest score.
-     */
-    private void addUserHighestScoreListener() {
+    @Override
+    protected void addUserHighestScoreListener() {
         TextView userHighestScoreText = findViewById(R.id.HighestScore);
-        userHighestScoreText.setText(formatUsedTime(this.scoreManager.getScore(this.currentUser)));
+        userHighestScoreText.setText(super.formatUsedTime(this.scoreManager.getScore(this.currentUser)));
     }
 
-    /**
-     * Show highest 5 scores on the activity.
-     */
-    private void addHighestFiveScoresListener() {
+    @Override
+    protected void addHighestFiveScoresListener() {
         List<Map.Entry<String, Long>> highest5Scores = this.scoreManager.getHighestFiveScores();
 
         TextView top1UserText = findViewById(R.id.Top1User);
@@ -97,77 +85,36 @@ public class ScoreBoard24GameActivity extends AppCompatActivity {
         top5UserText.setText(highest5Scores.get(4).getKey());
         top5ScoreText.setText(formatUsedTime(highest5Scores.get(4).getValue()));
     }
-    /**
-     * Take in a time in milliseconds and convert to a readable format.
-     *
-     * @param time time in milliseconds
-     * @return time in a readable format
-     */
-    @NonNull
-    private String formatUsedTime (@NonNull Long time) {
-        String format = "";
 
-        if (time == Long.MAX_VALUE) {
-            format = "00:00";
-        } else {
-
-            Long minute = (time / 1000) / 60;
-            Long second = (time / 1000) % 60;
-
-            if (minute > 9) {
-                format += minute.toString();
-            } else {
-                format += "0" + minute.toString();
-            }
-
-            format += ":";
-
-            if (second > 9) {
-                format += second.toString();
-            } else {
-                format += "0" + second.toString();
-            }
-        }
-        return format;
-    }
-    /**
-     * Save the score manager to fileName.
-     *
-     * @param fileName the name of the file
-     */
-    private void saveScoreToFile(String fileName) {
+    @Override
+    public void saveToFile() {
         try {
             ObjectOutputStream outputStream = new ObjectOutputStream(
-                    this.openFileOutput(fileName, MODE_PRIVATE));
+                    this.openFileOutput(this.saveFileName, MODE_PRIVATE));
             outputStream.writeObject(this.scoreManager);
             outputStream.close();
         } catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
+            Log.e("MemoryMatching Scoreboard Activity", "File write failed: " + e.toString());
         }
     }
 
-    /**
-     * Load the score manager from fileName.
-     *
-     * @param fileName the name of the file
-     */
-    private void loadScoreFromFile(String fileName) {
-
+    @Override
+    public void loadFromFile() {
         try {
-            InputStream inputStream = this.openFileInput(fileName);
+            InputStream inputStream = this.openFileInput(this.saveFileName);
             if (inputStream != null) {
                 ObjectInputStream input = new ObjectInputStream(inputStream);
                 this.scoreManager = (ScoreManager) input.readObject();
                 inputStream.close();
             }
         } catch (FileNotFoundException e) {
-            Log.e("Source Board", "File not found: " + e.toString());
+            Log.e("MemoryMatching Scoreboard Activity", "File not found: " + e.toString());
             this.scoreManager = new ScoreManager();
-            saveScoreToFile(SAVE_SCORE);
+            saveToFile();
         } catch (IOException e) {
-            Log.e("Source Board", "Can not read file: " + e.toString());
+            Log.e("MemoryMatching Scoreboard Activity", "Can not read file: " + e.toString());
         } catch (ClassNotFoundException e) {
-            Log.e("Source Board", "File contained unexpected data type: " + e.toString());
+            Log.e("MemoryMatching Scoreboard Activity", "File contained unexpected data type: " + e.toString());
         }
     }
 }

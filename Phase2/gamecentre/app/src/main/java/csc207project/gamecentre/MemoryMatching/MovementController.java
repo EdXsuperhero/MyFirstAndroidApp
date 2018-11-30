@@ -37,7 +37,7 @@ public class MovementController {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     Intent toScoreBoardIntent =
-                                            new Intent(mContext, MatchingScoreBoardActivity.class);
+                                            new Intent(mContext, MemoryMatchingScoreBoardActivity.class);
                                     toScoreBoardIntent.putExtra("score", duration);
                                     toScoreBoardIntent.putExtra("current_user",
                                             ((MatchingMainActivity)mContext).getCurrentUser());
