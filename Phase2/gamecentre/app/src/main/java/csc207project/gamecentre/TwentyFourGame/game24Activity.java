@@ -61,12 +61,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
 
     int track,a1,a2,a3,a4;
 
-    public static final String USER_SCORE = "user_score";
-
-    private ScoreManager sm;
-
-    public final static String SAVE_SCORE = "save_score.ser";
-
     public int[] generateNumber(){
         int[] numberList = new int[4];
         Random random = new Random();
@@ -94,10 +88,25 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         a3 = validList[2];
         a4 = validList[3];
     }
+    /**
+     * Creating a file that stores the user's score.
+     */
+    public static final String USER_SCORE = "user_score.ser";
+    /**
+     * The ScoreManager.
+     */
+    private ScoreManager sm;
+    /**
+     * To check if the game is win or lose.
+     */
     private boolean win = false;
 
+    /**
+     * The HashMap which the key and value are Strings.
+     */
     HashMap<String, String> hm = new HashMap<String, String>();
     /**
+     *
      * A Chronometer to record how many time is taken for the game.
      */
     private Chronometer chronometer;
@@ -120,7 +129,10 @@ public class game24Activity extends AppCompatActivity implements Serializable{
      * The file TIMER_OFFSET that store the time as string.
      */
     public final static String TIMER_OFFSET = "chronometer.ser";
-    public final static String IMAGENUMBER = "image_number.ser";
+    /**
+     * The file IMAGE_NUMBER that stores the array validList.
+     */
+    public final static String IMAGE_NUMBER = "image_number.ser";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,9 +189,8 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         editor.commit();
 
         /**
-         * Activity the load button.
+         * Active the load button.
          */
-
         btnLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -195,7 +206,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                 imageView3.setClickable(true);
                 imageView4.setClickable(true);
 
-                loadImageFromFile(IMAGENUMBER);
+                loadImageFromFile(IMAGE_NUMBER);
                 //set random picture to 4 imageViews
                 setImage(imageView1, validList[0]);
                 setImage(imageView2, validList[1]);
@@ -251,11 +262,13 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                 if (hm== null){
 //                    System.out.println("mapfromFile = null");
                     HashMap<String, String> hm = new HashMap<String, String>();
-                    hm.put("user1", editText.getText().toString());
+//                    hm.put("user1", editText.getText().toString());
+                    hm.put("user1", inputString);
                     saveToFile(GAME24POINTS_FILE_NAME);
                 }else {
 //                    System.out.println("mapfromFile = not null");
-                    hm.put("user1", editText.getText().toString());
+//                    hm.put("user1", editText.getText().toString());
+                    hm.put("user1", inputString);
                     saveToFile(GAME24POINTS_FILE_NAME);
                 }
             }
@@ -266,7 +279,9 @@ public class game24Activity extends AppCompatActivity implements Serializable{
             }
         });
 
-
+        /**
+         * Active confirm button.
+         */
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -301,7 +316,9 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                 }
             }
         });
-
+        /**
+         * Active the see result button.
+         */
         btnResult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -309,7 +326,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
             }
         });
     }
-
 
     private void addStartButtonListener(){
         StartButton = findViewById(R.id.startBtn);
@@ -340,7 +356,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                 imageView2.setClickable(true);
                 imageView3.setClickable(true);
                 imageView4.setClickable(true);
-                saveImageToFile(IMAGENUMBER);
+                saveImageToFile(IMAGE_NUMBER);
 
                 setImage(imageView1, validList[0]);
                 setImage(imageView2, validList[1]);
@@ -441,6 +457,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
                     String lastStr = inputString.substring(inputString.length() - 1);
                     int indicator = checkIfNumber(lastStr);
                     if (indicator > 0) {
+                        track = 0;
                         if (indicator == a1) {
                             imageView1.setClickable(true);
                         }
@@ -462,7 +479,9 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         });
     }
 
-    
+    /**
+     * To store the states of the game when the activity is switched.
+     */
     @Override
     protected void onPause(){
         super.onPause();
@@ -470,7 +489,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         HashMap<String, String> chm = new HashMap<>();
         chm.put("userName", String.valueOf(pauseOffset));
         saveTimeToFile(TIMER_OFFSET, chm);
-        saveImageToFile(IMAGENUMBER);
+        saveImageToFile(IMAGE_NUMBER);
 
     }
 
@@ -598,7 +617,11 @@ public class game24Activity extends AppCompatActivity implements Serializable{
             Log.e("game24 activity", "File contained unexpected data type: " + e.toString());
         }
     }
-
+    /**
+     * Load the array validList from fileName imageView.
+     *
+     * @param fileName the name of the file
+     */
     private void loadImageFromFile(String fileName) {
 
         try {
@@ -648,9 +671,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
      */
     private void switchToScore(){
         Intent scoreboard = new Intent(getApplicationContext(), TwentyFourGameScoreBoardActivity.class);
-//        if (win == false){
-//            pauseOffset = null;
-//        }
         scoreboard.putExtra("score", pauseOffset);
         scoreboard.putExtra("current_user", getIntent().getStringExtra("current_user"));
         startActivity(scoreboard);
@@ -673,6 +693,11 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         }
     }
 
+    /**
+     * Save the array validList to the file.
+     *
+     * @param fileName the name of the file
+     */
     public void saveImageToFile(String fileName) {
         try {
             ObjectOutputStream outputStream = new ObjectOutputStream(
