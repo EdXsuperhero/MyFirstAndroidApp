@@ -664,7 +664,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
             Log.e("Exception", "File write failed: " + e.toString());
         }
     }
-    
+
     public void saveImageToFile(String fileName) {
         try {
             ObjectOutputStream outputStream = new ObjectOutputStream(
