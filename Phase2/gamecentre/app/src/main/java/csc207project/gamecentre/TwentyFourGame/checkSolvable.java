@@ -1,20 +1,30 @@
 package csc207project.gamecentre.TwentyFourGame;
-
-
-//https://leetcode.com/problems/24-game/solution/
+/*
+Adapted from:
+https://leetcode.com/problems/24-game/solution/
+*/
 import java.util.ArrayList;
 
+/**
+ * The class is to check if the 4 randomly generated number is solvable or not.
+ */
 public class checkSolvable {
-
-
-
+    /**
+     * This method is to check if the input integer list of 4 number is solvable or not.
+     * @param nums the input list of integer num
+     * @return return turn the the list of number is solvable, otherwise return false
+     */
     public boolean judgePoint24(int[] nums) {
         ArrayList A = new ArrayList<Double>();
         for (int v: nums) A.add((double) v);
         return solve(A);
     }
 
-
+    /**
+     * Check the input arrayList of double is solvable or not.
+     * @param nums arrayList of double nums
+     * @return return true if solvale, otherwise return false
+     */
      private boolean solve(ArrayList<Double> nums) {
         if (nums.size() == 0) return false;
         if (nums.size() == 1) return Math.abs(nums.get(0) - 24) < 1e-6;

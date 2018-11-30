@@ -1,20 +1,15 @@
 package csc207project.gamecentre.TwentyFourGame;
-
-//https://blog.csdn.net/yhhazr/article/details/7947962
-
 /*
 Adapted from:
 https://blog.csdn.net/yhhazr/article/details/7947962
  */
-
 import java.util.ArrayList;
 import java.util.Stack;
-
 /**
- *  A changString class that transform valid input string to an expression that is computable.
+ *  A changString class that transform valid input string to an expression that is computable,
+ *  give the result if that is the not valid input.
  */
 public class ChangeString {
-
     /**
      * Transform input string to an ArrayList of String.
      * @param str input string
@@ -111,7 +106,6 @@ public class ChangeString {
         }
         return (Integer)stack.pop();
     }
-
 
     /**
      * Compare the current and peek operator with string peek and string cur.
