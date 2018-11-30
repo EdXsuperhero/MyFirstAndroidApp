@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
@@ -15,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+
 import java.util.Random;
 
 import csc207project.gamecentre.R;
@@ -27,11 +29,26 @@ import csc207project.gamecentre.filemanagement.FileManagerSingleton;
  */
 public class game24Activity extends AppCompatActivity {
 
+    ImageView imageView1 = null;
+    ImageView imageView2 = null;
+    ImageView imageView3 = null;
+    ImageView imageView4 = null;
+
+    ImageView btnLeft;
+    ImageView btnRight;
+    ImageView btnPlus;
+    ImageView btnMinus;
+    ImageView btnMultiply;
+    ImageView btnDivide;
+
+    EditText editText;
+    Button btnConfirm;
+    Button undo;
 
 
     String inputString = "";
 
-    int a1,a2,a3,a4;
+    int track,a1,a2,a3,a4;
 
     public int[] generateNumber(){
         int[] numberList = new int[4];
@@ -52,14 +69,13 @@ public class game24Activity extends AppCompatActivity {
         return resultList;
     }
 
+    int[] validList = getSolvableDigits();
     void getValidNumber(){
-        int[] validList = getSolvableDigits();
         a1 = validList[0];
         a2 = validList[1];
         a3 = validList[2];
         a4 = validList[3];
     }
-
 
     /**
      * A Chronometer to calculate time.
@@ -87,28 +103,15 @@ public class game24Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game24);
 
-        final Button StartButton = findViewById(R.id.startBtn);
-        final EditText editText = findViewById(R.id.inputText);
+        editText = findViewById(R.id.inputText);
+
         editText.setEnabled(false);
         editText.setFocusable(false);
         editText.setInputType(0);
-        Button btnConfirm = findViewById(R.id.btnComfirm);
+        btnConfirm = findViewById(R.id.btnComfirm);
         btnConfirm.setEnabled(false);
-        final Button undo = findViewById(R.id.undoBtn);
-        final Button btnLoad = findViewById(R.id.btnLoad);
 
-        final ImageView imageView1 = findViewById(R.id.imageView1);
-        final ImageView imageView2 = findViewById(R.id.imageView2);
-        final ImageView imageView3 = findViewById(R.id.imageView3);
-        final ImageView imageView4 = findViewById(R.id.imageView4);
-
-        final ImageView btnLeft = findViewById(R.id.btnLeft);
-        final ImageView btnRight = findViewById(R.id.btnRight);
-        final ImageView btnPlus = findViewById(R.id.btnPlus);
-        final ImageView btnMinus = findViewById(R.id.btnMinus);
-        final ImageView btnMultiply = findViewById(R.id.btnMultiply);
-        final ImageView btnDivide = findViewById(R.id.btnDivide);
-
+        Button btnLoad = findViewById(R.id.btnLoad);
 
         editText.setShowSoftInputOnFocus(false);
         editText.setInputType(InputType.TYPE_NULL);
@@ -120,9 +123,87 @@ public class game24Activity extends AppCompatActivity {
 
         getValidNumber();
 
+        addUndoButtonListener();
+        addStartButtonListener();
+        setImageView1Listener();
+        setImageView2Listener();
+        setImageView3Listener();
+        setImageView4Listener();
+
+        addLeftBracketListener();
+        addRightBracketListener();
+        addPlusButtontListener();
+        addMinusButtonListener();
+        addMultiplyButtontListener();
+        addDivideButtonListener();
+
+        btnLoad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FileManagerSingleton fileManagerSingleton = new FileManagerSingleton();
+                fileManagerSingleton.loadFromFile(GAME24POINTS_FILE_NAME);
+                editText.setText(inputString);
+            }
+        });
+
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(this);
+
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count)
+            {
+                prefs.edit().putString("autoSave", s.toString()).commit();
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after)
+            {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+            }
+        });
+
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // disable chronometer
+                pauseChronometer();
+
+                undo.setClickable(false);
+
+
+                setOperatorClickable(false);
+
+
+                String finalResult = getFinalResult(inputString);
+                editText.setText(finalResult);
+            }
+
+            /**
+             * A method that pause the chronometer.
+             */
+            private void pauseChronometer() {
+                if (running) {
+                    chronometer.stop();
+                    pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
+                    running = false;
+                }
+            }
+        });
+        }
+
+    private void addStartButtonListener(){
+        Button StartButton = findViewById(R.id.startBtn);
         StartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 //enable chronometer
                 startChronometer();
 
@@ -150,184 +231,88 @@ public class game24Activity extends AppCompatActivity {
                 setImage(imageView3, a3);
                 setImage(imageView4, a4);
 
-                btnLeft.setClickable(true);
-                btnRight.setClickable(true);
-                btnPlus.setClickable(true);
-                btnMinus.setClickable(true);
-                btnMultiply.setClickable(true);
-                btnDivide.setClickable(true);
-
-                inputString = "";
-            }
+                setOperatorClickable(true);
+                }
         });
+        }
 
-        btnLoad.setOnClickListener(new View.OnClickListener() {
+     void numberImageViewListener(ImageView numImaView, int a){
+        numImaView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FileManagerSingleton fileManagerSingleton = new FileManagerSingleton();
-                fileManagerSingleton.loadFromFile(GAME24POINTS_FILE_NAME);
-                editText.setText(inputString);
-            }
-        });
-//        editText.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                FileManager fileManager = new FileManager();
-//                fileManager.saveToFile(GAME24POINTS_FILE_NAME, "username" + "," +
-//                        editText.getText().toString());
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
-        final SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(this);
-
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before,
-                                      int count)
-            {
-                prefs.edit().putString("autoSave", s.toString()).commit();
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after)
-            {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s)
-            {
-            }
-        });
-
-
-        imageView1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                imageView1.setClickable(false);
-                inputString += a1;
-                editText.setText(inputString);
-            }
-        });
-
-        imageView2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                imageView2.setClickable(false);
-                inputString += a2;
-                editText.setText(inputString);
-            }
-        });
-
-        imageView3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                imageView3.setClickable(false);
-                inputString += a3;
-                editText.setText(inputString);
-            }
-        });
-
-        imageView4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                imageView4.setClickable(false);
-                inputString += a4;
-                editText.setText(inputString);
-            }
-        });
-
-        btnLeft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                inputString += "(";
-                editText.setText(inputString);
-            }
-        });
-
-        btnRight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                inputString += ")";
-                editText.setText(inputString);
-            }
-        });
-
-        btnPlus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                inputString += "+";
-                editText.setText(inputString);
-            }
-        });
-
-        btnMinus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                inputString += "-";
-                editText.setText(inputString);
-            }
-        });
-
-        btnMultiply.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                inputString += "*";
-                editText.setText(inputString);
-            }
-        });
-
-        btnDivide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                inputString += "/";
-                editText.setText(inputString);
-            }
-        });
-
-        btnConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // disable chronometer
-                pauseChronometer();
-
-                StartButton.setClickable(false);
-
-                btnLeft.setClickable(false);
-                btnRight.setClickable(false);
-                btnPlus.setClickable(false);
-                btnMinus.setClickable(false);
-                btnMultiply.setClickable(false);
-                btnDivide.setClickable(false);
-
-                String finalResult = getFinalResult(inputString);
-                editText.setText(finalResult);
-
-            }
-
-            /**
-             * A method that pause the chronometer.
-             */
-            private void pauseChronometer() {
-                if (running) {
-                    chronometer.stop();
-                    pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
-                    running = false;
+                if(track == 0) {
+                    track = a;
+                    numImaView.setClickable(false);
+                    inputString += a;
+                    editText.setText(inputString);
                 }
             }
         });
+    }
 
+    private void setImageView1Listener(){
+        imageView1 = findViewById(R.id.imageView1);
+        numberImageViewListener(imageView1,a1);
+    }
 
+    private void setImageView2Listener(){
+        imageView2 = findViewById(R.id.imageView2);
+        numberImageViewListener(imageView2,a2);
+    }
+
+    private void setImageView3Listener(){
+        imageView3 = findViewById(R.id.imageView3);
+        numberImageViewListener(imageView3,a3);
+    }
+
+    private void setImageView4Listener(){
+        imageView4 = findViewById(R.id.imageView4);
+        numberImageViewListener(imageView4,a4);
+    }
+
+    void operatorImageListener(ImageView opeImaView,String operator){
+        opeImaView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                track = 0;
+                inputString += operator;
+                editText.setText(inputString);
+            }
+        });
+    }
+
+    private void addLeftBracketListener(){
+        btnLeft = findViewById(R.id.btnLeft);
+        operatorImageListener(btnLeft,"(");
+    }
+
+    private void addRightBracketListener(){
+        btnRight = findViewById(R.id.btnRight);
+        operatorImageListener(btnRight,")");
+    }
+
+    private void addPlusButtontListener(){
+        btnPlus = findViewById(R.id.btnPlus);
+        operatorImageListener(btnPlus,"+");
+    }
+
+    private void addMinusButtonListener(){
+        btnMinus = findViewById(R.id.btnMinus);
+        operatorImageListener(btnMinus,"-");
+    }
+
+    private void addMultiplyButtontListener(){
+        btnMultiply = findViewById(R.id.btnMultiply);
+        operatorImageListener(btnMultiply,"*");
+    }
+
+    private void addDivideButtonListener(){
+        btnDivide = findViewById(R.id.btnDivide);
+        operatorImageListener(btnDivide,"/");
+    }
+
+    private void addUndoButtonListener(){
+        undo = findViewById(R.id.undoBtn);
         undo.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -355,17 +340,14 @@ public class game24Activity extends AppCompatActivity {
         });
     }
 
-    /**
-     * A method that enables the chronometer.
-     */
-    private void startChronometer() {
-        if (!running) {
-            chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
-            chronometer.start();
-            running = true;
-        }
+    private void setOperatorClickable(boolean bol){
+        btnLeft.setClickable(bol);
+        btnRight.setClickable(bol);
+        btnPlus.setClickable(bol);
+        btnMinus.setClickable(bol);
+        btnMultiply.setClickable(bol);
+        btnDivide.setClickable(bol);
     }
-
 
     public int checkIfNumber(String lastC) {
         int lastInt = 0;
@@ -377,8 +359,6 @@ public class game24Activity extends AppCompatActivity {
         return lastInt;
     }
 
-
-
     public String getFinalResult(String str){
         int re = judgeTransferable(str);
         if(re == 0){
@@ -387,9 +367,7 @@ public class game24Activity extends AppCompatActivity {
             String result = String.valueOf(re);
             return result;
         }
-
     }
-
 
     public int judgeTransferable(String s){
         int i = 0;
@@ -400,11 +378,9 @@ public class game24Activity extends AppCompatActivity {
             i = changeString.calculate(result);
         }catch (Exception e){
             System.out.println("invalid message");
-
         }
         return i;
     }
-
 
     private void setImage(ImageView imageView, int num) {
         switch (num) {
@@ -439,9 +415,18 @@ public class game24Activity extends AppCompatActivity {
                 imageView.setImageResource(R.drawable.initial);
                 break;
         }
-
     }
 
-
-
+    /**
+     * A method that enables the chronometer.
+     */
+    private void startChronometer() {
+        if (!running) {
+            chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+            chronometer.start();
+            running = true;
+        }
+    }
 }
+
+
