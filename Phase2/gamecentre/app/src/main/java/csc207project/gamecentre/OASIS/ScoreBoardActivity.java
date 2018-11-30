@@ -8,6 +8,10 @@ import android.widget.Button;
 
 import csc207project.gamecentre.R;
 
+/**
+ * Abstract scoreboard activity for factory design.
+ * # Exclude from tests because it's a abstract view class.
+ */
 public abstract class ScoreBoardActivity extends AppCompatActivity implements ReadWritePrivilege {
 
     @Override
