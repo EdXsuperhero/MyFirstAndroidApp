@@ -520,7 +520,7 @@ public class game24Activity extends AppCompatActivity implements Serializable{
     public String getFinalResult(String str){
         int re = judgeTransferable(str);
         if(re == 0){
-            return "Ooop! Computer cannot do this math!";
+            return "Ooop! Invalid Input!";
         }else{
             String result = String.valueOf(re);
             return result;
@@ -700,3 +700,5 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         }
     }
 }
+
+
