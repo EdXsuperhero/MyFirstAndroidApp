@@ -66,8 +66,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
 
     public final static String SAVE_SCORE = "save_score.ser";
 
-
-
     public int[] generateNumber(){
         int[] numberList = new int[4];
         Random random = new Random();
@@ -479,7 +477,6 @@ public class game24Activity extends AppCompatActivity implements Serializable{
         });
     }
 
-    
     @Override
     protected void onPause(){
         super.onPause();
