@@ -12,6 +12,7 @@ import csc207project.gamecentre.MainMenu.UserManager;
 
 /**
  * The login activity for Game Centre.
+ * # Exclude from code coverage because it's a view class.
  */
 public class LoginActivity extends AppCompatActivity {
 

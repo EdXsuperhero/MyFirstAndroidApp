@@ -6,7 +6,7 @@ import java.io.Serializable;
  * User's information.
  * A JavaBean.
  */
-public class User implements Serializable {
+class User implements Serializable {
 
     /**
      * The username of this user.
@@ -24,7 +24,7 @@ public class User implements Serializable {
      * @param username user's username
      * @param password user's password
      */
-    public User(String username, String password) {
+    User(String username, String password) {
         this.username = username;
         this.password = password;
     }
@@ -32,7 +32,7 @@ public class User implements Serializable {
     /**
      * @return this user's username
      */
-    public String getUsername() {
+    String getUsername() {
         return username;
     }
 
@@ -41,14 +41,14 @@ public class User implements Serializable {
      *
      * @param username new username
      */
-    public void setUsername(String username) {
+    void setUsername(String username) {
         this.username = username;
     }
 
     /**
      * @return this user's password
      */
-    public String getPassword() {
+    String getPassword() {
         return password;
     }
 
@@ -57,7 +57,7 @@ public class User implements Serializable {
      *
      * @param password new password
      */
-    public void setPassword(String password) {
+    void setPassword(String password) {
         this.password = password;
     }
 }

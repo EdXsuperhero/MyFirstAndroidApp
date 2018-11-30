@@ -12,6 +12,7 @@ import csc207project.gamecentre.R;
 
 /**
  * ViewHolder for games that is needed for RecyclerViewAdapter.
+ * # Exclude from code coverage because it's a view class.
  *
  * This was adapted from an article by Droid By Me at :
  * https://medium.com/@droidbyme/android-recyclerview-fca74609725e

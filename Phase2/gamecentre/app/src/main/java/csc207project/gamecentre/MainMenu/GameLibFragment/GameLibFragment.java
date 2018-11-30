@@ -22,6 +22,7 @@ import csc207project.gamecentre.R;
 /**
  * A Fragment showing the game library.
  * Based on a CardView based RecyclerView.
+ * # Exclude from code coverage because it's a view class.
  *
  * This was adapted from an article by Droid By Me at :
  * https://medium.com/@droidbyme/android-recyclerview-fca74609725e
