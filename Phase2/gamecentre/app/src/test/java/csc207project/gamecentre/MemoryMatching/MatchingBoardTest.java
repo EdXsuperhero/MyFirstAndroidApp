@@ -11,6 +11,7 @@ import csc207project.gamecentre.R;
 import static org.junit.Assert.*;
 
 public class MatchingBoardTest {
+
     @Test
     public void flipTwoCardMatchedTest() {
         List<Card> cards = new ArrayList<>();

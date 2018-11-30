@@ -38,7 +38,7 @@
     <string name="twenty_four_game_des"/>
 
     <string name="memory_matching">Memory Matching</string>
-    <string name="memory_matching_des" />
+    <string name="memory_matching_des" >A Memory Game where you can flip two cards over and match them together.</string>
 
     <string name="welcome">Welcome,</string>
     <string name="change_username">Change Username</string>
