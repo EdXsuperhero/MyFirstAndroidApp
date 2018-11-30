@@ -82,7 +82,7 @@ public class GameLibFragment extends Fragment {
                         null)
         );
         this.games.add(
-                new Game(R.drawable.twenty_four_game_screenshot,
+                new Game(R.drawable.matching_game_screenshot,
                         R.string.memory_matching,
                         R.string.memory_matching_des,
                         MatchingMainActivity.class,
